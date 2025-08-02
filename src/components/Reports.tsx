@@ -73,7 +73,11 @@ const reportTemplates = [
   }
 ];
 
-export default function Reports() {
+interface ReportsProps {
+  onWorkflowOpen?: (workflow: string) => void;
+}
+
+export default function Reports({ onWorkflowOpen }: ReportsProps) {
   const { addNotification } = useNotifications();
   const [activeTab, setActiveTab] = useState('reports');
   const [filterStatus, setFilterStatus] = useState('All');
@@ -171,6 +175,7 @@ export default function Reports() {
           <p className="text-gray-600 mt-1 font-sans">Generate tax reports and export data</p>
         </div>
         <button 
+          onClick={() => onWorkflowOpen?.('generate-report')}
           className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
         >
           <FileText className="w-4 h-4 mr-2" />
@@ -350,6 +355,7 @@ export default function Reports() {
                 <h3 className="text-lg font-semibold text-gray-900 text-center mb-2 font-sans">{template.name}</h3>
                 <p className="text-sm text-gray-600 text-center mb-4 font-sans">{template.description}</p>
                 <button 
+                  onClick={() => onWorkflowOpen?.('generate-report')}
                   onClick={() => handleTemplateGenerate(template.name)}
                   className="w-full px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
                 >
@@ -407,6 +413,8 @@ export default function Reports() {
                 Preview
               </button>
               <button 
+                onClick={() => onWorkflowOpen?.('generate-report')}
+                onClick={() => onWorkflowOpen?.('generate-report')}
                 onClick={() => handleTemplateGenerate('Custom Report')}
                 className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
               >

@@ -97,7 +97,11 @@ const aiInsights = [
   }
 ];
 
-export default function Dashboard() {
+interface DashboardProps {
+  onWorkflowOpen?: (workflow: string) => void;
+}
+
+export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   const { addNotification } = useNotifications();
 
   const handleQuickAction = (action: string) => {
@@ -236,24 +240,28 @@ export default function Dashboard() {
             <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">Quick Actions</h2>
             <div className="space-y-4">
               <button 
+                onClick={() => onWorkflowOpen?.('import-transactions')}
                 className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-base font-medium text-gray-900">Import Transactions</span>
                 <TrendingUp className="h-5 w-5 text-gray-400" />
               </button>
               <button 
+                onClick={() => onWorkflowOpen?.('generate-report')}
                 className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-base font-medium text-gray-900">Generate Report</span>
                 <FileText className="h-5 w-5 text-gray-400" />
               </button>
               <button 
+                onClick={() => onWorkflowOpen?.('add-client')}
                 className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-base font-medium text-gray-900">Add Client</span>
                 <Users className="h-5 w-5 text-gray-400" />
               </button>
               <button 
+                onClick={() => onWorkflowOpen?.('connect-wallet')}
                 className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-base font-medium text-gray-900">Connect Wallet</span>

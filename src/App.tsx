@@ -22,6 +22,10 @@ import AuditTrail from './components/AuditTrail';
 import ImportWizard from './components/ImportWizard';
 import BulkActions from './components/BulkActions';
 import SearchFilters from './components/SearchFilters';
+import ImportTransactionsWorkflow from './components/ImportTransactionsWorkflow';
+import GenerateReportWorkflow from './components/GenerateReportWorkflow';
+import AddClientWorkflow from './components/AddClientWorkflow';
+import ConnectWalletWorkflow from './components/ConnectWalletWorkflow';
 
 function App() {
   const [isAuditTrailOpen, setIsAuditTrailOpen] = useState(false);
@@ -31,6 +35,7 @@ function App() {
   const [isImportWizardOpen, setIsImportWizardOpen] = useState(false);
   const [selectedTransactions, setSelectedTransactions] = useState<string[]>([]);
   const [searchFilters, setSearchFilters] = useState({});
+  const [activeWorkflow, setActiveWorkflow] = useState<string | null>(null);
 
   const toggleAuditTrail = () => {
     setIsAuditTrailOpen(!isAuditTrailOpen);
@@ -52,7 +57,31 @@ function App() {
     setSelectedClientId(null);
   };
 
+  const handleWorkflowOpen = (workflow: string) => {
+    setActiveWorkflow(workflow);
+  };
+
+  const handleWorkflowClose = () => {
+    setActiveWorkflow(null);
+  };
+
   const renderContent = () => {
+    // Workflow Views
+    if (activeWorkflow) {
+      switch (activeWorkflow) {
+        case 'import-transactions':
+          return <ImportTransactionsWorkflow onBack={handleWorkflowClose} />;
+        case 'generate-report':
+          return <GenerateReportWorkflow onBack={handleWorkflowClose} />;
+        case 'add-client':
+          return <AddClientWorkflow onBack={handleWorkflowClose} />;
+        case 'connect-wallet':
+          return <ConnectWalletWorkflow onBack={handleWorkflowClose} />;
+        default:
+          return null;
+      }
+    }
+
     // Transaction Detail View
     if (selectedTransactionId) {
       return (
@@ -81,7 +110,7 @@ function App() {
       case 'dashboard':
         return (
           <div className="p-8">
-            <Dashboard />
+            <Dashboard onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'analytics':
@@ -93,19 +122,19 @@ function App() {
       case 'clients':
         return (
           <div className="p-8">
-            <Clients onClientSelect={handleClientSelect} />
+            <Clients onClientSelect={handleClientSelect} onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'wallets':
         return (
           <div className="p-8">
-            <Wallets />
+            <Wallets onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'reports':
         return (
           <div className="p-8">
-            <Reports />
+            <Reports onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'settings':
@@ -166,7 +195,7 @@ function App() {
         <Header />
         <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
         
-        <main className="ml-72 pt-20 min-h-screen">
+        <main className={`${activeWorkflow ? 'ml-0 pt-0' : 'ml-72 pt-20'} min-h-screen`}>
           {renderContent()}
         </main>
 

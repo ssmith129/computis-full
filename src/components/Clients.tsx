@@ -5,6 +5,7 @@ import ConfirmDialog from './ConfirmDialog';
 
 interface ClientsProps {
   onClientSelect?: (clientId: string) => void;
+  onWorkflowOpen?: (workflow: string) => void;
 }
 
 const clients = [
@@ -58,7 +59,7 @@ const clients = [
   }
 ];
 
-export default function Clients() {
+export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps) {
   const { addNotification } = useNotifications();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('All');
@@ -127,7 +128,7 @@ export default function Clients() {
           <h1 className="text-2xl font-bold text-gray-900 font-sans">Clients</h1>
           <p className="text-gray-600 mt-1 font-sans">Manage your clients and their crypto tax profiles</p>
         </div>
-        <button onClick={handleAddClient} className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
+        <button onClick={() => onWorkflowOpen?.('add-client')} className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
           <Plus className="w-4 h-4 mr-2" />
           Add Client
         </button>
