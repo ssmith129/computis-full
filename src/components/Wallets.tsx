@@ -382,7 +382,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {importHistory.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50 transition-all duration-300 hover:scale-105">
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors duration-200">
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="text-sm font-medium text-gray-900 font-sans">{item.filename}</div>
                       </td>
