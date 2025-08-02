@@ -45,9 +45,11 @@ export default function Header() {
           <FileText className="w-3.5 h-3.5 mr-1.5" />
           Export
         </button>
-        <NotificationBell />
-        <div className="flex items-center space-x-2 hover:bg-gray-800 px-3 py-2 rounded-md transition-colors duration-200 cursor-pointer">
-          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center">
+        <div className="flex items-center">
+          <NotificationBell />
+        </div>
+        <div className="flex items-center space-x-2 hover:bg-gray-800 px-3 py-1.5 rounded-md transition-colors duration-200 cursor-pointer h-[34px]">
+          <div className="h-7 w-7 rounded-full bg-gray-700 flex items-center justify-center">
             <User className="w-4 h-4 text-white" />
           </div>
           <span className="font-sans">John Smith</span>
