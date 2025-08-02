@@ -172,6 +172,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       onClick: () => handleClientAction(client.id, 'edit')
     }
   ];
+  
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -378,93 +379,6 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
               </InteractiveButton>
             </div>
           </div>
-        </AnimatedCard>
-      )}
-    </div>
-  );
-}
-                  {client.type === 'Business' ? (
-                    <Building className="h-4 w-4 text-gray-600" />
-                  ) : (
-                    <User className="h-4 w-4 text-gray-600" />
-                  )}
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-900 font-display">{client.name}</h3>
-                  <div className="mt-1">
-                    <StatusIndicator 
-                      status={client.status === 'Active' ? 'success' : 'pending'} 
-                      label={client.status}
-                      size="sm"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-                <ActionMenu actions={getClientActionMenu(client)} />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <div className="flex items-center text-sm text-gray-600 font-sans">
-                <Mail className="h-4 w-4 mr-1" />
-                {client.email}
-              </div>
-              <div className="flex items-center text-sm text-gray-600 font-sans">
-                <Phone className="h-4 w-4 mr-1" />
-                {client.phone}
-              </div>
-              <div className="flex items-center text-sm text-gray-600 font-sans">
-                <Calendar className="h-4 w-4 mr-1" />
-                Last activity: {client.lastActivity}
-              </div>
-            </div>
-
-            <div className="mt-2 pt-2 border-t border-gray-100">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-sm text-gray-600 font-sans">Transactions</p>
-                  <p className="text-base font-semibold text-gray-900 font-display">{client.transactions}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-600 font-sans">Total Value</p>
-                  <p className="text-base font-semibold text-gray-900 font-display">{client.totalValue}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-2 flex space-x-1">
-              <InteractiveButton 
-                variant="secondary" 
-                size="sm" 
-                className="flex-1"
-                onClick={() => handleClientAction(client.id, 'view')}
-              >
-                View Details
-              </InteractiveButton>
-              <InteractiveButton 
-                variant="primary" 
-                size="sm" 
-                icon={TrendingUp}
-                className="flex-1"
-                onClick={() => handleClientAction(client.id, 'transactions')}
-              >
-                Transactions
-              </InteractiveButton>
-            </div>
-          </AnimatedCard>
-        ))}
-      </div>
-
-      {/* Empty State */}
-      {filteredClients.length === 0 && (
-        <AnimatedCard className="text-center py-8">
-          <User className="h-16 w-16 text-gray-400 mx-auto mb-4 animate-float" />
-          <h3 className="text-xl font-medium text-gray-900 mb-2 font-display">No clients found</h3>
-          <p className="text-base text-gray-600 mb-4 font-sans">Try adjusting your search or filter criteria</p>
-          <InteractiveButton variant="primary" size="md">
-            Clear Filters
-          </InteractiveButton>
         </AnimatedCard>
       )}
 
