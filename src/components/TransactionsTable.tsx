@@ -269,7 +269,7 @@ export default function TransactionsTable() {
               <div className="bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs mr-3">
                 <HelpCircle className="w-3 h-3" />
               </div>
-              <span className="text-base font-sans">Low (<70%)</span>
+              <span className="text-base font-sans">Low (&lt;70%)</span>
             </div>
           </div>
           <div>
