@@ -134,7 +134,7 @@ export default function Exports() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -143,9 +143,9 @@ export default function Exports() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Export Configuration */}
-        <div className="lg:col-span-1">
+        <div className="xl:col-span-1">
           <FormSection 
             title="Create New Export" 
             description="Configure and generate a new data export"
@@ -294,7 +294,7 @@ export default function Exports() {
         </div>
 
         {/* Export Jobs List */}
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-2">
           <div className="space-y-6">
             {/* Filters */}
             <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
