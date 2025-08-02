@@ -58,6 +58,7 @@ export default function InteractiveButton({
           ${sizes[size]}
           ${isPressed ? 'scale-98' : 'hover:scale-102'}
           ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+          !font-semibold
           ${className}
         `}
         disabled={disabled || loading}
