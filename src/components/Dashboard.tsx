@@ -261,10 +261,6 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
           </AnimatedCard>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">Quick Actions</h2>
-            <div className="space-y-4">
-              <button 
           <AnimatedCard className="p-10" hover>
             <h2 className="text-3xl font-bold text-gray-900 mb-10 font-display">Quick Actions</h2>
             <div className="space-y-6">
