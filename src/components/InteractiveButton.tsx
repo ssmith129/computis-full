@@ -36,15 +36,15 @@ export default function InteractiveButton({
   };
 
   const sizes = {
-    sm: 'px-3 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg'
+    sm: 'px-2 py-1 text-xs',
+    md: 'px-4 py-2 text-sm',
+    lg: 'px-6 py-3 text-base'
   };
 
   const handleClick = () => {
     if (!disabled && !loading && onClick) {
       setIsPressed(true);
-      setTimeout(() => setIsPressed(false), 150);
+      setTimeout(() => setIsPressed(false), 100);
       onClick();
     }
   };
@@ -53,37 +53,36 @@ export default function InteractiveButton({
     <div className="relative inline-block">
       <button
         className={`
-          button-ripple font-medium rounded-xl transition-all duration-200 transform
+          font-medium rounded-md transition-all duration-150 transform
           ${variants[variant]}
           ${sizes[size]}
-          ${isPressed ? 'scale-95' : 'hover:scale-105'}
+          ${isPressed ? 'scale-98' : 'hover:scale-102'}
           ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-          ${loading ? 'animate-pulse' : ''}
           ${className}
         `}
         disabled={disabled || loading}
-        onMouseEnter={() => setShowTooltip(true)}
+        onMouseEnter={() => tooltip && setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onMouseDown={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}
-        onMouseLeave={() => setIsPressed(false)}
+        onClick={handleClick}
       >
         <div className="flex items-center justify-center space-x-2">
           {loading ? (
-            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
           ) : Icon ? (
-            <Icon className={`${size === 'sm' ? 'w-4 h-4' : size === 'lg' ? 'w-6 h-6' : 'w-5 h-5'} transition-transform duration-200 ${isPressed ? 'scale-90' : ''}`} />
+            <Icon className={`${size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'} transition-transform duration-150 ${isPressed ? 'scale-95' : ''}`} />
           ) : null}
-          <span className={`transition-transform duration-200 ${isPressed ? 'scale-95' : ''}`}>
+          <span className={`transition-transform duration-150 ${isPressed ? 'scale-98' : ''}`}>
             {children}
           </span>
         </div>
       </button>
       
       {tooltip && showTooltip && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg whitespace-nowrap animate-bounce-in z-50">
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap z-50">
           {tooltip}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900" />
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
         </div>
       )}
     </div>

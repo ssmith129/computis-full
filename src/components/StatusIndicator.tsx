@@ -21,28 +21,28 @@ export default function StatusIndicator({
           icon: CheckCircle,
           className: 'bg-green-100 text-green-800 border-green-200',
           iconClass: 'text-green-600',
-          animation: animated ? 'animate-bounce-in' : ''
+          animation: ''
         };
       case 'pending':
         return {
           icon: Clock,
           className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
           iconClass: 'text-yellow-600',
-          animation: animated ? 'animate-pulse' : ''
+          animation: ''
         };
       case 'warning':
         return {
           icon: AlertTriangle,
           className: 'bg-orange-100 text-orange-800 border-orange-200',
           iconClass: 'text-orange-600',
-          animation: animated ? 'animate-pulse' : ''
+          animation: ''
         };
       case 'error':
         return {
           icon: XCircle,
           className: 'bg-red-100 text-red-800 border-red-200',
           iconClass: 'text-red-600',
-          animation: animated ? 'animate-shake' : ''
+          animation: ''
         };
       case 'loading':
         return {
@@ -58,9 +58,9 @@ export default function StatusIndicator({
   const Icon = config.icon;
 
   const sizeClasses = {
-    sm: 'px-2 py-1 text-xs',
-    md: 'px-3 py-1.5 text-sm',
-    lg: 'px-4 py-2 text-base'
+    sm: 'px-2 py-0.5 text-xs',
+    md: 'px-2 py-1 text-xs',
+    lg: 'px-3 py-1.5 text-sm'
   };
 
   const iconSizes = {
@@ -71,12 +71,12 @@ export default function StatusIndicator({
 
   return (
     <span className={`
-      inline-flex items-center rounded-full font-medium border transition-all duration-300
+      inline-flex items-center rounded-full font-medium border transition-all duration-150
       ${config.className}
       ${sizeClasses[size]}
       ${config.animation}
     `}>
-      <Icon className={`${iconSizes[size]} mr-1.5 ${config.iconClass} ${config.animation}`} />
+      <Icon className={`${iconSizes[size]} mr-1 ${config.iconClass} ${config.animation}`} />
       {label}
     </span>
   );

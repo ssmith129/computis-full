@@ -30,39 +30,39 @@ export default function Header() {
   };
 
   return (
-    <header className="text-white h-16 flex items-center justify-between px-6 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
+    <header className="text-white h-12 flex items-center justify-between px-4 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
       <div className="flex items-center space-x-2">
         <img 
           src="/computis_v2_1.png" 
           alt="Computis Logo" 
-          className="h-10 w-auto hover:scale-105 transition-transform duration-300"
+          className="h-6 w-auto hover:scale-102 transition-transform duration-200"
         />
       </div>
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-3">
         <InteractiveButton 
           variant="primary" 
           size="sm" 
           icon={FileText}
-          tooltip="Export transaction data and reports"
+          className="text-xs"
         >
           Export
         </InteractiveButton>
         <InteractiveButton 
           variant="success" 
           size="sm"
-          tooltip="Import transaction data from exchanges and wallets"
+          className="text-xs"
         >
           Import Data
         </InteractiveButton>
-        <div className="flex items-center h-8">
+        <div className="flex items-center h-6">
           <NotificationBell />
         </div>
-        <div className="flex items-center justify-center space-x-2 hover:bg-gray-800 px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer hover:scale-105 group">
-          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+        <div className="flex items-center justify-center space-x-1 hover:bg-gray-800 px-2 py-1 rounded-md transition-all duration-200 cursor-pointer group">
+          <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
             <User className="w-4 h-4 text-white" />
           </div>
-          <span className="font-sans text-sm">John Smith</span>
-          <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+          <span className="font-sans text-xs">John Smith</span>
+          <ChevronDown className="w-3 h-3 transition-transform duration-150 group-hover:rotate-180" />
         </div>
       </div>
     </header>

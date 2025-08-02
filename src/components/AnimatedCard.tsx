@@ -22,18 +22,17 @@ export default function AnimatedCard({
   return (
     <div
       className={`
-        bg-white rounded-xl border border-gray-200 transition-all duration-300
-        ${hover ? 'hover:shadow-xl hover:scale-105 hover:-translate-y-1' : ''}
-        ${glow ? 'animate-pulse-glow' : ''}
-        ${float ? 'animate-float' : ''}
+        bg-white rounded-lg border border-gray-200 transition-all duration-200
+        ${hover ? 'hover:shadow-md hover:scale-102' : ''}
         ${onClick ? 'cursor-pointer' : ''}
         ${isHovered ? 'shadow-2xl' : 'shadow-sm'}
         ${className}
       `}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
     >
-      <div className={`transition-all duration-300 ${isHovered ? 'scale-105' : ''}`}>
+      <div className={`transition-all duration-200 ${isHovered ? 'scale-101' : ''}`}>
         {children}
       </div>
     </div>

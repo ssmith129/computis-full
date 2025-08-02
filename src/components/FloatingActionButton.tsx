@@ -11,23 +11,31 @@ interface FloatingAction {
 interface FloatingActionButtonProps {
   actions: FloatingAction[];
   position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export default function FloatingActionButton({ 
   actions, 
-  position = 'bottom-right' 
+  position = 'bottom-right',
+  size = 'md'
 }: FloatingActionButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const positionClasses = {
-    'bottom-right': 'bottom-8 right-8',
-    'bottom-left': 'bottom-8 left-8',
-    'top-right': 'top-8 right-8',
-    'top-left': 'top-8 left-8'
+    'bottom-right': 'bottom-4 right-4',
+    'bottom-left': 'bottom-4 left-4',
+    'top-right': 'top-4 right-4',
+    'top-left': 'top-4 left-4'
+  };
+
+  const sizeClasses = {
+    sm: { main: 'w-10 h-10', action: 'w-8 h-8', icon: 'w-4 h-4', offset: 50 },
+    md: { main: 'w-12 h-12', action: 'w-10 h-10', icon: 'w-5 h-5', offset: 60 },
+    lg: { main: 'w-16 h-16', action: 'w-12 h-12', icon: 'w-6 h-6', offset: 70 }
   };
 
   const getActionPosition = (index: number) => {
-    const offset = (index + 1) * 70;
+    const offset = (index + 1) * sizeClasses[size].offset;
     switch (position) {
       case 'bottom-right':
       case 'bottom-left':
@@ -44,27 +52,26 @@ export default function FloatingActionButton({
       {isOpen && actions.map((action, index) => (
         <div
           key={index}
-          className="absolute animate-bounce-in"
+          className="absolute"
           style={getActionPosition(index)}
         >
-          <div className="flex items-center space-x-3 mb-3">
+          <div className="flex items-center space-x-2 mb-2">
             {(position.includes('right')) && (
-              <span className="bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap animate-slide-in-right font-sans">
+              <span className="bg-gray-900 text-white px-2 py-1 rounded-md text-xs font-medium whitespace-nowrap font-sans">
                 {action.label}
               </span>
             )}
             <button
               className={`
-                w-12 h-12 rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl
+                ${sizeClasses[size].action} rounded-full shadow-md transition-all duration-200 hover:scale-105
                 ${action.color || 'bg-blue-600 hover:bg-blue-700'} text-white
-                animate-float
               `}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              onClick={action.onClick}
             >
-              <action.icon className="w-6 h-6 mx-auto" />
+              <action.icon className={`${sizeClasses[size].icon} mx-auto`} />
             </button>
             {(position.includes('left')) && (
-              <span className="bg-gray-900 text-white px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap animate-slide-in-right font-sans">
+              <span className="bg-gray-900 text-white px-2 py-1 rounded-md text-xs font-medium whitespace-nowrap font-sans">
                 {action.label}
               </span>
             )}
@@ -75,17 +82,16 @@ export default function FloatingActionButton({
       {/* Main FAB */}
       <button
         className={`
-          w-16 h-16 bg-yellow-400 hover:bg-yellow-300 text-gray-900 rounded-full shadow-xl 
-          transition-all duration-300 hover:scale-110 hover:shadow-2xl
-          ${isOpen ? 'rotate-45' : 'hover:rotate-12'}
-          animate-pulse-glow
+          ${sizeClasses[size].main} bg-yellow-400 hover:bg-yellow-300 text-gray-900 rounded-full shadow-lg 
+          transition-all duration-200 hover:scale-105
+          ${isOpen ? 'rotate-45' : ''}
         `}
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-          <X className="w-8 h-8 mx-auto transition-transform duration-300" />
+          <X className={`${sizeClasses[size].icon} mx-auto transition-transform duration-200`} />
         ) : (
-          <Plus className="w-8 h-8 mx-auto transition-transform duration-300" />
+          <Plus className={`${sizeClasses[size].icon} mx-auto transition-transform duration-200`} />
         )}
       </button>
     </div>

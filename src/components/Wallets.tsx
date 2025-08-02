@@ -194,23 +194,21 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
-          <p className="text-sm text-gray-600 mt-1 font-sans">Connect wallets and import transaction data</p>
+          <h1 className="text-lg font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
+          <p className="text-xs text-gray-600 mt-1 font-sans">Connect wallets and import data</p>
         </div>
         <div className="flex space-x-2">
           <InteractiveButton 
             variant="secondary" 
-            size="md" 
+            size="sm" 
             icon={Upload}
-            tooltip="Import transaction data from CSV files"
           >
             Import CSV
           </InteractiveButton>
           <InteractiveButton 
             variant="primary" 
-            size="md" 
+            size="sm" 
             icon={Plus}
-            tooltip="Connect a new wallet or exchange"
           >
             Connect Wallet
           </InteractiveButton>
@@ -222,7 +220,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
         <nav className="-mb-px flex space-x-6">
           <button
             onClick={() => setActiveTab('wallets')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-300 font-display hover:scale-105 ${
+            className={`py-2 px-1 border-b-2 font-medium text-xs transition-all duration-200 font-display ${
               activeTab === 'wallets'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -232,7 +230,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </button>
           <button
             onClick={() => setActiveTab('imports')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-300 font-display hover:scale-105 ${
+            className={`py-2 px-1 border-b-2 font-medium text-xs transition-all duration-200 font-display ${
               activeTab === 'imports'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -246,37 +244,37 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {activeTab === 'wallets' && (
         <div className="space-y-8">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <AnimatedCard className="p-4" hover glow>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <AnimatedCard className="p-3" hover>
               <div className="flex items-center">
-                <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-3 hover:scale-110 transition-transform duration-200 animate-pulse-glow">
-                  <CheckCircle className="h-5 w-5" />
+                <div className="h-6 w-6 rounded-md bg-green-100 flex items-center justify-center text-green-600 mr-2 hover:scale-105 transition-transform duration-150">
+                  <CheckCircle className="h-3 w-3" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Connected Wallets</p>
-                  <p className="text-xl font-bold text-gray-900 font-display">4</p>
+                  <p className="text-xs font-medium text-gray-600 font-sans">Connected</p>
+                  <p className="text-lg font-bold text-gray-900 font-display">4</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-4" hover>
+            <AnimatedCard className="p-3" hover>
               <div className="flex items-center">
-                <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-3 hover:scale-110 transition-transform duration-200 animate-float">
-                  <Wallet className="h-5 w-5" />
+                <div className="h-6 w-6 rounded-md bg-blue-100 flex items-center justify-center text-blue-600 mr-2 hover:scale-105 transition-transform duration-150">
+                  <Wallet className="h-3 w-3" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Total Balance</p>
-                  <p className="text-xl font-bold text-gray-900 font-display">$409,330</p>
+                  <p className="text-xs font-medium text-gray-600 font-sans">Balance</p>
+                  <p className="text-lg font-bold text-gray-900 font-display">$409,330</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-4" hover>
+            <AnimatedCard className="p-3" hover>
               <div className="flex items-center">
-                <div className="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 mr-3 hover:scale-110 transition-transform duration-200 animate-pulse">
-                  <Clock className="h-5 w-5" />
+                <div className="h-6 w-6 rounded-md bg-purple-100 flex items-center justify-center text-purple-600 mr-2 hover:scale-105 transition-transform duration-150">
+                  <Clock className="h-3 w-3" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Total Transactions</p>
-                  <p className="text-xl font-bold text-gray-900 font-display">557</p>
+                  <p className="text-xs font-medium text-gray-600 font-sans">Transactions</p>
+                  <p className="text-lg font-bold text-gray-900 font-display">557</p>
                 </div>
               </div>
             </AnimatedCard>
@@ -284,36 +282,36 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
 
           {/* Wallets List */}
           <AnimatedCard className="overflow-hidden" hover>
-            <div className="px-4 py-3 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 font-display">Connected Wallets</h2>
+            <div className="px-3 py-2 border-b border-gray-200">
+              <h2 className="text-sm font-semibold text-gray-900 font-display">Connected Wallets</h2>
             </div>
             <div className="divide-y divide-gray-200">
               {wallets.map((wallet) => (
                 <div 
                   key={wallet.id} 
-                  className="p-4 hover:bg-gray-50 transition-all duration-300 group hover:scale-105"
+                  className="p-3 hover:bg-gray-50 transition-all duration-150 group"
                   onMouseEnter={() => setHoveredWallet(wallet.id)}
                   onMouseLeave={() => setHoveredWallet(null)}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="text-xl hover:scale-110 transition-transform duration-200 animate-float">
+                    <div className="flex items-center space-x-2">
+                      <div className="text-lg hover:scale-105 transition-transform duration-150">
                         {wallet.icon}
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900 font-display">{wallet.name}</h3>
+                        <h3 className="text-xs font-medium text-gray-900 font-display">{wallet.name}</h3>
                         <p className="text-xs text-gray-600 font-sans">{wallet.type}</p>
-                        <p className="text-xs text-gray-500 font-mono mt-1">{wallet.address}</p>
+                        <p className="text-xs text-gray-500 font-mono">{wallet.address.slice(0, 20)}...</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-2">
                       <div className="text-right">
-                        <p className="text-sm font-semibold text-gray-900 font-display">{wallet.balance}</p>
+                        <p className="text-xs font-semibold text-gray-900 font-display">{wallet.balance}</p>
                         <p className="text-xs text-gray-600 font-sans">{wallet.usdValue}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-gray-600 font-sans">{wallet.transactions} transactions</p>
-                        <p className="text-xs text-gray-500 font-sans">Last sync: {wallet.lastSync}</p>
+                        <p className="text-xs text-gray-600 font-sans">{wallet.transactions} tx</p>
+                        <p className="text-xs text-gray-500 font-sans">{wallet.lastSync}</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <StatusIndicator 
@@ -321,17 +319,16 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                           label={wallet.status}
                           size="sm"
                         />
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                           <ActionMenu actions={getWalletActionMenu(wallet)} />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-3 flex space-x-2">
+                  <div className="mt-2 flex space-x-1">
                     <InteractiveButton 
                       variant="secondary" 
                       size="sm"
-                      tooltip="Sync wallet transactions now"
                     >
                       Sync Now
                     </InteractiveButton>
@@ -339,7 +336,6 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                       variant="secondary" 
                       size="sm" 
                       icon={ExternalLink}
-                      tooltip="View all transactions from this wallet"
                     >
                       View Transactions
                     </InteractiveButton>
