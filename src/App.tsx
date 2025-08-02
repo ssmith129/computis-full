@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NotificationProvider } from './components/NotificationSystem';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -93,24 +94,26 @@ function App() {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Header />
-      <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
-      
-      <main className="ml-64 pt-16 min-h-screen">
-        {renderContent()}
-      </main>
+    <NotificationProvider>
+      <div className="min-h-screen bg-gray-100">
+        <Header />
+        <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
+        
+        <main className="ml-64 pt-16 min-h-screen">
+          {renderContent()}
+        </main>
 
-      <AuditTrail isOpen={isAuditTrailOpen} onClose={() => setIsAuditTrailOpen(false)} />
-      
-      {/* Overlay */}
-      {isAuditTrailOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-25 z-30"
-          onClick={() => setIsAuditTrailOpen(false)}
-        />
-      )}
-    </div>
+        <AuditTrail isOpen={isAuditTrailOpen} onClose={() => setIsAuditTrailOpen(false)} />
+        
+        {/* Overlay */}
+        {isAuditTrailOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-25 z-30"
+            onClick={() => setIsAuditTrailOpen(false)}
+          />
+        )}
+      </div>
+    </NotificationProvider>
   );
 }
 

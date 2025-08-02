@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FileText, Download, Calendar, Filter, TrendingUp, DollarSign, AlertTriangle, CheckCircle } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
+import ConfirmDialog from './ConfirmDialog';
 
 const reports = [
   {
@@ -72,15 +74,93 @@ const reportTemplates = [
 ];
 
 export default function Reports() {
+  const { addNotification } = useNotifications();
   const [activeTab, setActiveTab] = useState('reports');
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterClient, setFilterClient] = useState('All');
+  const [showGenerateDialog, setShowGenerateDialog] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const filteredReports = reports.filter(report => {
     const matchesStatus = filterStatus === 'All' || report.status === filterStatus;
     const matchesClient = filterClient === 'All' || report.client === filterClient;
     return matchesStatus && matchesClient;
   });
+
+  const handleGenerateReport = () => {
+    setShowGenerateDialog(true);
+  };
+
+  const confirmGenerateReport = async () => {
+    setIsGenerating(true);
+    
+    addNotification({
+      type: 'info',
+      title: 'Report Generation Started',
+      message: 'Generating your IRS Form 8949...',
+      duration: 3000
+    });
+    
+    // Simulate report generation
+    await new Promise(resolve => setTimeout(resolve, 4000));
+    
+    addNotification({
+      type: 'success',
+      title: 'Report Generated',
+      message: 'Your IRS Form 8949 is ready for download.',
+      action: {
+        label: 'Download',
+        onClick: () => console.log('Download report')
+      }
+    });
+    
+    setIsGenerating(false);
+    setShowGenerateDialog(false);
+  };
+
+  const handleReportAction = (reportId: number, action: string) => {
+    const report = reports.find(r => r.id === reportId);
+    
+    switch (action) {
+      case 'view':
+        addNotification({
+          type: 'info',
+          title: 'Opening Report',
+          message: `Loading ${report?.name}...`,
+          duration: 2000
+        });
+        break;
+      case 'download':
+        addNotification({
+          type: 'success',
+          title: 'Download Started',
+          message: `Downloading ${report?.name}...`,
+          duration: 3000
+        });
+        break;
+    }
+  };
+
+  const handleTemplateGenerate = (templateName: string) => {
+    addNotification({
+      type: 'info',
+      title: 'Report Generation',
+      message: `Generating ${templateName}...`,
+      duration: 3000
+    });
+    
+    setTimeout(() => {
+      addNotification({
+        type: 'success',
+        title: 'Report Ready',
+        message: `${templateName} has been generated successfully.`,
+        action: {
+          label: 'Download',
+          onClick: () => console.log(`Download ${templateName}`)
+        }
+      });
+    }, 3000);
+  };
 
   return (
     <div className="space-y-6">
@@ -90,7 +170,10 @@ export default function Reports() {
           <h1 className="text-2xl font-bold text-gray-900 font-sans">Reports & Exports</h1>
           <p className="text-gray-600 mt-1 font-sans">Generate tax reports and export data</p>
         </div>
-        <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
+        <button 
+          onClick={handleGenerateReport}
+          className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
+        >
           <FileText className="w-4 h-4 mr-2" />
           Generate Report
         </button>
@@ -232,10 +315,16 @@ export default function Reports() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <button className="text-blue-600 hover:text-blue-900 hover:scale-105 transition-all duration-200 font-sans">
+                          <button 
+                            onClick={() => handleReportAction(report.id, 'view')}
+                            className="text-blue-600 hover:text-blue-900 hover:scale-105 transition-all duration-200 font-sans"
+                          >
                             View
                           </button>
-                          <button className="text-green-600 hover:text-green-900 hover:scale-105 transition-all duration-200 font-sans">
+                          <button 
+                            onClick={() => handleReportAction(report.id, 'download')}
+                            className="text-green-600 hover:text-green-900 hover:scale-105 transition-all duration-200 font-sans"
+                          >
                             <Download className="w-4 h-4 inline mr-1" />
                             Download
                           </button>
@@ -263,7 +352,10 @@ export default function Reports() {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 text-center mb-2 font-sans">{template.name}</h3>
                 <p className="text-sm text-gray-600 text-center mb-4 font-sans">{template.description}</p>
-                <button className="w-full px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans">
+                <button 
+                  onClick={() => handleTemplateGenerate(template.name)}
+                  className="w-full px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+                >
                   Generate Report
                 </button>
               </div>
@@ -317,13 +409,28 @@ export default function Reports() {
               <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
                 Preview
               </button>
-              <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleTemplateGenerate('Custom Report')}
+                className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 Generate Report
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Generate Report Dialog */}
+      <ConfirmDialog
+        isOpen={showGenerateDialog}
+        onClose={() => setShowGenerateDialog(false)}
+        onConfirm={confirmGenerateReport}
+        title="Generate Report"
+        message="This will generate a new IRS Form 8949 based on your current transaction data."
+        type="info"
+        confirmText="Generate Report"
+        isLoading={isGenerating}
+      />
     </div>
   );
 }
