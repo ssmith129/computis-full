@@ -188,7 +188,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -244,7 +244,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {activeTab === 'wallets' && (
         <div className="space-y-8">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <AnimatedCard className="p-3" hover>
               <div className="flex items-center">
                 <div className="h-6 w-6 rounded-md bg-green-100 flex items-center justify-center text-green-600 mr-2 hover:scale-105 transition-transform duration-150">
@@ -421,13 +421,13 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </AnimatedCard>
 
           {/* Upload Area */}
-          <AnimatedCard className="p-6 text-center" hover glow>
+          <AnimatedCard className="p-8 text-center" hover glow>
             <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4 hover:scale-110 transition-transform duration-200 animate-float" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">Import Transaction Data</h3>
+            <h3 className="text-xl font-medium text-gray-900 mb-2 font-display">Import Transaction Data</h3>
             <p className="text-sm text-gray-600 mb-4 font-sans">
               Upload CSV files from exchanges, wallets, or other sources
             </p>
-            <div className="flex justify-center space-x-2">
+            <div className="flex justify-center space-x-3">
               <InteractiveButton 
                 variant="primary" 
                 size="md"

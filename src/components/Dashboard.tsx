@@ -176,9 +176,9 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 max-w-7xl mx-auto">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <AnimatedCard key={stat.title} className="p-3" hover>
             <div className="flex items-center justify-between">
@@ -199,10 +199,10 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <AnimatedCard className="p-4" hover>
+          <AnimatedCard className="p-6" hover>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900 font-display">Recent Activity</h2>
               <InteractiveButton variant="secondary" size="sm">

@@ -157,7 +157,7 @@ export default function RuleEngine() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -179,7 +179,7 @@ export default function RuleEngine() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-4 hover:scale-110 transition-transform duration-200">

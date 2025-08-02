@@ -173,7 +173,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
     }
   ];
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -191,7 +191,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </div>
 
       {/* Filters */}
-      <AnimatedCard className="p-3">
+      <AnimatedCard className="p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
@@ -229,11 +229,11 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </AnimatedCard>
 
       {/* Clients Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {filteredClients.map((client) => (
           <AnimatedCard 
             key={client.id} 
-            className="p-3 cursor-pointer group" 
+            className="p-4 cursor-pointer group" 
             hover
             onMouseEnter={() => setHoveredClient(client.id)}
             onMouseLeave={() => setHoveredClient(null)}

@@ -196,7 +196,9 @@ function App() {
         <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
         
         <main className={`${activeWorkflow ? 'ml-0 pt-0' : 'ml-48 pt-12'} min-h-screen transition-all duration-200`}>
-          {renderContent()}
+          <div className="max-w-screen-xl mx-auto px-4">
+            {renderContent()}
+          </div>
         </main>
 
         <AuditTrail isOpen={isAuditTrailOpen} onClose={() => setIsAuditTrailOpen(false)} />
