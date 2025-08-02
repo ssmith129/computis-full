@@ -149,58 +149,58 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((stat) => (
-          <div key={stat.title} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <div key={stat.title} className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 font-sans">{stat.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2 font-sans">{stat.value}</p>
+                <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
+                <p className="text-3xl font-bold text-gray-900 mt-3 font-display">{stat.value}</p>
                 <p className={`text-sm mt-1 font-sans ${
                   stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {stat.change} from last month
                 </p>
               </div>
-              <div className={`h-12 w-12 rounded-lg flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200`}>
-                <stat.icon className="h-6 w-6" />
+              <div className={`h-16 w-16 rounded-xl flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200`}>
+                <stat.icon className="h-8 w-8" />
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 font-sans">Recent Activity</h2>
-              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 font-display">Recent Activity</h2>
+              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium">
                 View All
               </button>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-4 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                  <div className={`h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} hover:scale-110 transition-transform duration-200`}>
-                    <activity.icon className="h-4 w-4" />
+                <div key={activity.id} className="flex items-start space-x-5 p-5 rounded-xl hover:bg-gray-50 transition-colors duration-200">
+                  <div className={`h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} hover:scale-110 transition-transform duration-200`}>
+                    <activity.icon className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 font-sans">{activity.type}</p>
-                    <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
+                    <p className="text-base font-medium text-gray-900 font-display">{activity.type}</p>
+                    <p className="text-sm text-gray-600 mt-2 font-sans">{activity.description}</p>
                     <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
                   </div>
                   <div className="flex-shrink-0">
                     {activity.status === 'completed' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 font-sans">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 font-sans">
                         Completed
                       </span>
                     )}
                     {activity.status === 'warning' && (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 font-sans">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 font-sans">
                         Review
                       </span>
                     )}
@@ -212,52 +212,52 @@ export default function Dashboard() {
         </div>
 
         {/* AI Insights */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 font-sans">AI Insights</h2>
-            <div className="space-y-6">
+        <div className="space-y-8">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">AI Insights</h2>
+            <div className="space-y-8">
               {aiInsights.map((insight, index) => (
-                <div key={index} className="hover:bg-gray-50 p-3 rounded-lg transition-colors duration-200">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-2xl font-bold text-gray-900 font-sans">{insight.value}</span>
+                <div key={index} className="hover:bg-gray-50 p-4 rounded-xl transition-colors duration-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl font-bold text-gray-900 font-display">{insight.value}</span>
                     {insight.trend === 'up' && (
-                      <TrendingUp className="h-4 w-4 text-green-500 hover:scale-110 transition-transform duration-200" />
+                      <TrendingUp className="h-5 w-5 text-green-500 hover:scale-110 transition-transform duration-200" />
                     )}
                   </div>
-                  <p className="text-sm font-medium text-gray-900 font-sans">{insight.title}</p>
-                  <p className="text-xs text-gray-600 mt-1 font-sans">{insight.description}</p>
+                  <p className="text-base font-medium text-gray-900 font-display">{insight.title}</p>
+                  <p className="text-sm text-gray-600 mt-2 font-sans">{insight.description}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 font-sans">Quick Actions</h2>
-            <div className="space-y-3">
+          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">Quick Actions</h2>
+            <div className="space-y-4">
               <button 
-                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
-                <span className="text-sm font-medium text-gray-900">Import Transactions</span>
-                <TrendingUp className="h-4 w-4 text-gray-400" />
+                <span className="text-base font-medium text-gray-900">Import Transactions</span>
+                <TrendingUp className="h-5 w-5 text-gray-400" />
               </button>
               <button 
-                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
-                <span className="text-sm font-medium text-gray-900">Generate Report</span>
-                <FileText className="h-4 w-4 text-gray-400" />
+                <span className="text-base font-medium text-gray-900">Generate Report</span>
+                <FileText className="h-5 w-5 text-gray-400" />
               </button>
               <button 
-                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
-                <span className="text-sm font-medium text-gray-900">Add Client</span>
-                <Users className="h-4 w-4 text-gray-400" />
+                <span className="text-base font-medium text-gray-900">Add Client</span>
+                <Users className="h-5 w-5 text-gray-400" />
               </button>
               <button 
-                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
-                <span className="text-sm font-medium text-gray-900">Connect Wallet</span>
-                <Wallet className="h-4 w-4 text-gray-400" />
+                <span className="text-base font-medium text-gray-900">Connect Wallet</span>
+                <Wallet className="h-5 w-5 text-gray-400" />
               </button>
             </div>
           </div>

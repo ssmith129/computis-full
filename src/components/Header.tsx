@@ -29,30 +29,30 @@ export default function Header() {
   };
 
   return (
-    <header className="text-white h-16 flex items-center justify-between px-8 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
+    <header className="text-white h-20 flex items-center justify-between px-10 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
       <div className="flex items-center space-x-2">
         <img 
           src="/computis_v2_1.png" 
           alt="Computis Logo" 
-          className="h-10 w-auto"
+          className="h-12 w-auto"
         />
       </div>
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-8">
         <button 
-          className="flex items-center justify-center text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 w-24 h-[34px] rounded-md font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
+          className="flex items-center justify-center text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 px-6 h-10 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
         >
-          <FileText className="w-3.5 h-3.5 mr-1.5" />
+          <FileText className="w-4 h-4 mr-2" />
           Export
         </button>
-        <div className="flex items-center h-[34px]">
+        <div className="flex items-center h-10">
           <NotificationBell />
         </div>
-        <div className="flex items-center justify-center space-x-2 hover:bg-gray-800 px-3 rounded-md transition-colors duration-200 cursor-pointer h-[34px]">
-          <div className="h-7 w-7 rounded-full bg-gray-700 flex items-center justify-center">
+        <div className="flex items-center justify-center space-x-3 hover:bg-gray-800 px-4 rounded-lg transition-colors duration-200 cursor-pointer h-10">
+          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center">
             <User className="w-4 h-4 text-white" />
           </div>
-          <span className="font-sans">John Smith</span>
-          <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+          <span className="font-sans text-sm">John Smith</span>
+          <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
         </div>
       </div>
     </header>

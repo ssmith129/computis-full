@@ -99,7 +99,7 @@ function App() {
         <Header />
         <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
         
-        <main className="ml-64 pt-16 min-h-screen">
+        <main className="ml-72 pt-20 min-h-screen">
           {renderContent()}
         </main>
 
