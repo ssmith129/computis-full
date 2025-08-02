@@ -40,15 +40,15 @@ export default function Header() {
       <div className="flex items-center space-x-6">
         <button 
           onClick={handleExport}
-          className="text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 w-24 h-[34px] rounded-md font-medium flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
+          className="flex items-center justify-center text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 w-24 h-[34px] rounded-md font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
         >
           <FileText className="w-3.5 h-3.5 mr-1.5" />
           Export
         </button>
-        <div className="flex items-center">
+        <div className="flex items-center h-[34px]">
           <NotificationBell />
         </div>
-        <div className="flex items-center space-x-2 hover:bg-gray-800 px-3 py-1.5 rounded-md transition-colors duration-200 cursor-pointer h-[34px]">
+        <div className="flex items-center justify-center space-x-2 hover:bg-gray-800 px-3 rounded-md transition-colors duration-200 cursor-pointer h-[34px]">
           <div className="h-7 w-7 rounded-full bg-gray-700 flex items-center justify-center">
             <User className="w-4 h-4 text-white" />
           </div>
