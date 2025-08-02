@@ -19,7 +19,7 @@ import AuditTrail from './components/AuditTrail';
 
 function App() {
   const [isAuditTrailOpen, setIsAuditTrailOpen] = useState(false);
-  const [activeModule, setActiveModule] = useState('transactions');
+  const [activeModule, setActiveModule] = useState('dashboard');
 
   const toggleAuditTrail = () => {
     setIsAuditTrailOpen(!isAuditTrailOpen);
