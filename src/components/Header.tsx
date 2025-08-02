@@ -38,8 +38,10 @@ export default function Header() {
         />
       </div>
       <div className="flex items-center space-x-6">
-        <button className="text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 px-4 py-2 rounded-md font-medium flex items-center transition-all duration-200 shadow-sm hover:shadow-md font-sans">
+        <button 
           onClick={handleExport}
+          className="text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 px-4 py-2 rounded-md font-medium flex items-center transition-all duration-200 shadow-sm hover:shadow-md font-sans"
+        >
           <FileText className="w-4 h-4 mr-2" />
           Export
         </button>
