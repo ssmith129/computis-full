@@ -137,46 +137,39 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   const handleQuickAction = (action: string) => {
     switch (action) {
       case 'import':
+        onWorkflowOpen?.('import-transactions');
         addNotification({
           type: 'info',
           title: 'Import Started',
-          message: 'Opening transaction import wizard...',
+          message: 'Opening import workflow...',
           duration: 2000
         });
         break;
       case 'report':
+        onWorkflowOpen?.('generate-report');
         addNotification({
           type: 'info',
           title: 'Report Generation',
-          message: 'Preparing your tax report...',
-          duration: 3000
+          message: 'Opening report generation workflow...',
+          duration: 2000
         });
-        setTimeout(() => {
-          addNotification({
-            type: 'success',
-            title: 'Report Ready',
-            message: 'Your IRS Form 8949 is ready for download.',
-            action: {
-              label: 'Download',
-              onClick: () => console.log('Download report')
-            }
-          });
-        }, 3000);
         break;
       case 'client':
+        onWorkflowOpen?.('add-client');
         addNotification({
-          type: 'success',
+          type: 'info',
           title: 'Client Added',
-          message: 'New client profile has been created successfully.',
-          duration: 3000
+          message: 'Opening add client workflow...',
+          duration: 2000
         });
         break;
       case 'wallet':
+        onWorkflowOpen?.('connect-wallet');
         addNotification({
           type: 'info',
           title: 'Wallet Connection',
-          message: 'Connecting to wallet and syncing transactions...',
-          duration: 4000
+          message: 'Opening wallet connection workflow...',
+          duration: 2000
         });
         break;
     }
@@ -269,6 +262,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 size="sm" 
                 icon={TrendingUp}
                 className="w-full justify-between"
+                onClick={() => handleQuickAction('import')}
               >
                 <span className="text-xs font-medium text-gray-900">Import Transactions</span>
               </InteractiveButton>
@@ -277,6 +271,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 size="sm" 
                 icon={FileText}
                 className="w-full justify-between"
+                onClick={() => handleQuickAction('report')}
               >
                 <span className="text-xs font-medium text-gray-900">Generate Report</span>
               </InteractiveButton>
@@ -285,6 +280,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 size="sm" 
                 icon={Users}
                 className="w-full justify-between"
+                onClick={() => handleQuickAction('client')}
               >
                 <span className="text-xs font-medium text-gray-900">Add Client</span>
               </InteractiveButton>
@@ -293,6 +289,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 size="sm" 
                 icon={Wallet}
                 className="w-full justify-between"
+                onClick={() => handleQuickAction('wallet')}
               >
                 <span className="text-xs font-medium text-gray-900">Connect Wallet</span>
               </InteractiveButton>

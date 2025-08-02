@@ -97,7 +97,13 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
   const [hoveredWallet, setHoveredWallet] = useState<number | null>(null);
 
   const handleConnectWallet = () => {
-    setShowConnectDialog(true);
+    onWorkflowOpen?.('connect-wallet');
+    addNotification({
+      type: 'info',
+      title: 'Connect Wallet',
+      message: 'Opening wallet connection workflow...',
+      duration: 2000
+    });
   };
 
   const confirmConnectWallet = async () => {
@@ -172,21 +178,13 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
     }
   ];
   const handleImportCSV = () => {
+    onWorkflowOpen?.('import-transactions');
     addNotification({
       type: 'info',
       title: 'Import Started',
-      message: 'Processing CSV file...',
-      duration: 3000
+      message: 'Opening import workflow...',
+      duration: 2000
     });
-    
-    setTimeout(() => {
-      addNotification({
-        type: 'success',
-        title: 'Import Complete',
-        message: 'Successfully imported 156 transactions from CSV.',
-        duration: 4000
-      });
-    }, 3000);
   };
 
   return (
@@ -202,6 +200,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
             variant="secondary" 
             size="sm" 
             icon={Upload}
+            onClick={handleImportCSV}
           >
             Import CSV
           </InteractiveButton>
@@ -209,6 +208,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
             variant="primary" 
             size="sm" 
             icon={Plus}
+            onClick={handleConnectWallet}
           >
             Connect Wallet
           </InteractiveButton>
@@ -329,6 +329,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                     <InteractiveButton 
                       variant="secondary" 
                       size="sm"
+                      onClick={() => handleWalletAction(wallet.id, 'sync')}
                     >
                       Sync Now
                     </InteractiveButton>
@@ -336,6 +337,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                       variant="secondary" 
                       size="sm" 
                       icon={ExternalLink}
+                      onClick={() => handleWalletAction(wallet.id, 'view')}
                     >
                       View Transactions
                     </InteractiveButton>

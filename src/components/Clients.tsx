@@ -82,7 +82,13 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
   });
 
   const handleAddClient = () => {
-    setShowAddClientDialog(true);
+    onWorkflowOpen?.('add-client');
+    addNotification({
+      type: 'info',
+      title: 'Opening Add Client',
+      message: 'Starting client creation workflow...',
+      duration: 2000
+    });
   };
 
   const confirmAddClient = async () => {
@@ -107,6 +113,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
     
     switch (action) {
       case 'view':
+        onClientSelect?.(clientId.toString());
         addNotification({
           type: 'info',
           title: 'Loading Client Details',
@@ -119,6 +126,24 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
           type: 'info',
           title: 'Loading Transactions',
           message: `Fetching ${client?.name}'s transaction history...`,
+          duration: 2000
+        });
+        break;
+      case 'report':
+        onWorkflowOpen?.('generate-report');
+        addNotification({
+          type: 'info',
+          title: 'Generate Report',
+          message: `Opening report generation for ${client?.name}...`,
+          duration: 2000
+        });
+        break;
+      case 'edit':
+        onClientSelect?.(clientId.toString());
+        addNotification({
+          type: 'info',
+          title: 'Edit Client',
+          message: `Opening ${client?.name}'s profile for editing...`,
           duration: 2000
         });
         break;
@@ -159,6 +184,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
           variant="primary" 
           size="sm" 
           icon={Plus}
+          onClick={handleAddClient}
         >
           Add Client
         </InteractiveButton>
@@ -270,6 +296,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 variant="secondary" 
                 size="sm" 
                 className="flex-1"
+                onClick={() => handleClientAction(client.id, 'view')}
               >
                 View Details
               </InteractiveButton>
@@ -278,6 +305,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 size="sm" 
                 icon={TrendingUp}
                 className="flex-1"
+                onClick={() => handleClientAction(client.id, 'transactions')}
               >
                 Transactions
               </InteractiveButton>

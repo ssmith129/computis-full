@@ -146,24 +146,13 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
   };
 
   const handleTemplateGenerate = (templateName: string) => {
+    onWorkflowOpen?.('generate-report');
     addNotification({
       type: 'info',
       title: 'Report Generation',
-      message: `Generating ${templateName}...`,
-      duration: 3000
+      message: `Opening ${templateName} generation workflow...`,
+      duration: 2000
     });
-    
-    setTimeout(() => {
-      addNotification({
-        type: 'success',
-        title: 'Report Ready',
-        message: `${templateName} has been generated successfully.`,
-        action: {
-          label: 'Download',
-          onClick: () => console.log(`Download ${templateName}`)
-        }
-      });
-    }, 3000);
   };
 
   return (
@@ -321,11 +310,13 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
                         <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <button 
                             className="text-blue-600 hover:text-blue-900 hover:scale-105 transition-all duration-200 font-sans"
+                            onClick={() => handleReportAction(report.id, 'view')}
                           >
                             View
                           </button>
                           <button 
                             className="text-green-600 hover:text-green-900 hover:scale-105 transition-all duration-200 font-sans"
+                            onClick={() => handleReportAction(report.id, 'download')}
                           >
                             <Download className="w-4 h-4 inline mr-1" />
                             Download
@@ -355,7 +346,6 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
                 <h3 className="text-lg font-semibold text-gray-900 text-center mb-2 font-sans">{template.name}</h3>
                 <p className="text-sm text-gray-600 text-center mb-4 font-sans">{template.description}</p>
                 <button 
-                  onClick={() => onWorkflowOpen?.('generate-report')}
                   onClick={() => handleTemplateGenerate(template.name)}
                   className="w-full px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
                 >
@@ -414,8 +404,6 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
               </button>
               <button 
                 onClick={() => onWorkflowOpen?.('generate-report')}
-                onClick={() => onWorkflowOpen?.('generate-report')}
-                onClick={() => handleTemplateGenerate('Custom Report')}
                 className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
               >
                 Generate Report

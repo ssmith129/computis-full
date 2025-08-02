@@ -4,7 +4,11 @@ import { NotificationBell } from './NotificationSystem';
 import { useNotifications } from './NotificationSystem';
 import InteractiveButton from './InteractiveButton';
 
-export default function Header() {
+interface HeaderProps {
+  onWorkflowOpen?: (workflow: string) => void;
+}
+
+export default function Header({ onWorkflowOpen }: HeaderProps) {
   const { addNotification } = useNotifications();
 
   const handleExport = () => {
@@ -44,6 +48,7 @@ export default function Header() {
           size="sm" 
           icon={FileText}
           className="text-xs"
+          onClick={handleExport}
         >
           Export
         </InteractiveButton>
@@ -51,6 +56,7 @@ export default function Header() {
           variant="success" 
           size="sm"
           className="text-xs"
+          onClick={() => onWorkflowOpen?.('import-transactions')}
         >
           Import Data
         </InteractiveButton>
