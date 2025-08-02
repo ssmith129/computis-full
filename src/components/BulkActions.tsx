@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check, X, Tag, Download, AlertTriangle, CheckCircle } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
 
 interface BulkActionsProps {
   selectedCount: number;
