@@ -176,7 +176,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   };
 
   return (
-    <div className="space-y-8 max-w-screen-2xl mx-auto">
+    <div className="space-y-8 max-w-6xl mx-auto">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         {stats.map((stat) => (
