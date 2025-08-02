@@ -63,7 +63,7 @@ const settingItems = [
               activeModule === item.key ? 'bg-gray-800 border-r-2 border-yellow-400' : 'hover:bg-gray-800'
             }`}
           >
-            <item.icon className={`w-4 h-4 mr-2 transition-all duration-150 ${activeModule === item.key ? 'text-yellow-400' : 'group-hover:text-yellow-400'}`} />
+            <item.icon className={`w-5 h-5 mr-2 transition-all duration-150 ${activeModule === item.key ? 'text-yellow-400' : 'group-hover:text-yellow-400'}`} />
             <span>{item.label}</span>
           </div>
         ))}
@@ -87,7 +87,7 @@ const settingItems = [
             onClick={() => onModuleChange(item.key)}
             className="flex items-center py-3 px-4 rounded-lg hover:bg-gray-800 cursor-pointer transition-all duration-300 transform hover:translate-x-1 hover:scale-105 font-sans text-sm group"
           >
-            <item.icon className="w-4 h-4 mr-2 transition-colors duration-150 group-hover:text-yellow-400" />
+            <item.icon className="w-5 h-5 mr-2 transition-colors duration-150 group-hover:text-yellow-400" />
             <span>{item.label}</span>
           </div>
         ))}
@@ -99,7 +99,7 @@ const settingItems = [
             <div className="h-6 w-6 rounded-md bg-yellow-400 flex items-center justify-center text-gray-900 group-hover:scale-105 transition-transform duration-150">
               <Crown className="w-3 h-3" />
             </div>
-            <div className="ml-2">
+            <item.icon className="w-5 h-5 mr-2 transition-colors duration-150 group-hover:text-yellow-400" />
               <div className="text-xs text-gray-400 font-display">Pro</div>
               <div className="text-xs font-sans font-medium">14 days</div>
             </div>
