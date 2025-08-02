@@ -44,6 +44,11 @@ export default function Header() {
           <FileText className="w-4 h-4 mr-2" />
           Export
         </button>
+        <button 
+          className="flex items-center justify-center text-gray-900 bg-green-600 hover:bg-green-700 hover:scale-105 px-6 h-10 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm text-white"
+        >
+          <span>Import Data</span>
+        </button>
         <div className="flex items-center h-10">
           <NotificationBell />
         </div>

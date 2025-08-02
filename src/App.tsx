@@ -3,7 +3,9 @@ import { NotificationProvider } from './components/NotificationSystem';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import Analytics from './components/Analytics';
 import Clients from './components/Clients';
+import ClientProfile from './components/ClientProfile';
 import Wallets from './components/Wallets';
 import Reports from './components/Reports';
 import Settings from './components/Settings';
@@ -13,19 +15,68 @@ import AccountSettings from './components/AccountSettings';
 import Exports from './components/Exports';
 import PageHeader from './components/PageHeader';
 import TransactionsTable from './components/TransactionsTable';
+import TransactionDetail from './components/TransactionDetail';
 import RuleBuilder from './components/RuleBuilder';
 import AnomalyFlags from './components/AnomalyFlags';
 import AuditTrail from './components/AuditTrail';
+import ImportWizard from './components/ImportWizard';
+import BulkActions from './components/BulkActions';
+import SearchFilters from './components/SearchFilters';
 
 function App() {
   const [isAuditTrailOpen, setIsAuditTrailOpen] = useState(false);
   const [activeModule, setActiveModule] = useState('dashboard');
+  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [isImportWizardOpen, setIsImportWizardOpen] = useState(false);
+  const [selectedTransactions, setSelectedTransactions] = useState<string[]>([]);
+  const [searchFilters, setSearchFilters] = useState({});
 
   const toggleAuditTrail = () => {
     setIsAuditTrailOpen(!isAuditTrailOpen);
   };
 
+  const handleTransactionSelect = (transactionId: string) => {
+    setSelectedTransactionId(transactionId);
+  };
+
+  const handleClientSelect = (clientId: string) => {
+    setSelectedClientId(clientId);
+  };
+
+  const handleBackToTransactions = () => {
+    setSelectedTransactionId(null);
+  };
+
+  const handleBackToClients = () => {
+    setSelectedClientId(null);
+  };
+
   const renderContent = () => {
+    // Transaction Detail View
+    if (selectedTransactionId) {
+      return (
+        <div className="p-8">
+          <TransactionDetail 
+            transactionId={selectedTransactionId} 
+            onBack={handleBackToTransactions}
+          />
+        </div>
+      );
+    }
+
+    // Client Profile View
+    if (selectedClientId) {
+      return (
+        <div className="p-8">
+          <ClientProfile 
+            clientId={selectedClientId} 
+            onBack={handleBackToClients}
+          />
+        </div>
+      );
+    }
+
     switch (activeModule) {
       case 'dashboard':
         return (
@@ -33,10 +84,16 @@ function App() {
             <Dashboard />
           </div>
         );
+      case 'analytics':
+        return (
+          <div className="p-8">
+            <Analytics />
+          </div>
+        );
       case 'clients':
         return (
           <div className="p-8">
-            <Clients />
+            <Clients onClientSelect={handleClientSelect} />
           </div>
         );
       case 'wallets':
@@ -85,14 +142,24 @@ function App() {
       default:
         return (
           <>
+            <SearchFilters onFiltersChange={setSearchFilters} />
             <PageHeader onAuditTrailToggle={toggleAuditTrail} />
-            <TransactionsTable />
+            <TransactionsTable 
+              onTransactionSelect={handleTransactionSelect}
+              selectedTransactions={selectedTransactions}
+              onSelectionChange={setSelectedTransactions}
+            />
             <RuleBuilder />
             <AnomalyFlags />
+            <BulkActions 
+              selectedCount={selectedTransactions.length}
+              onClose={() => setSelectedTransactions([])}
+            />
           </>
         );
     }
   };
+
   return (
     <NotificationProvider>
       <div className="min-h-screen bg-gray-100">
@@ -104,6 +171,11 @@ function App() {
         </main>
 
         <AuditTrail isOpen={isAuditTrailOpen} onClose={() => setIsAuditTrailOpen(false)} />
+        
+        <ImportWizard 
+          isOpen={isImportWizardOpen} 
+          onClose={() => setIsImportWizardOpen(false)} 
+        />
         
         {/* Overlay */}
         {isAuditTrailOpen && (

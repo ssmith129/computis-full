@@ -71,8 +71,8 @@ const settingItems = [
         {reportItems.map((item) => (
           <div
             key={item.label}
+            onClick={() => onModuleChange(item.key)}
             className="flex items-center py-3 px-4 rounded-lg hover:bg-gray-800 cursor-pointer transition-all duration-200 transform hover:translate-x-1 font-sans text-sm"
-            className="flex items-center py-2 px-4 rounded-md hover:bg-gray-800 cursor-pointer transition-all duration-200 transform hover:translate-x-1 font-sans"
           >
             <item.icon className="w-5 h-5 mr-4" />
             <span>{item.label}</span>

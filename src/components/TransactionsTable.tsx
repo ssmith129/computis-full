@@ -4,6 +4,12 @@ import { useNotifications } from './NotificationSystem';
 import ConfirmDialog from './ConfirmDialog';
 import LoadingSpinner from './LoadingSpinner';
 
+interface TransactionsTableProps {
+  onTransactionSelect?: (transactionId: string) => void;
+  selectedTransactions?: string[];
+  onSelectionChange?: (selected: string[]) => void;
+}
+
 const transactions = [
   {
     id: 1,

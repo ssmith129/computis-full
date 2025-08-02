@@ -3,6 +3,10 @@ import { Plus, Search, MoreVertical, User, Building, Mail, Phone, Calendar, Tren
 import { useNotifications } from './NotificationSystem';
 import ConfirmDialog from './ConfirmDialog';
 
+interface ClientsProps {
+  onClientSelect?: (clientId: string) => void;
+}
+
 const clients = [
   {
     id: 1,
