@@ -34,9 +34,9 @@ export default function RuleBuilder() {
   if (!isOpen) return null;
 
   return (
-    <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">
+    <div className="px-4 py-3 bg-gray-50 border-t border-gray-200">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-900 font-sans">Rule Builder</h2>
+        <h2 className="text-lg font-bold text-gray-900 font-sans">Rule Builder</h2>
         <button 
           onClick={() => setIsOpen(false)}
           className="text-sm text-gray-600 hover:text-gray-900 flex items-center hover:scale-105 transition-all duration-200 font-sans"
@@ -46,16 +46,16 @@ export default function RuleBuilder() {
         </button>
       </div>
       
-      <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="flex space-x-6 mb-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="flex space-x-4 mb-4">
           {/* Conditions */}
           <div className="flex-1">
-            <h3 className="text-lg font-semibold mb-3 text-gray-900 font-sans">If transaction matches...</h3>
-            <div className="space-y-4">
-              <div className="p-4 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors duration-200">
-                <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-semibold mb-2 text-gray-900 font-sans">If transaction matches...</h3>
+            <div className="space-y-2">
+              <div className="p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors duration-200">
+                <div className="flex items-center justify-between mb-1">
                   <span className="font-medium text-gray-700 font-sans">Transaction Type</span>
-                  <div className="relative inline-block w-10 h-6">
+                  <div className="relative inline-block w-8 h-4">
                     <input 
                       type="checkbox" 
                       checked={conditions.transactionType.enabled}
@@ -63,19 +63,19 @@ export default function RuleBuilder() {
                       className="sr-only"
                     />
                     <div 
-                      className={`absolute inset-0 rounded-full transition-colors cursor-pointer ${
+                      className={`absolute inset-0 rounded-full transition-colors cursor-pointer text-xs ${
                         conditions.transactionType.enabled ? 'bg-yellow-400' : 'bg-gray-300'
                       } hover:scale-105 transition-all duration-200`}
                       onClick={() => toggleCondition('transactionType')}
                     >
-                      <div className={`absolute h-5 w-5 bg-white rounded-full transition-transform duration-200 top-0.5 ${
-                        conditions.transactionType.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                      <div className={`absolute h-3 w-3 bg-white rounded-full transition-transform duration-200 top-0.5 ${
+                        conditions.transactionType.enabled ? 'translate-x-3.5' : 'translate-x-0.5'
                       }`} />
                     </div>
                   </div>
                 </div>
                 <select 
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans text-sm"
                   disabled={!conditions.transactionType.enabled}
                   value={conditions.transactionType.value}
                   onChange={(e) => setConditions(prev => ({
@@ -90,10 +90,10 @@ export default function RuleBuilder() {
                 </select>
               </div>
 
-              <div className="p-4 bg-gray-50 rounded-md">
-                <div className="flex items-center justify-between mb-2">
+              <div className="p-3 bg-gray-50 rounded-md">
+                <div className="flex items-center justify-between mb-1">
                   <span className="font-medium text-gray-700 font-sans">Asset</span>
-                  <div className="relative inline-block w-10 h-6">
+                  <div className="relative inline-block w-8 h-4">
                     <input 
                       type="checkbox" 
                       checked={conditions.asset.enabled}
@@ -101,19 +101,19 @@ export default function RuleBuilder() {
                       className="sr-only"
                     />
                     <div 
-                      className={`absolute inset-0 rounded-full transition-colors cursor-pointer ${
+                      className={`absolute inset-0 rounded-full transition-colors cursor-pointer text-xs ${
                         conditions.asset.enabled ? 'bg-yellow-400' : 'bg-gray-300'
                       }`}
                       onClick={() => toggleCondition('asset')}
                     >
-                      <div className={`absolute h-5 w-5 bg-white rounded-full transition-transform top-0.5 ${
-                        conditions.asset.enabled ? 'translate-x-4' : 'translate-x-0.5'
+                      <div className={`absolute h-3 w-3 bg-white rounded-full transition-transform top-0.5 ${
+                        conditions.asset.enabled ? 'translate-x-3.5' : 'translate-x-0.5'
                       }`} />
                     </div>
                   </div>
                 </div>
                 <select 
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans"
+                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans text-sm"
                   disabled={!conditions.asset.enabled}
                 >
                   <option>Bitcoin (BTC)</option>

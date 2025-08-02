@@ -152,12 +152,12 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-display">Clients</h1>
-          <p className="text-lg text-gray-600 mt-2 font-sans">Manage your clients and their crypto tax profiles</p>
+          <h1 className="text-2xl font-bold text-gray-900 font-display">Clients</h1>
+          <p className="text-sm text-gray-600 mt-1 font-sans">Manage your clients and their crypto tax profiles</p>
         </div>
         <InteractiveButton 
           variant="primary" 
-          size="lg" 
+          size="md" 
           icon={Plus}
           tooltip="Add a new client to your portfolio"
         >
@@ -166,25 +166,25 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </div>
 
       {/* Filters */}
-      <AnimatedCard className="p-8">
-        <div className="flex flex-col sm:flex-row gap-6">
+      <AnimatedCard className="p-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="w-5 h-5 absolute left-4 top-4 text-gray-400" />
+              <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search clients..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-6 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-lg hover:scale-105"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-sm hover:scale-105"
               />
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-base hover:scale-105"
+              className="px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-sm hover:scale-105"
             >
               <option>All Types</option>
               <option>Individual</option>
@@ -193,7 +193,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-base hover:scale-105"
+              className="px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-300 font-sans text-sm hover:scale-105"
             >
               <option>All Status</option>
               <option>Active</option>
@@ -204,28 +204,28 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </AnimatedCard>
 
       {/* Clients Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {filteredClients.map((client) => (
           <AnimatedCard 
             key={client.id} 
-            className="p-8 cursor-pointer group" 
+            className="p-4 cursor-pointer group" 
             hover
             glow={client.status === 'Active'}
             onMouseEnter={() => setHoveredClient(client.id)}
             onMouseLeave={() => setHoveredClient(null)}
           >
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 animate-float">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 animate-float">
                   {client.type === 'Business' ? (
-                    <Building className="h-8 w-8 text-gray-600" />
+                    <Building className="h-5 w-5 text-gray-600" />
                   ) : (
-                    <User className="h-8 w-8 text-gray-600" />
+                    <User className="h-5 w-5 text-gray-600" />
                   )}
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 font-display">{client.name}</h3>
-                  <div className="mt-2">
+                  <h3 className="text-sm font-semibold text-gray-900 font-display">{client.name}</h3>
+                  <div className="mt-1">
                     <StatusIndicator 
                       status={client.status === 'Active' ? 'success' : 'pending'} 
                       label={client.status}
@@ -239,38 +239,38 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-center text-base text-gray-600 font-sans">
-                <Mail className="h-5 w-5 mr-3" />
+            <div className="space-y-2">
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Mail className="h-4 w-4 mr-2" />
                 {client.email}
               </div>
-              <div className="flex items-center text-base text-gray-600 font-sans">
-                <Phone className="h-5 w-5 mr-3" />
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Phone className="h-4 w-4 mr-2" />
                 {client.phone}
               </div>
-              <div className="flex items-center text-base text-gray-600 font-sans">
-                <Calendar className="h-5 w-5 mr-3" />
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Calendar className="h-4 w-4 mr-2" />
                 Last activity: {client.lastActivity}
               </div>
             </div>
 
-            <div className="mt-6 pt-6 border-t border-gray-100">
+            <div className="mt-4 pt-3 border-t border-gray-100">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-base text-gray-600 font-sans">Transactions</p>
-                  <p className="text-xl font-semibold text-gray-900 font-display">{client.transactions}</p>
+                  <p className="text-xs text-gray-600 font-sans">Transactions</p>
+                  <p className="text-sm font-semibold text-gray-900 font-display">{client.transactions}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-base text-gray-600 font-sans">Total Value</p>
-                  <p className="text-xl font-semibold text-gray-900 font-display">{client.totalValue}</p>
+                  <p className="text-xs text-gray-600 font-sans">Total Value</p>
+                  <p className="text-sm font-semibold text-gray-900 font-display">{client.totalValue}</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 flex space-x-3">
+            <div className="mt-3 flex space-x-2">
               <InteractiveButton 
                 variant="secondary" 
-                size="md" 
+                size="sm" 
                 className="flex-1"
                 tooltip="View detailed client profile"
               >
@@ -278,7 +278,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
               </InteractiveButton>
               <InteractiveButton 
                 variant="primary" 
-                size="md" 
+                size="sm" 
                 icon={TrendingUp}
                 className="flex-1"
                 tooltip="View client transactions"
@@ -292,11 +292,11 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
 
       {/* Empty State */}
       {filteredClients.length === 0 && (
-        <AnimatedCard className="text-center py-16">
-          <User className="h-16 w-16 text-gray-400 mx-auto mb-6 animate-float" />
-          <h3 className="text-2xl font-medium text-gray-900 mb-4 font-display">No clients found</h3>
-          <p className="text-lg text-gray-600 mb-8 font-sans">Try adjusting your search or filter criteria</p>
-          <InteractiveButton variant="primary" size="lg">
+        <AnimatedCard className="text-center py-8">
+          <User className="h-12 w-12 text-gray-400 mx-auto mb-4 animate-float" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">No clients found</h3>
+          <p className="text-sm text-gray-600 mb-4 font-sans">Try adjusting your search or filter criteria</p>
+          <InteractiveButton variant="primary" size="md">
             Clear Filters
           </InteractiveButton>
         </AnimatedCard>

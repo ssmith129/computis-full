@@ -194,13 +194,13 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
-          <p className="text-lg text-gray-600 mt-2 font-sans">Connect wallets and import transaction data</p>
+          <h1 className="text-2xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
+          <p className="text-sm text-gray-600 mt-1 font-sans">Connect wallets and import transaction data</p>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-2">
           <InteractiveButton 
             variant="secondary" 
-            size="lg" 
+            size="md" 
             icon={Upload}
             tooltip="Import transaction data from CSV files"
           >
@@ -208,7 +208,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </InteractiveButton>
           <InteractiveButton 
             variant="primary" 
-            size="lg" 
+            size="md" 
             icon={Plus}
             tooltip="Connect a new wallet or exchange"
           >
@@ -219,10 +219,10 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-10">
+        <nav className="-mb-px flex space-x-6">
           <button
             onClick={() => setActiveTab('wallets')}
-            className={`py-3 px-2 border-b-4 font-medium text-lg transition-all duration-300 font-display hover:scale-105 ${
+            className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-300 font-display hover:scale-105 ${
               activeTab === 'wallets'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -232,7 +232,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </button>
           <button
             onClick={() => setActiveTab('imports')}
-            className={`py-3 px-2 border-b-4 font-medium text-lg transition-all duration-300 font-display hover:scale-105 ${
+            className={`py-2 px-1 border-b-2 font-medium text-sm transition-all duration-300 font-display hover:scale-105 ${
               activeTab === 'imports'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -246,37 +246,37 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {activeTab === 'wallets' && (
         <div className="space-y-8">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatedCard className="p-8" hover glow>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <AnimatedCard className="p-4" hover glow>
               <div className="flex items-center">
-                <div className="h-16 w-16 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse-glow">
-                  <CheckCircle className="h-8 w-8" />
+                <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-3 hover:scale-110 transition-transform duration-200 animate-pulse-glow">
+                  <CheckCircle className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-base font-medium text-gray-600 font-sans">Connected Wallets</p>
-                  <p className="text-3xl font-bold text-gray-900 font-display">4</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Connected Wallets</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">4</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-8" hover>
+            <AnimatedCard className="p-4" hover>
               <div className="flex items-center">
-                <div className="h-16 w-16 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 mr-6 hover:scale-110 transition-transform duration-200 animate-float">
-                  <Wallet className="h-8 w-8" />
+                <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-3 hover:scale-110 transition-transform duration-200 animate-float">
+                  <Wallet className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-base font-medium text-gray-600 font-sans">Total Balance</p>
-                  <p className="text-3xl font-bold text-gray-900 font-display">$409,330</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Total Balance</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">$409,330</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-8" hover>
+            <AnimatedCard className="p-4" hover>
               <div className="flex items-center">
-                <div className="h-16 w-16 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse">
-                  <Clock className="h-8 w-8" />
+                <div className="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 mr-3 hover:scale-110 transition-transform duration-200 animate-pulse">
+                  <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-base font-medium text-gray-600 font-sans">Total Transactions</p>
-                  <p className="text-3xl font-bold text-gray-900 font-display">557</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Total Transactions</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">557</p>
                 </div>
               </div>
             </AnimatedCard>
@@ -284,42 +284,42 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
 
           {/* Wallets List */}
           <AnimatedCard className="overflow-hidden" hover>
-            <div className="px-8 py-6 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 font-display">Connected Wallets</h2>
+            <div className="px-4 py-3 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900 font-display">Connected Wallets</h2>
             </div>
             <div className="divide-y divide-gray-200">
               {wallets.map((wallet) => (
                 <div 
                   key={wallet.id} 
-                  className="p-8 hover:bg-gray-50 transition-all duration-300 group hover:scale-105"
+                  className="p-4 hover:bg-gray-50 transition-all duration-300 group hover:scale-105"
                   onMouseEnter={() => setHoveredWallet(wallet.id)}
                   onMouseLeave={() => setHoveredWallet(null)}
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-6">
-                      <div className="text-3xl hover:scale-110 transition-transform duration-200 animate-float">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-xl hover:scale-110 transition-transform duration-200 animate-float">
                         {wallet.icon}
                       </div>
                       <div>
-                        <h3 className="text-xl font-medium text-gray-900 font-display">{wallet.name}</h3>
-                        <p className="text-base text-gray-600 font-sans">{wallet.type}</p>
-                        <p className="text-sm text-gray-500 font-mono mt-2">{wallet.address}</p>
+                        <h3 className="text-sm font-medium text-gray-900 font-display">{wallet.name}</h3>
+                        <p className="text-xs text-gray-600 font-sans">{wallet.type}</p>
+                        <p className="text-xs text-gray-500 font-mono mt-1">{wallet.address}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-8">
+                    <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="text-xl font-semibold text-gray-900 font-display">{wallet.balance}</p>
-                        <p className="text-base text-gray-600 font-sans">{wallet.usdValue}</p>
+                        <p className="text-sm font-semibold text-gray-900 font-display">{wallet.balance}</p>
+                        <p className="text-xs text-gray-600 font-sans">{wallet.usdValue}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-base text-gray-600 font-sans">{wallet.transactions} transactions</p>
-                        <p className="text-sm text-gray-500 font-sans">Last sync: {wallet.lastSync}</p>
+                        <p className="text-xs text-gray-600 font-sans">{wallet.transactions} transactions</p>
+                        <p className="text-xs text-gray-500 font-sans">Last sync: {wallet.lastSync}</p>
                       </div>
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-2">
                         <StatusIndicator 
                           status={wallet.status === 'Connected' ? 'success' : 'warning'} 
                           label={wallet.status}
-                          size="md"
+                          size="sm"
                         />
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <ActionMenu actions={getWalletActionMenu(wallet)} />
@@ -327,7 +327,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 flex space-x-4">
+                  <div className="mt-3 flex space-x-2">
                     <InteractiveButton 
                       variant="secondary" 
                       size="sm"
@@ -355,29 +355,29 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
         <div className="space-y-8">
           {/* Import History */}
           <AnimatedCard className="overflow-hidden" hover>
-            <div className="px-8 py-6 border-b border-gray-200">
-              <h2 className="text-2xl font-semibold text-gray-900 font-display">Recent Imports</h2>
+            <div className="px-4 py-3 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900 font-display">Recent Imports</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       File
                     </th>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       Date
                     </th>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       Records
                     </th>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       Status
                     </th>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       Errors
                     </th>
-                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
+                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-display">
                       Actions
                     </th>
                   </tr>
@@ -385,16 +385,16 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {importHistory.map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50 transition-all duration-300 hover:scale-105">
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="text-base font-medium text-gray-900 font-sans">{item.filename}</div>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="text-sm font-medium text-gray-900 font-sans">{item.filename}</div>
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="text-base text-gray-600 font-sans">{item.date}</div>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="text-sm text-gray-600 font-sans">{item.date}</div>
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className="text-base text-gray-900 font-sans">{item.records}</div>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="text-sm text-gray-900 font-sans">{item.records}</div>
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <StatusIndicator 
                           status={
                             item.status === 'Completed' ? 'success' :
@@ -402,15 +402,15 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
                             'error'
                           }
                           label={item.status}
-                          size="md"
+                          size="sm"
                         />
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
-                        <div className={`text-base font-sans ${item.errors > 0 ? 'text-red-600 animate-pulse' : 'text-gray-600'}`}>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className={`text-sm font-sans ${item.errors > 0 ? 'text-red-600 animate-pulse' : 'text-gray-600'}`}>
                           {item.errors}
                         </div>
                       </td>
-                      <td className="px-8 py-5 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         <InteractiveButton variant="secondary" size="sm">
                           View Details
                         </InteractiveButton>
@@ -423,23 +423,23 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </AnimatedCard>
 
           {/* Upload Area */}
-          <AnimatedCard className="p-12 text-center" hover glow>
-            <Upload className="h-16 w-16 text-gray-400 mx-auto mb-6 hover:scale-110 transition-transform duration-200 animate-float" />
-            <h3 className="text-2xl font-medium text-gray-900 mb-4 font-display">Import Transaction Data</h3>
-            <p className="text-lg text-gray-600 mb-8 font-sans">
+          <AnimatedCard className="p-6 text-center" hover glow>
+            <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4 hover:scale-110 transition-transform duration-200 animate-float" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">Import Transaction Data</h3>
+            <p className="text-sm text-gray-600 mb-4 font-sans">
               Upload CSV files from exchanges, wallets, or other sources
             </p>
-            <div className="flex justify-center space-x-4">
+            <div className="flex justify-center space-x-2">
               <InteractiveButton 
                 variant="primary" 
-                size="lg"
+                size="md"
                 tooltip="Upload CSV files from your computer"
               >
                 Choose File
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
-                size="lg"
+                size="md"
                 tooltip="Download CSV templates for different exchanges"
               >
                 View Templates

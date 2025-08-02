@@ -27,47 +27,45 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
   if (selectedCount === 0) return null;
 
   return (
-    <div className="fixed bottom-0 left-72 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
-      <div className="px-8 py-4">
+    <div className="fixed bottom-0 left-64 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+      <div className="px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <CheckCircle className="w-5 h-5 text-blue-600" />
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-1">
+              <CheckCircle className="w-4 h-4 text-blue-600" />
               <span className="font-medium text-gray-900 font-sans">
                 {selectedCount} transaction{selectedCount > 1 ? 's' : ''} selected
               </span>
             </div>
             
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               <button
-                disabled={isProcessing}
-                className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 font-sans"
               >
                 {isProcessing && activeAction === 'accept' ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                  <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
                 ) : (
-                  <Check className="w-4 h-4 mr-2" />
+                  <Check className="w-3 h-3 mr-1" />
                 )}
                 Accept All
               </button>
               
               <button
-                disabled={isProcessing}
-                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors duration-200 font-sans"
               >
                 {isProcessing && activeAction === 'reject' ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                  <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
                 ) : (
-                  <X className="w-4 h-4 mr-2" />
+                  <X className="w-3 h-3 mr-1" />
                 )}
                 Reject All
               </button>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <select
                   value={bulkClassification}
                   onChange={(e) => setBulkClassification(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans"
+                  className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans text-sm"
                   disabled={isProcessing}
                 >
                   <option value="">Classify as...</option>
@@ -79,35 +77,35 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
                 </select>
                 <button
                   disabled={!bulkClassification || isProcessing}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                  className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
                 >
                   Apply
                 </button>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <input
                   type="text"
                   placeholder="Add tags..."
                   value={bulkTags}
                   onChange={(e) => setBulkTags(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans"
+                  className="px-2 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans text-sm"
                   disabled={isProcessing}
                 />
                 <button
                   disabled={!bulkTags || isProcessing}
-                  className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                  className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
                 >
-                  <Tag className="w-4 h-4 mr-2" />
+                  <Tag className="w-3 h-3 mr-1" />
                   Tag
                 </button>
               </div>
 
               <button
                 disabled={isProcessing}
-                className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                className="flex items-center px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
               >
-                <Download className="w-4 h-4 mr-2" />
+                <Download className="w-3 h-3 mr-1" />
                 Export
               </button>
             </div>
@@ -121,10 +119,10 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
         </div>
 
         {isProcessing && (
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-center">
-              <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-3" />
-              <span className="text-blue-800 font-medium font-sans">
+              <div className="w-3 h-3 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mr-2" />
+              <span className="text-blue-800 font-medium font-sans text-sm">
                 Processing {selectedCount} transactions...
               </span>
             </div>

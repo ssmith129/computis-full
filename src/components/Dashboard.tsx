@@ -185,53 +185,53 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   return (
     <div className="space-y-10">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <AnimatedCard key={stat.title} className="p-10" hover glow={stat.title === 'Total Transactions'}>
+          <AnimatedCard key={stat.title} className="p-6" hover glow={stat.title === 'Total Transactions'}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-base font-medium text-gray-600 font-display">{stat.title}</p>
-                <p className="text-4xl font-bold text-gray-900 mt-4 font-display">{stat.value}</p>
-                <p className={`text-base mt-2 font-sans ${
+                <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
+                <p className="text-2xl font-bold text-gray-900 mt-2 font-display">{stat.value}</p>
+                <p className={`text-sm mt-1 font-sans ${
                   stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {stat.change} from last month
                 </p>
               </div>
-              <div className={`h-20 w-20 rounded-2xl flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200 animate-float`}>
-                <stat.icon className="h-10 w-10" />
+              <div className={`h-12 w-12 rounded-xl flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200 animate-float`}>
+                <stat.icon className="h-6 w-6" />
               </div>
             </div>
           </AnimatedCard>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <AnimatedCard className="p-10" hover>
+          <AnimatedCard className="p-6" hover>
             <div className="flex items-center justify-between mb-10">
-              <h2 className="text-3xl font-bold text-gray-900 font-display">Recent Activity</h2>
+              <h2 className="text-xl font-bold text-gray-900 font-display">Recent Activity</h2>
               <InteractiveButton variant="secondary" size="sm">
                 View All
               </InteractiveButton>
             </div>
-            <div className="space-y-8">
+            <div className="space-y-4">
               {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-6 p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 hover:scale-105 group">
-                  <div className={`h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform duration-200`}>
-                    <activity.icon className="h-6 w-6" />
+                <div key={activity.id} className="flex items-start space-x-4 p-4 rounded-lg hover:bg-gray-50 transition-all duration-300 hover:scale-105 group">
+                  <div className={`h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform duration-200`}>
+                    <activity.icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-lg font-medium text-gray-900 font-display">{activity.type}</p>
-                    <p className="text-base text-gray-600 mt-2 font-sans">{activity.description}</p>
-                    <p className="text-sm text-gray-500 mt-2 font-sans">{activity.time}</p>
+                    <p className="text-sm font-medium text-gray-900 font-display">{activity.type}</p>
+                    <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
+                    <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
                   </div>
                   <div className="flex-shrink-0">
                     <StatusIndicator 
                       status={activity.status === 'completed' ? 'success' : 'warning'} 
                       label={activity.status === 'completed' ? 'Completed' : 'Review'}
-                      size="md"
+                      size="sm"
                     />
                   </div>
                 </div>
@@ -241,64 +241,64 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         </div>
 
         {/* AI Insights */}
-        <div className="space-y-10">
-          <AnimatedCard className="p-10" hover float>
-            <h2 className="text-3xl font-bold text-gray-900 mb-10 font-display">AI Insights</h2>
-            <div className="space-y-10">
+        <div className="space-y-6">
+          <AnimatedCard className="p-6" hover float>
+            <h2 className="text-xl font-bold text-gray-900 mb-6 font-display">AI Insights</h2>
+            <div className="space-y-6">
               {aiInsights.map((insight, index) => (
-                <div key={index} className="hover:bg-gray-50 p-6 rounded-2xl transition-all duration-300 hover:scale-105 group">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-4xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-300">{insight.value}</span>
+                <div key={index} className="hover:bg-gray-50 p-4 rounded-lg transition-all duration-300 hover:scale-105 group">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-2xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-300">{insight.value}</span>
                     {insight.trend === 'up' && (
-                      <TrendingUp className="h-6 w-6 text-green-500 group-hover:scale-110 transition-transform duration-200 animate-float" />
+                      <TrendingUp className="h-4 w-4 text-green-500 group-hover:scale-110 transition-transform duration-200 animate-float" />
                     )}
                   </div>
-                  <p className="text-lg font-medium text-gray-900 font-display">{insight.title}</p>
-                  <p className="text-base text-gray-600 mt-3 font-sans">{insight.description}</p>
+                  <p className="text-sm font-medium text-gray-900 font-display">{insight.title}</p>
+                  <p className="text-sm text-gray-600 mt-1 font-sans">{insight.description}</p>
                 </div>
               ))}
             </div>
           </AnimatedCard>
 
           {/* Quick Actions */}
-          <AnimatedCard className="p-10" hover>
-            <h2 className="text-3xl font-bold text-gray-900 mb-10 font-display">Quick Actions</h2>
-            <div className="space-y-6">
+          <AnimatedCard className="p-6" hover>
+            <h2 className="text-xl font-bold text-gray-900 mb-6 font-display">Quick Actions</h2>
+            <div className="space-y-3">
               <InteractiveButton 
                 variant="secondary" 
-                size="lg" 
+                size="md" 
                 icon={TrendingUp}
                 className="w-full justify-between"
                 tooltip="Import crypto transactions from exchanges and wallets"
               >
-                <span className="text-lg font-medium text-gray-900">Import Transactions</span>
+                <span className="text-sm font-medium text-gray-900">Import Transactions</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
-                size="lg" 
+                size="md" 
                 icon={FileText}
                 className="w-full justify-between"
                 tooltip="Generate tax reports and compliance documents"
               >
-                <span className="text-lg font-medium text-gray-900">Generate Report</span>
+                <span className="text-sm font-medium text-gray-900">Generate Report</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
-                size="lg" 
+                size="md" 
                 icon={Users}
                 className="w-full justify-between"
                 tooltip="Add new client to your portfolio"
               >
-                <span className="text-lg font-medium text-gray-900">Add Client</span>
+                <span className="text-sm font-medium text-gray-900">Add Client</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
-                size="lg" 
+                size="md" 
                 icon={Wallet}
                 className="w-full justify-between"
                 tooltip="Connect crypto wallets and exchanges"
               >
-                <span className="text-lg font-medium text-gray-900">Connect Wallet</span>
+                <span className="text-sm font-medium text-gray-900">Connect Wallet</span>
               </InteractiveButton>
             </div>
           </AnimatedCard>
