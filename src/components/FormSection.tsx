@@ -10,12 +10,12 @@ export default function FormSection({ title, description, children }: FormSectio
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 font-sans">{title}</h3>
+        <h3 className="heading-3">{title}</h3>
         {description && (
-          <p className="text-sm text-gray-600 mt-1 font-sans">{description}</p>
+          <p className="body-small text-gray-600 mt-2">{description}</p>
         )}
       </div>
-      <div className="space-y-4">
+      <div className="space-y-6">
         {children}
       </div>
     </div>

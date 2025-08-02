@@ -49,18 +49,18 @@ export default function Settings() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">General Settings</h1>
-          <p className="text-gray-600 mt-1 font-sans">Configure your application preferences and account settings</p>
+          <h1 className="heading-1">General Settings</h1>
+          <p className="body-large text-gray-600 mt-2">Configure your application preferences and account settings</p>
         </div>
         <div className="flex space-x-3">
           <button 
-            className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans"
+            className="btn-base btn-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset to Defaults
           </button>
           <button 
-            className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
+            className="btn-base btn-md bg-yellow-400 text-gray-900 hover:bg-yellow-300"
           >
             <Save className="w-4 h-4 mr-2" />
             Save Changes
@@ -71,25 +71,25 @@ export default function Settings() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* General Settings */}
         <FormSection 
-          title="General Settings" 
+          title="General Settings"
           description="Basic application configuration"
         >
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Company Name</label>
+            <label className="label mb-2">Company Name</label>
             <input
               type="text"
               value={settings.companyName}
               onChange={(e) => handleSettingChange('companyName', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+              className="input-base w-full"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Timezone</label>
+            <label className="label mb-2">Timezone</label>
             <select
               value={settings.timezone}
               onChange={(e) => handleSettingChange('timezone', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+              className="input-base w-full"
             >
               <option value="America/New_York">Eastern Time (ET)</option>
               <option value="America/Chicago">Central Time (CT)</option>
@@ -101,11 +101,11 @@ export default function Settings() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Date Format</label>
+              <label className="label mb-2">Date Format</label>
               <select
                 value={settings.dateFormat}
                 onChange={(e) => handleSettingChange('dateFormat', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                className="input-base w-full"
               >
                 <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                 <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -114,11 +114,11 @@ export default function Settings() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Currency</label>
+              <label className="label mb-2">Currency</label>
               <select
                 value={settings.currency}
                 onChange={(e) => handleSettingChange('currency', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                className="input-base w-full"
               >
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
@@ -137,8 +137,8 @@ export default function Settings() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Email Notifications</label>
-                <p className="text-xs text-gray-600 font-sans">Receive updates via email</p>
+                <label className="label">Email Notifications</label>
+                <p className="caption text-gray-600">Receive updates via email</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -162,8 +162,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Push Notifications</label>
-                <p className="text-xs text-gray-600 font-sans">Browser notifications</p>
+                <label className="label">Push Notifications</label>
+                <p className="caption text-gray-600">Browser notifications</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -187,8 +187,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Weekly Reports</label>
-                <p className="text-xs text-gray-600 font-sans">Summary emails every Monday</p>
+                <label className="label">Weekly Reports</label>
+                <p className="caption text-gray-600">Summary emails every Monday</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -212,8 +212,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Anomaly Alerts</label>
-                <p className="text-xs text-gray-600 font-sans">Immediate alerts for unusual activity</p>
+                <label className="label">Anomaly Alerts</label>
+                <p className="caption text-gray-600">Immediate alerts for unusual activity</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -245,25 +245,25 @@ export default function Settings() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Two-Factor Authentication</label>
-                <p className="text-xs text-gray-600 font-sans">Add extra security to your account</p>
+                <label className="label">Two-Factor Authentication</label>
+                <p className="caption text-gray-600">Add extra security to your account</p>
               </div>
               <div className="flex items-center space-x-2">
                 <Badge variant={settings.twoFactorAuth ? 'success' : 'warning'}>
                   {settings.twoFactorAuth ? 'Enabled' : 'Disabled'}
                 </Badge>
-                <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">
+                <button className="body-small text-blue-600 hover:underline hover:scale-105 transition-all duration-200">
                   Configure
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Session Timeout (minutes)</label>
+              <label className="label mb-2">Session Timeout (minutes)</label>
               <select
                 value={settings.sessionTimeout}
                 onChange={(e) => handleSettingChange('sessionTimeout', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                className="input-base w-full"
               >
                 <option value="15">15 minutes</option>
                 <option value="30">30 minutes</option>
@@ -274,11 +274,11 @@ export default function Settings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Password Expiry (days)</label>
+              <label className="label mb-2">Password Expiry (days)</label>
               <select
                 value={settings.passwordExpiry}
                 onChange={(e) => handleSettingChange('passwordExpiry', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                className="input-base w-full"
               >
                 <option value="30">30 days</option>
                 <option value="60">60 days</option>
@@ -297,11 +297,11 @@ export default function Settings() {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Theme</label>
+              <label className="label mb-2">Theme</label>
               <div className="flex space-x-3">
                 <button
                   onClick={() => handleSettingChange('theme', 'light')}
-                  className={`flex items-center px-3 py-2 rounded-md border transition-all duration-200 hover:scale-105 font-sans ${
+                  className={`btn-base btn-md border transition-all duration-200 ${
                     settings.theme === 'light' 
                       ? 'bg-yellow-400 text-gray-900 border-yellow-400' 
                       : 'bg-white border-gray-300 hover:bg-gray-50'
@@ -312,7 +312,7 @@ export default function Settings() {
                 </button>
                 <button
                   onClick={() => handleSettingChange('theme', 'dark')}
-                  className={`flex items-center px-3 py-2 rounded-md border transition-all duration-200 hover:scale-105 font-sans ${
+                  className={`btn-base btn-md border transition-all duration-200 ${
                     settings.theme === 'dark' 
                       ? 'bg-yellow-400 text-gray-900 border-yellow-400' 
                       : 'bg-white border-gray-300 hover:bg-gray-50'
@@ -326,8 +326,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Compact Mode</label>
-                <p className="text-xs text-gray-600 font-sans">Reduce spacing for more content</p>
+                <label className="label">Compact Mode</label>
+                <p className="caption text-gray-600">Reduce spacing for more content</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -351,8 +351,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Show Tooltips</label>
-                <p className="text-xs text-gray-600 font-sans">Display helpful hints on hover</p>
+                <label className="label">Show Tooltips</label>
+                <p className="caption text-gray-600">Display helpful hints on hover</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
@@ -376,8 +376,8 @@ export default function Settings() {
 
             <div className="flex items-center justify-between">
               <div>
-                <label className="text-sm font-medium text-gray-700 font-sans">Enable Animations</label>
-                <p className="text-xs text-gray-600 font-sans">Smooth transitions and effects</p>
+                <label className="label">Enable Animations</label>
+                <p className="caption text-gray-600">Smooth transitions and effects</p>
               </div>
               <div className="relative inline-block w-10 h-6">
                 <input 
