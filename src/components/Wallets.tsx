@@ -205,6 +205,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
             tooltip="Import transaction data from CSV files"
           >
             Import CSV
+          </button>
           </InteractiveButton>
           <InteractiveButton 
             variant="primary" 
