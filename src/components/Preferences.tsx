@@ -59,14 +59,12 @@ export default function Preferences() {
         </div>
         <div className="flex space-x-3">
           <button 
-            onClick={handleReset}
             className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset
           </button>
           <button 
-            onClick={handleSave}
             className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
           >
             <Save className="w-4 h-4 mr-2" />

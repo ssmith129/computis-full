@@ -169,7 +169,6 @@ export default function Wallets() {
           <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans">
             <Upload className="w-4 h-4 mr-2" />
             Import CSV
-          </button>
           <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
             onClick={handleConnectWallet}
             <Plus className="w-4 h-4 mr-2" />
@@ -287,13 +286,11 @@ export default function Wallets() {
                   </div>
                   <div className="mt-4 flex space-x-3">
                     <button 
-                      onClick={() => handleWalletAction(wallet.id, 'sync')}
                       className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
                     >
                       Sync Now
                     </button>
                     <button 
-                      onClick={() => handleWalletAction(wallet.id, 'view')}
                       className="px-3 py-1 text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
                     >
                       <ExternalLink className="h-3 w-3 mr-1 inline" />
@@ -387,7 +384,6 @@ export default function Wallets() {
             </p>
             <div className="flex justify-center space-x-3">
               <button 
-                onClick={handleImportCSV}
                 className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
               >
                 Choose File

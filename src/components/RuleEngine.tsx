@@ -170,7 +170,6 @@ export default function RuleEngine() {
             Run All Rules
           </button>
           <button 
-            onClick={handleCreateRule}
             className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -298,35 +297,30 @@ export default function RuleEngine() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                       <button 
-                        onClick={() => handleViewRule(rule)}
                         className="text-blue-600 hover:text-blue-900 hover:scale-110 transition-all duration-200 font-sans"
                         title="View Rule"
                       >
                         <GitBranch className="w-4 h-4" />
                       </button>
                       <button 
-                        onClick={() => handleEditRule(rule)}
                         className="text-gray-600 hover:text-gray-900 hover:scale-110 transition-all duration-200 font-sans"
                         title="Edit Rule"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
                       <button 
-                        onClick={() => handleDuplicateRule(rule)}
                         className="text-green-600 hover:text-green-900 hover:scale-110 transition-all duration-200 font-sans"
                         title="Duplicate Rule"
                       >
                         <Copy className="w-4 h-4" />
                       </button>
                       <button 
-                        onClick={() => handleToggleRule(rule.id)}
                         className="text-yellow-600 hover:text-yellow-900 hover:scale-110 transition-all duration-200 font-sans"
                         title={rule.status === 'active' ? 'Deactivate' : 'Activate'}
                       >
                         {rule.status === 'active' ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                       </button>
                       <button 
-                        onClick={() => handleDeleteRule(rule.id)}
                         className="text-red-600 hover:text-red-900 hover:scale-110 transition-all duration-200 font-sans"
                         title="Delete Rule"
                       >

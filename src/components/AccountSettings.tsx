@@ -53,7 +53,6 @@ export default function AccountSettings() {
           <p className="text-gray-600 mt-1 font-sans">Manage your profile, security, and billing information</p>
         </div>
         <button 
-          onClick={handleSave}
           className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
         >
           <Save className="w-4 h-4 mr-2" />

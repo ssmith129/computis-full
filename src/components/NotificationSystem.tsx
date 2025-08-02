@@ -112,7 +112,6 @@ const NotificationContainer: React.FC = () => {
               </p>
               {notification.action && (
                 <button
-                  onClick={notification.action.onClick}
                   className="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium hover:scale-105 transition-all duration-200 font-sans"
                 >
                   {notification.action.label}
@@ -120,7 +119,6 @@ const NotificationContainer: React.FC = () => {
               )}
             </div>
             <button
-              onClick={() => removeNotification(notification.id)}
               className="flex-shrink-0 ml-2 text-gray-400 hover:text-gray-600 hover:scale-110 transition-all duration-200"
             >
               <X className="w-4 h-4" />
@@ -142,7 +140,6 @@ export const NotificationBell: React.FC = () => {
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
         className="text-white hover:text-yellow-400 transition-all duration-200 hover:scale-110 relative group"
       >
         <Bell className="w-5 h-5 group-hover:animate-pulse" />
@@ -160,7 +157,6 @@ export const NotificationBell: React.FC = () => {
               <h3 className="text-lg font-semibold text-gray-900 font-sans">Notifications</h3>
               {unreadCount > 0 && (
                 <button
-                  onClick={clearAll}
                   className="text-sm text-blue-600 hover:text-blue-800 hover:scale-105 transition-all duration-200 font-sans"
                 >
                   Clear All

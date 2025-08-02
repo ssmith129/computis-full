@@ -171,7 +171,6 @@ export default function Reports() {
           <p className="text-gray-600 mt-1 font-sans">Generate tax reports and export data</p>
         </div>
         <button 
-          onClick={handleGenerateReport}
           className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
         >
           <FileText className="w-4 h-4 mr-2" />
@@ -316,13 +315,11 @@ export default function Reports() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <button 
-                            onClick={() => handleReportAction(report.id, 'view')}
                             className="text-blue-600 hover:text-blue-900 hover:scale-105 transition-all duration-200 font-sans"
                           >
                             View
                           </button>
                           <button 
-                            onClick={() => handleReportAction(report.id, 'download')}
                             className="text-green-600 hover:text-green-900 hover:scale-105 transition-all duration-200 font-sans"
                           >
                             <Download className="w-4 h-4 inline mr-1" />

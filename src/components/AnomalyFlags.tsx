@@ -121,7 +121,6 @@ export default function AnomalyFlags() {
               {anomaly.actions.map((action, index) => (
                 <button 
                   key={index}
-                  onClick={() => handleAnomalyAction(anomaly.id, action.toLowerCase().replace(' ', '-'))}
                   className={`text-sm hover:underline hover:scale-105 transition-all duration-200 font-sans ${
                     index === 0 ? 'text-blue-600' : 'text-gray-600'
                   }`}

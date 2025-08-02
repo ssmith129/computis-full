@@ -374,7 +374,6 @@ export default function TransactionsTable() {
                       <div className="flex space-x-2">
                         {transaction.classification === 'Unclassified' ? (
                           <button 
-                            onClick={() => handleAction('ai-classify', transaction.id)}
                             className="text-blue-500 hover:text-blue-700 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
                             title="AI Classify"
                           >
@@ -382,7 +381,6 @@ export default function TransactionsTable() {
                           </button>
                         ) : (
                           <button 
-                            onClick={() => handleAction('accept', transaction.id)}
                             className="text-gray-400 hover:text-green-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
                             title="Accept"
                           >
@@ -390,7 +388,6 @@ export default function TransactionsTable() {
                           </button>
                         )}
                         <button 
-                          onClick={() => handleAction('reject', transaction.id)}
                           className="text-gray-400 hover:text-red-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
                           title="Reject"
                         >
@@ -414,21 +411,18 @@ export default function TransactionsTable() {
               <div className="flex items-center space-x-2">
                 <span className="text-sm text-gray-600 font-sans">Bulk Actions:</span>
                 <button 
-                  onClick={() => handleBulkAction('Accept All')}
                   className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
                 >
                   <Check className="w-3 h-3 mr-1 inline" />
                   Accept All
                 </button>
                 <button 
-                  onClick={() => handleBulkAction('Tag')}
                   className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
                 >
                   <AlertTriangle className="w-3 h-3 mr-1 inline" />
                   Tag
                 </button>
                 <button 
-                  onClick={() => handleBulkAction('Export')}
                   className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
                 >
                   <ArrowUpDown className="w-3 h-3 mr-1 inline" />
@@ -504,7 +498,6 @@ export default function TransactionsTable() {
             </div>
             <div className="mt-3">
               <button 
-                onClick={() => handleBulkAction('Accept All High Confidence')}
                 className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
               >
                 Accept All
@@ -526,7 +519,6 @@ export default function TransactionsTable() {
             </div>
             <div className="mt-3">
               <button 
-                onClick={() => handleBulkAction('Review All Medium Confidence')}
                 className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
               >
                 Review All
@@ -548,7 +540,6 @@ export default function TransactionsTable() {
             </div>
             <div className="mt-3">
               <button 
-                onClick={() => handleBulkAction('Fix Manually Low Confidence')}
                 className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
               >
                 Fix Manually
