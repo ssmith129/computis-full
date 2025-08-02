@@ -45,11 +45,11 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
+    <div className="space-y-8 max-w-screen-xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-display">General Settings</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-display">General Settings</h1>
           <p className="text-gray-600 mt-1 font-sans">Configure your application preferences and account settings</p>
         </div>
         <div className="flex space-x-3">

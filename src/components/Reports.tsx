@@ -156,11 +156,11 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">Reports & Exports</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-sans">Reports & Exports</h1>
           <p className="text-gray-600 mt-1 font-sans">Generate tax reports and export data</p>
         </div>
         <button 
@@ -335,19 +335,19 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
       {activeTab === 'templates' && (
         <div className="space-y-6">
           {/* Report Templates Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
             {reportTemplates.map((template) => (
-              <div key={template.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group">
+              <div key={template.id} className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group">
                 <div className="flex items-center justify-center mb-4">
-                  <div className={`h-16 w-16 rounded-lg flex items-center justify-center ${template.color} group-hover:scale-110 transition-transform duration-200`}>
-                    <template.icon className="h-8 w-8" />
+                  <div className={`h-20 w-20 rounded-lg flex items-center justify-center ${template.color} group-hover:scale-110 transition-transform duration-200`}>
+                    <template.icon className="h-10 w-10" />
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 text-center mb-2 font-sans">{template.name}</h3>
-                <p className="text-sm text-gray-600 text-center mb-4 font-sans">{template.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 text-center mb-3 font-sans">{template.name}</h3>
+                <p className="text-base text-gray-600 text-center mb-6 font-sans">{template.description}</p>
                 <button 
                   onClick={() => handleTemplateGenerate(template.name)}
-                  className="w-full px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+                  className="w-full px-4 py-3 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans font-semibold"
                 >
                   Generate Report
                 </button>
@@ -356,12 +356,12 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
           </div>
 
           {/* Report Configuration */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-4 font-sans">Report Configuration</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white rounded-lg border border-gray-200 p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-gray-900 mb-6 font-sans">Report Configuration</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Client</label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
+                <label className="block text-base font-medium text-gray-700 mb-2 font-sans">Client</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
                   <option>Select a client</option>
                   <option>John Smith</option>
                   <option>ABC Corporation</option>
@@ -369,42 +369,42 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Tax Year</label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
+                <label className="block text-base font-medium text-gray-700 mb-2 font-sans">Tax Year</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
                   <option>2023</option>
                   <option>2022</option>
                   <option>2021</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Date Range</label>
+                <label className="block text-base font-medium text-gray-700 mb-2 font-sans">Date Range</label>
                 <div className="flex space-x-2">
                   <input
                     type="date"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
                   />
                   <input
                     type="date"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Format</label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
+                <label className="block text-base font-medium text-gray-700 mb-2 font-sans">Format</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans">
                   <option>PDF</option>
                   <option>Excel</option>
                   <option>CSV</option>
                 </select>
               </div>
             </div>
-            <div className="mt-4 flex justify-end space-x-3">
-              <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+            <div className="mt-8 flex justify-end space-x-3">
+              <button className="px-6 py-3 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans font-semibold">
                 Preview
               </button>
               <button 
                 onClick={() => onWorkflowOpen?.('generate-report')}
-                className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+                className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans font-semibold"
               >
                 Generate Report
               </button>

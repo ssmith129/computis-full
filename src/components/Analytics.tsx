@@ -64,11 +64,11 @@ const Analytics = () => {
   ];
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-display">Analytics Dashboard</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-display">Analytics Dashboard</h1>
           <p className="text-gray-600 mt-1 font-sans">Comprehensive analysis of your crypto tax position</p>
         </div>
         <div className="flex space-x-4">
@@ -94,21 +94,21 @@ const Analytics = () => {
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-8">
         {metrics.map((metric) => (
-          <div key={metric.title} className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-300">
+          <div key={metric.title} className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-300">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 font-display">{metric.title}</p>
-                <p className="text-2xl font-bold text-gray-900 mt-2 font-display">{metric.value}</p>
+                <p className="text-sm font-medium text-gray-600 font-display">{metric.title}</p>
+                <p className="text-3xl font-bold text-gray-900 mt-2 font-display">{metric.value}</p>
                 <p className={`text-sm mt-2 font-sans ${
                   metric.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {metric.change} from last period
                 </p>
               </div>
-              <div className={`h-12 w-12 rounded-xl flex items-center justify-center ${metric.color}`}>
-                <metric.icon className="h-6 w-6" />
+              <div className={`h-16 w-16 rounded-xl flex items-center justify-center ${metric.color}`}>
+                <metric.icon className="h-8 w-8" />
               </div>
             </div>
           </div>
@@ -117,10 +117,10 @@ const Analytics = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Monthly Performance Chart */}
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="lg:col-span-2 xl:col-span-2">
+          <div className="bg-white rounded-xl border border-gray-200 p-8">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold text-gray-900 font-display">Monthly Performance</h2>
+              <h2 className="text-2xl font-bold text-gray-900 font-display">Monthly Performance</h2>
               <div className="flex space-x-2">
                 <button
                   className={`px-4 py-2 rounded-lg text-sm font-sans ${
@@ -153,18 +153,18 @@ const Analytics = () => {
             </div>
             
             {/* Simple Bar Chart Visualization */}
-            <div className="space-y-4">
-              {monthlyData.slice(-6).map((data, index) => (
+            <div className="space-y-6">
+              {monthlyData.slice(-8).map((data, index) => (
                 <div key={data.month} className="flex items-center space-x-4">
-                  <div className="w-12 text-sm font-medium text-gray-600 font-sans">{data.month}</div>
-                  <div className="flex-1 bg-gray-100 rounded-full h-8 relative overflow-hidden">
+                  <div className="w-16 text-base font-medium text-gray-600 font-sans">{data.month}</div>
+                  <div className="flex-1 bg-gray-100 rounded-full h-10 relative overflow-hidden">
                     <div 
                       className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-full rounded-full transition-all duration-500"
                       style={{ 
                         width: `${Math.max(10, (data[selectedMetric] / Math.max(...monthlyData.map(d => d[selectedMetric]))) * 100)}%` 
                       }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-700 font-sans">
+                    <div className="absolute inset-0 flex items-center justify-center text-base font-medium text-gray-700 font-sans">
                       ${data[selectedMetric].toLocaleString()}
                     </div>
                   </div>
@@ -176,26 +176,26 @@ const Analytics = () => {
 
         {/* Portfolio Breakdown */}
         <div className="space-y-6">
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 font-display">Portfolio Breakdown</h2>
+          <div className="bg-white rounded-xl border border-gray-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 font-display">Portfolio Breakdown</h2>
             <div className="space-y-6">
               {portfolioData.map((item, index) => (
                 <div key={item.asset} className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div 
-                      className="w-4 h-4 rounded-full"
+                      className="w-5 h-5 rounded-full"
                       style={{ 
                         backgroundColor: `hsl(${index * 60}, 70%, 50%)` 
                       }}
                     />
                     <div>
-                      <p className="font-medium text-gray-900 font-display">{item.asset}</p>
-                      <p className="text-sm text-gray-600 font-sans">{item.percentage}%</p>
+                      <p className="text-lg font-medium text-gray-900 font-display">{item.asset}</p>
+                      <p className="text-base text-gray-600 font-sans">{item.percentage}%</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-gray-900 font-sans">{item.value}</p>
-                    <p className={`text-sm font-sans ${
+                    <p className="text-lg font-medium text-gray-900 font-sans">{item.value}</p>
+                    <p className={`text-base font-sans ${
                       item.change.startsWith('+') ? 'text-green-600' : 'text-red-600'
                     }`}>
                       {item.change}
@@ -207,28 +207,28 @@ const Analytics = () => {
           </div>
 
           {/* Tax Summary */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 font-display">Tax Summary</h2>
+          <div className="bg-white rounded-xl border border-gray-200 p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 font-display">Tax Summary</h2>
             <div className="space-y-6">
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                <span className="text-gray-600 font-sans">Short-term gains</span>
-                <span className="font-medium text-gray-900 font-sans">$12,450.00</span>
+                <span className="text-base text-gray-600 font-sans">Short-term gains</span>
+                <span className="text-lg font-medium text-gray-900 font-sans">$12,450.00</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                <span className="text-gray-600 font-sans">Long-term gains</span>
-                <span className="font-medium text-gray-900 font-sans">$32,780.25</span>
+                <span className="text-base text-gray-600 font-sans">Long-term gains</span>
+                <span className="text-lg font-medium text-gray-900 font-sans">$32,780.25</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-gray-100">
-                <span className="text-gray-600 font-sans">Total losses</span>
-                <span className="font-medium text-red-600 font-sans">-$8,450.25</span>
+                <span className="text-base text-gray-600 font-sans">Total losses</span>
+                <span className="text-lg font-medium text-red-600 font-sans">-$8,450.25</span>
               </div>
               <div className="flex justify-between items-center py-3 pt-6 border-t-2 border-gray-200">
-                <span className="font-medium text-gray-900 font-display">Net taxable gains</span>
-                <span className="font-bold text-xl text-gray-900 font-display">$36,780.25</span>
+                <span className="text-lg font-medium text-gray-900 font-display">Net taxable gains</span>
+                <span className="font-bold text-2xl text-gray-900 font-display">$36,780.25</span>
               </div>
               <div className="flex justify-between items-center py-3">
-                <span className="font-medium text-gray-900 font-display">Estimated tax (20%)</span>
-                <span className="font-bold text-xl text-purple-600 font-display">$7,356.05</span>
+                <span className="text-lg font-medium text-gray-900 font-display">Estimated tax (20%)</span>
+                <span className="font-bold text-2xl text-purple-600 font-display">$7,356.05</span>
               </div>
             </div>
           </div>
@@ -236,32 +236,32 @@ const Analytics = () => {
       </div>
 
       {/* Detailed Analysis */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-6 font-display">Detailed Analysis</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">Detailed Analysis</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="h-12 w-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <BarChart3 className="h-6 w-6 text-blue-600" />
+            <div className="h-16 w-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <BarChart3 className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-base font-medium text-gray-900 mb-2 font-display">Transaction Volume</h3>
-            <p className="text-2xl font-bold text-gray-900 mb-2 font-display">2,847</p>
-            <p className="text-sm text-gray-600 font-sans">Total transactions processed</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">Transaction Volume</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2 font-display">2,847</p>
+            <p className="text-base text-gray-600 font-sans">Total transactions processed</p>
           </div>
           <div className="text-center">
-            <div className="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <TrendingUp className="h-6 w-6 text-green-600" />
+            <div className="h-16 w-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <TrendingUp className="h-8 w-8 text-green-600" />
             </div>
-            <h3 className="text-base font-medium text-gray-900 mb-2 font-display">Win Rate</h3>
-            <p className="text-2xl font-bold text-gray-900 mb-2 font-display">68.5%</p>
-            <p className="text-sm text-gray-600 font-sans">Profitable transactions</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">Win Rate</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2 font-display">68.5%</p>
+            <p className="text-base text-gray-600 font-sans">Profitable transactions</p>
           </div>
           <div className="text-center">
-            <div className="h-12 w-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-              <PieChart className="h-6 w-6 text-purple-600" />
+            <div className="h-16 w-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+              <PieChart className="h-8 w-8 text-purple-600" />
             </div>
-            <h3 className="text-base font-medium text-gray-900 mb-2 font-display">Average Hold Time</h3>
-            <p className="text-2xl font-bold text-gray-900 mb-2 font-display">127</p>
-            <p className="text-sm text-gray-600 font-sans">Days average holding period</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">Average Hold Time</h3>
+            <p className="text-3xl font-bold text-gray-900 mb-2 font-display">127</p>
+            <p className="text-base text-gray-600 font-sans">Days average holding period</p>
           </div>
         </div>
       </div>

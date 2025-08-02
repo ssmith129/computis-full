@@ -176,23 +176,23 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   };
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-8 max-w-screen-2xl mx-auto">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         {stats.map((stat) => (
-          <AnimatedCard key={stat.title} className="p-3" hover>
+          <AnimatedCard key={stat.title} className="p-4" hover>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs font-medium text-gray-600 font-display">{stat.title}</p>
-                <p className="text-lg font-bold text-gray-900 mt-1 font-display">{stat.value}</p>
-                <p className={`text-xs mt-1 font-sans ${
+                <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
+                <p className="text-xl font-bold text-gray-900 mt-1 font-display">{stat.value}</p>
+                <p className={`text-sm mt-1 font-sans ${
                   stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {stat.change} from last month
                 </p>
               </div>
-              <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${stat.color} hover:scale-105 transition-transform duration-150`}>
-                <stat.icon className="h-4 w-4" />
+              <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${stat.color} hover:scale-105 transition-transform duration-150`}>
+                <stat.icon className="h-5 w-5" />
               </div>
             </div>
           </AnimatedCard>
@@ -201,10 +201,10 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 xl:col-span-2">
           <AnimatedCard className="p-6" hover>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900 font-display">Recent Activity</h2>
+              <h2 className="text-xl font-bold text-gray-900 font-display">Recent Activity</h2>
               <InteractiveButton variant="secondary" size="sm">
                 View All
               </InteractiveButton>
@@ -213,11 +213,11 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
               {recentActivity.map((activity) => (
                 <div key={activity.id} className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-50 transition-all duration-150 group">
                   <div className={`h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-105 transition-transform duration-150`}>
-                    <activity.icon className="h-4 w-4" />
+                    <activity.icon className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-gray-900 font-display">{activity.type}</p>
-                    <p className="text-xs text-gray-600 mt-1 font-sans">{activity.description}</p>
+                    <p className="text-sm font-medium text-gray-900 font-display">{activity.type}</p>
+                    <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
                     <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
                   </div>
                   <div className="flex-shrink-0">
@@ -236,17 +236,17 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         {/* AI Insights */}
         <div className="space-y-4">
           <AnimatedCard className="p-4" hover>
-            <h2 className="text-lg font-bold text-gray-900 mb-4 font-display">AI Insights</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4 font-display">AI Insights</h2>
             <div className="space-y-3">
               {aiInsights.map((insight, index) => (
-                <div key={index} className="hover:bg-gray-50 p-2 rounded-md transition-all duration-150 group">
+                <div key={index} className="hover:bg-gray-50 p-3 rounded-md transition-all duration-150 group">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-lg font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-200">{insight.value}</span>
+                    <span className="text-xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-200">{insight.value}</span>
                     {insight.trend === 'up' && (
                       <TrendingUp className="h-3 w-3 text-green-500 group-hover:scale-105 transition-transform duration-150" />
                     )}
                   </div>
-                  <p className="text-xs font-medium text-gray-900 font-display">{insight.title}</p>
+                  <p className="text-sm font-medium text-gray-900 font-display">{insight.title}</p>
                   <p className="text-xs text-gray-600 mt-1 font-sans">{insight.description}</p>
                 </div>
               ))}
@@ -255,8 +255,8 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
 
           {/* Quick Actions */}
           <AnimatedCard className="p-4" hover>
-            <h2 className="text-lg font-bold text-gray-900 mb-4 font-display">Quick Actions</h2>
-            <div className="grid grid-cols-2 gap-2">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 font-display">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-3">
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 
@@ -264,7 +264,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('import')}
               >
-                <span className="text-xs font-medium text-gray-900">Import</span>
+                <span className="text-sm font-semibold text-gray-900">Import</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -273,7 +273,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('report')}
               >
-                <span className="text-xs font-medium text-gray-900">Report</span>
+                <span className="text-sm font-semibold text-gray-900">Report</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -282,7 +282,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('client')}
               >
-                <span className="text-xs font-medium text-gray-900">Client</span>
+                <span className="text-sm font-semibold text-gray-900">Client</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -291,7 +291,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('wallet')}
               >
-                <span className="text-xs font-medium text-gray-900">Wallet</span>
+                <span className="text-sm font-semibold text-gray-900">Wallet</span>
               </InteractiveButton>
             </div>
           </AnimatedCard>

@@ -50,11 +50,11 @@ export default function Preferences() {
   };
 
   return (
-    <div className="space-y-6 max-w-6xl mx-auto">
+    <div className="space-y-6 max-w-screen-xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">Preferences</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-sans">Preferences</h1>
           <p className="text-gray-600 mt-1 font-sans">Configure tax calculations, AI behavior, and data handling</p>
         </div>
         <div className="flex space-x-3">

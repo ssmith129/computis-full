@@ -173,12 +173,12 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
     }
   ];
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-bold text-gray-900 font-display">Clients</h1>
-          <p className="text-xs text-gray-600 mt-1 font-sans">Manage client crypto tax profiles</p>
+          <h1 className="text-2xl font-bold text-gray-900 font-display">Clients</h1>
+          <p className="text-base text-gray-600 mt-1 font-sans">Manage client crypto tax profiles</p>
         </div>
         <InteractiveButton 
           variant="primary" 
@@ -229,26 +229,26 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </AnimatedCard>
 
       {/* Clients Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {filteredClients.map((client) => (
           <AnimatedCard 
             key={client.id} 
-            className="p-4 cursor-pointer group" 
+            className="p-6 cursor-pointer group" 
             hover
             onMouseEnter={() => setHoveredClient(client.id)}
             onMouseLeave={() => setHoveredClient(null)}
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center space-x-2">
-                <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
+                <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
                   {client.type === 'Business' ? (
-                    <Building className="h-3 w-3 text-gray-600" />
+                    <Building className="h-4 w-4 text-gray-600" />
                   ) : (
-                    <User className="h-3 w-3 text-gray-600" />
+                    <User className="h-4 w-4 text-gray-600" />
                   )}
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-900 font-display">{client.name}</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 font-display">{client.name}</h3>
                   <div className="mt-1">
                     <StatusIndicator 
                       status={client.status === 'Active' ? 'success' : 'pending'} 
@@ -264,16 +264,16 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center text-xs text-gray-600 font-sans">
-                <Mail className="h-3 w-3 mr-1" />
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Mail className="h-4 w-4 mr-1" />
                 {client.email}
               </div>
-              <div className="flex items-center text-xs text-gray-600 font-sans">
-                <Phone className="h-3 w-3 mr-1" />
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Phone className="h-4 w-4 mr-1" />
                 {client.phone}
               </div>
-              <div className="flex items-center text-xs text-gray-600 font-sans">
-                <Calendar className="h-3 w-3 mr-1" />
+              <div className="flex items-center text-sm text-gray-600 font-sans">
+                <Calendar className="h-4 w-4 mr-1" />
                 Last activity: {client.lastActivity}
               </div>
             </div>
@@ -281,12 +281,12 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             <div className="mt-2 pt-2 border-t border-gray-100">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-xs text-gray-600 font-sans">Transactions</p>
-                  <p className="text-xs font-semibold text-gray-900 font-display">{client.transactions}</p>
+                  <p className="text-sm text-gray-600 font-sans">Transactions</p>
+                  <p className="text-base font-semibold text-gray-900 font-display">{client.transactions}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-gray-600 font-sans">Total Value</p>
-                  <p className="text-xs font-semibold text-gray-900 font-display">{client.totalValue}</p>
+                  <p className="text-sm text-gray-600 font-sans">Total Value</p>
+                  <p className="text-base font-semibold text-gray-900 font-display">{client.totalValue}</p>
                 </div>
               </div>
             </div>
@@ -317,9 +317,9 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       {/* Empty State */}
       {filteredClients.length === 0 && (
         <AnimatedCard className="text-center py-8">
-          <User className="h-12 w-12 text-gray-400 mx-auto mb-4 animate-float" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">No clients found</h3>
-          <p className="text-sm text-gray-600 mb-4 font-sans">Try adjusting your search or filter criteria</p>
+          <User className="h-16 w-16 text-gray-400 mx-auto mb-4 animate-float" />
+          <h3 className="text-xl font-medium text-gray-900 mb-2 font-display">No clients found</h3>
+          <p className="text-base text-gray-600 mb-4 font-sans">Try adjusting your search or filter criteria</p>
           <InteractiveButton variant="primary" size="md">
             Clear Filters
           </InteractiveButton>

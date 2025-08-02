@@ -134,16 +134,16 @@ export default function Exports() {
   });
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">Data Exports</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-sans">Data Exports</h1>
           <p className="text-gray-600 mt-1 font-sans">Export transaction data and generate reports</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
         {/* Export Configuration */}
         <div className="xl:col-span-1">
           <FormSection 
@@ -294,19 +294,19 @@ export default function Exports() {
         </div>
 
         {/* Export Jobs List */}
-        <div className="xl:col-span-2">
+        <div className="xl:col-span-3">
           <div className="space-y-6">
             {/* Filters */}
-            <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <Filter className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm font-medium text-gray-700 font-sans">Filters:</span>
+                  <Filter className="h-5 w-5 text-gray-400" />
+                  <span className="text-base font-medium text-gray-700 font-sans">Filters:</span>
                 </div>
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                  className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
                 >
                   <option value="all">All Status</option>
                   <option value="completed">Completed</option>
@@ -317,7 +317,7 @@ export default function Exports() {
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
+                  className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-colors duration-200 font-sans"
                 >
                   <option value="all">All Types</option>
                   <option value="transaction">Transaction</option>
@@ -331,16 +331,16 @@ export default function Exports() {
             {/* Export Jobs */}
             <div className="space-y-4">
               {filteredJobs.map((job) => (
-                <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
-                        <FileText className="w-5 h-5 text-gray-600" />
-                        <h3 className="text-lg font-semibold text-gray-900 font-sans">{job.name}</h3>
+                        <FileText className="w-6 h-6 text-gray-600" />
+                        <h3 className="text-xl font-semibold text-gray-900 font-sans">{job.name}</h3>
                         {getStatusBadge(job.status)}
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-3 font-sans">
+                      <div className="grid grid-cols-2 gap-6 text-base text-gray-600 mb-4 font-sans">
                         <div>
                           <span className="font-medium">Type:</span> {job.type}
                         </div>

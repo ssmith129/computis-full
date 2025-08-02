@@ -188,12 +188,12 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
-          <p className="text-xs text-gray-600 mt-1 font-sans">Connect wallets and import data</p>
+          <h1 className="text-2xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
+          <p className="text-base text-gray-600 mt-1 font-sans">Connect wallets and import data</p>
         </div>
         <div className="flex space-x-2">
           <InteractiveButton 
@@ -244,37 +244,37 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {activeTab === 'wallets' && (
         <div className="space-y-8">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <AnimatedCard className="p-3" hover>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <AnimatedCard className="p-4" hover>
               <div className="flex items-center">
-                <div className="h-6 w-6 rounded-md bg-green-100 flex items-center justify-center text-green-600 mr-2 hover:scale-105 transition-transform duration-150">
-                  <CheckCircle className="h-3 w-3" />
+                <div className="h-8 w-8 rounded-md bg-green-100 flex items-center justify-center text-green-600 mr-3 hover:scale-105 transition-transform duration-150">
+                  <CheckCircle className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-gray-600 font-sans">Connected</p>
-                  <p className="text-lg font-bold text-gray-900 font-display">4</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Connected</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">4</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-3" hover>
+            <AnimatedCard className="p-4" hover>
               <div className="flex items-center">
-                <div className="h-6 w-6 rounded-md bg-blue-100 flex items-center justify-center text-blue-600 mr-2 hover:scale-105 transition-transform duration-150">
-                  <Wallet className="h-3 w-3" />
+                <div className="h-8 w-8 rounded-md bg-blue-100 flex items-center justify-center text-blue-600 mr-3 hover:scale-105 transition-transform duration-150">
+                  <Wallet className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-gray-600 font-sans">Balance</p>
-                  <p className="text-lg font-bold text-gray-900 font-display">$409,330</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Balance</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">$409,330</p>
                 </div>
               </div>
             </AnimatedCard>
-            <AnimatedCard className="p-3" hover>
+            <AnimatedCard className="p-4" hover>
               <div className="flex items-center">
-                <div className="h-6 w-6 rounded-md bg-purple-100 flex items-center justify-center text-purple-600 mr-2 hover:scale-105 transition-transform duration-150">
-                  <Clock className="h-3 w-3" />
+                <div className="h-8 w-8 rounded-md bg-purple-100 flex items-center justify-center text-purple-600 mr-3 hover:scale-105 transition-transform duration-150">
+                  <Clock className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-gray-600 font-sans">Transactions</p>
-                  <p className="text-lg font-bold text-gray-900 font-display">557</p>
+                  <p className="text-sm font-medium text-gray-600 font-sans">Transactions</p>
+                  <p className="text-xl font-bold text-gray-900 font-display">557</p>
                 </div>
               </div>
             </AnimatedCard>
@@ -282,35 +282,35 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
 
           {/* Wallets List */}
           <AnimatedCard className="overflow-hidden" hover>
-            <div className="px-3 py-2 border-b border-gray-200">
-              <h2 className="text-sm font-semibold text-gray-900 font-display">Connected Wallets</h2>
+            <div className="px-4 py-3 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900 font-display">Connected Wallets</h2>
             </div>
             <div className="divide-y divide-gray-200">
               {wallets.map((wallet) => (
                 <div 
                   key={wallet.id} 
-                  className="p-3 hover:bg-gray-50 transition-all duration-150 group"
+                  className="p-4 hover:bg-gray-50 transition-all duration-150 group"
                   onMouseEnter={() => setHoveredWallet(wallet.id)}
                   onMouseLeave={() => setHoveredWallet(null)}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="text-lg hover:scale-105 transition-transform duration-150">
+                      <div className="text-xl hover:scale-105 transition-transform duration-150">
                         {wallet.icon}
                       </div>
                       <div>
-                        <h3 className="text-xs font-medium text-gray-900 font-display">{wallet.name}</h3>
-                        <p className="text-xs text-gray-600 font-sans">{wallet.type}</p>
+                        <h3 className="text-sm font-medium text-gray-900 font-display">{wallet.name}</h3>
+                        <p className="text-sm text-gray-600 font-sans">{wallet.type}</p>
                         <p className="text-xs text-gray-500 font-mono">{wallet.address.slice(0, 20)}...</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="text-right">
-                        <p className="text-xs font-semibold text-gray-900 font-display">{wallet.balance}</p>
-                        <p className="text-xs text-gray-600 font-sans">{wallet.usdValue}</p>
+                        <p className="text-sm font-semibold text-gray-900 font-display">{wallet.balance}</p>
+                        <p className="text-sm text-gray-600 font-sans">{wallet.usdValue}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-gray-600 font-sans">{wallet.transactions} tx</p>
+                        <p className="text-sm text-gray-600 font-sans">{wallet.transactions} tx</p>
                         <p className="text-xs text-gray-500 font-sans">{wallet.lastSync}</p>
                       </div>
                       <div className="flex items-center space-x-2">

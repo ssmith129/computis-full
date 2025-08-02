@@ -157,11 +157,11 @@ export default function RuleEngine() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-screen-2xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">Rule Engine</h1>
+          <h1 className="text-3xl font-bold text-gray-900 font-sans">Rule Engine</h1>
           <p className="text-gray-600 mt-1 font-sans">Create and manage automated classification rules</p>
         </div>
         <div className="flex space-x-3">
@@ -179,57 +179,57 @@ export default function RuleEngine() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+        <div className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-4 hover:scale-110 transition-transform duration-200">
-              <CheckCircle className="h-6 w-6" />
+            <div className="h-16 w-16 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-4 hover:scale-110 transition-transform duration-200">
+              <CheckCircle className="h-8 w-8" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 font-sans">Active Rules</p>
-              <p className="text-2xl font-bold text-gray-900 font-sans">
+              <p className="text-base font-medium text-gray-600 font-sans">Active Rules</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">
                 {rules.filter(r => r.status === 'active').length}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <div className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-4 hover:scale-110 transition-transform duration-200">
-              <GitBranch className="h-6 w-6" />
+            <div className="h-16 w-16 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-4 hover:scale-110 transition-transform duration-200">
+              <GitBranch className="h-8 w-8" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 font-sans">Total Matches</p>
-              <p className="text-2xl font-bold text-gray-900 font-sans">
+              <p className="text-base font-medium text-gray-600 font-sans">Total Matches</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">
                 {rules.reduce((sum, rule) => sum + rule.matchCount, 0)}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <div className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-yellow-100 flex items-center justify-center text-yellow-600 mr-4 hover:scale-110 transition-transform duration-200">
-              <Clock className="h-6 w-6" />
+            <div className="h-16 w-16 rounded-lg bg-yellow-100 flex items-center justify-center text-yellow-600 mr-4 hover:scale-110 transition-transform duration-200">
+              <Clock className="h-8 w-8" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 font-sans">Draft Rules</p>
-              <p className="text-2xl font-bold text-gray-900 font-sans">
+              <p className="text-base font-medium text-gray-600 font-sans">Draft Rules</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">
                 {rules.filter(r => r.status === 'draft').length}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+        <div className="bg-white rounded-lg border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 mr-4 hover:scale-110 transition-transform duration-200">
-              <AlertTriangle className="h-6 w-6" />
+            <div className="h-16 w-16 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 mr-4 hover:scale-110 transition-transform duration-200">
+              <AlertTriangle className="h-8 w-8" />
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600 font-sans">Avg Confidence</p>
-              <p className="text-2xl font-bold text-gray-900 font-sans">
+              <p className="text-base font-medium text-gray-600 font-sans">Avg Confidence</p>
+              <p className="text-3xl font-bold text-gray-900 font-sans">
                 {Math.round(rules.reduce((sum, rule) => sum + (rule.actions.confidence || 0), 0) / rules.length)}%
               </p>
             </div>
