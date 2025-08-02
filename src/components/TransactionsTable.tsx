@@ -141,10 +141,6 @@ const transactions = [
   }
 ];
 
-const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
-const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
-const [isProcessing, setIsProcessing] = React.useState(false);
-
 const getConfidenceIcon = (confidenceLevel: string | null) => {
   switch (confidenceLevel) {
     case 'high':
@@ -173,6 +169,9 @@ const getConfidenceColor = (confidenceLevel: string | null) => {
 
 export default function TransactionsTable() {
   const { addNotification } = useNotifications();
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
+  const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
+  const [isProcessing, setIsProcessing] = React.useState(false);
 
   const handleAction = (type: string, transactionId: number) => {
     setSelectedAction({ type, transactionId });
