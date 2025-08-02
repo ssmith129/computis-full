@@ -169,8 +169,9 @@ export default function Wallets() {
           <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans">
             <Upload className="w-4 h-4 mr-2" />
             Import CSV
-          <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
-            onClick={handleConnectWallet}
+          </button>
+          <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
+            onClick={handleConnectWallet}>
             <Plus className="w-4 h-4 mr-2" />
             Connect Wallet
           </button>
