@@ -1,5 +1,8 @@
 import React from 'react';
 import { ArrowUpDown, Check, AlertTriangle, HelpCircle, AlertCircle, Minus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
+import ConfirmDialog from './ConfirmDialog';
+import LoadingSpinner from './LoadingSpinner';
 
 const transactions = [
   {
@@ -138,6 +141,10 @@ const transactions = [
   }
 ];
 
+const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
+const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
+const [isProcessing, setIsProcessing] = React.useState(false);
+
 const getConfidenceIcon = (confidenceLevel: string | null) => {
   switch (confidenceLevel) {
     case 'high':
@@ -165,6 +172,81 @@ const getConfidenceColor = (confidenceLevel: string | null) => {
 };
 
 export default function TransactionsTable() {
+  const { addNotification } = useNotifications();
+
+  const handleAction = (type: string, transactionId: number) => {
+    setSelectedAction({ type, transactionId });
+    setShowConfirmDialog(true);
+  };
+
+  const confirmAction = async () => {
+    if (!selectedAction) return;
+    
+    setIsProcessing(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const transaction = transactions.find(t => t.id === selectedAction.transactionId);
+    
+    switch (selectedAction.type) {
+      case 'accept':
+        addNotification({
+          type: 'success',
+          title: 'Classification Accepted',
+          message: `Transaction classification has been confirmed.`,
+          duration: 3000
+        });
+        break;
+      case 'reject':
+        addNotification({
+          type: 'warning',
+          title: 'Classification Rejected',
+          message: `Transaction has been marked for manual review.`,
+          duration: 3000
+        });
+        break;
+      case 'ai-classify':
+        addNotification({
+          type: 'info',
+          title: 'AI Classification Started',
+          message: `AI is analyzing the transaction...`,
+          duration: 2000
+        });
+        setTimeout(() => {
+          addNotification({
+            type: 'success',
+            title: 'AI Classification Complete',
+            message: `Transaction classified as Income with 87% confidence.`,
+            duration: 4000
+          });
+        }, 2000);
+        break;
+    }
+    
+    setIsProcessing(false);
+    setShowConfirmDialog(false);
+    setSelectedAction(null);
+  };
+
+  const handleBulkAction = (action: string) => {
+    addNotification({
+      type: 'info',
+      title: 'Bulk Action Started',
+      message: `Processing ${action} for selected transactions...`,
+      duration: 3000
+    });
+    
+    setTimeout(() => {
+      addNotification({
+        type: 'success',
+        title: 'Bulk Action Complete',
+        message: `Successfully processed ${action} for 5 transactions.`,
+        duration: 4000
+      });
+    }, 3000);
+  };
+
   return (
     <>
       {/* AI Confidence Legend */}
@@ -292,15 +374,27 @@ export default function TransactionsTable() {
                     <td className="px-4 py-3">
                       <div className="flex space-x-2">
                         {transaction.classification === 'Unclassified' ? (
-                          <button className="text-blue-500 hover:text-blue-700 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" title="AI Classify">
+                          <button 
+                            onClick={() => handleAction('ai-classify', transaction.id)}
+                            className="text-blue-500 hover:text-blue-700 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
+                            title="AI Classify"
+                          >
                             <Check className="w-4 h-4" />
                           </button>
                         ) : (
-                          <button className="text-gray-400 hover:text-green-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" title="Accept">
+                          <button 
+                            onClick={() => handleAction('accept', transaction.id)}
+                            className="text-gray-400 hover:text-green-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
+                            title="Accept"
+                          >
                             <Check className="w-4 h-4" />
                           </button>
                         )}
-                        <button className="text-gray-400 hover:text-red-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" title="Reject">
+                        <button 
+                          onClick={() => handleAction('reject', transaction.id)}
+                          className="text-gray-400 hover:text-red-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
+                          title="Reject"
+                        >
                           <AlertTriangle className="w-4 h-4" />
                         </button>
                         <button className="text-gray-400 hover:text-gray-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" title="More options">
@@ -320,15 +414,24 @@ export default function TransactionsTable() {
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-sm text-gray-600 font-sans">Bulk Actions:</span>
-                <button className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">
+                <button 
+                  onClick={() => handleBulkAction('Accept All')}
+                  className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+                >
                   <Check className="w-3 h-3 mr-1 inline" />
                   Accept All
                 </button>
-                <button className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">
+                <button 
+                  onClick={() => handleBulkAction('Tag')}
+                  className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+                >
                   <AlertTriangle className="w-3 h-3 mr-1 inline" />
                   Tag
                 </button>
-                <button className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">
+                <button 
+                  onClick={() => handleBulkAction('Export')}
+                  className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+                >
                   <ArrowUpDown className="w-3 h-3 mr-1 inline" />
                   Export
                 </button>
@@ -351,6 +454,35 @@ export default function TransactionsTable() {
         </div>
       </div>
 
+      {/* Confirm Dialog */}
+      <ConfirmDialog
+        isOpen={showConfirmDialog}
+        onClose={() => {
+          setShowConfirmDialog(false);
+          setSelectedAction(null);
+        }}
+        onConfirm={confirmAction}
+        title={
+          selectedAction?.type === 'accept' ? 'Accept Classification' :
+          selectedAction?.type === 'reject' ? 'Reject Classification' :
+          'Start AI Classification'
+        }
+        message={
+          selectedAction?.type === 'accept' ? 'Are you sure you want to accept this AI classification?' :
+          selectedAction?.type === 'reject' ? 'This will mark the transaction for manual review.' :
+          'AI will analyze this transaction and suggest a classification.'
+        }
+        type={
+          selectedAction?.type === 'reject' ? 'warning' : 'info'
+        }
+        confirmText={
+          selectedAction?.type === 'accept' ? 'Accept' :
+          selectedAction?.type === 'reject' ? 'Reject' :
+          'Start AI Analysis'
+        }
+        isLoading={isProcessing}
+      />
+
       {/* AI Classification Insights */}
       <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">
         <div className="flex items-center justify-between mb-4">
@@ -372,7 +504,12 @@ export default function TransactionsTable() {
               These transactions match known patterns with high confidence.
             </div>
             <div className="mt-3">
-              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">Accept All</button>
+              <button 
+                onClick={() => handleBulkAction('Accept All High Confidence')}
+                className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
+              >
+                Accept All
+              </button>
             </div>
           </div>
           <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
@@ -389,7 +526,12 @@ export default function TransactionsTable() {
               These transactions have somewhat reliable AI classifications.
             </div>
             <div className="mt-3">
-              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">Review All</button>
+              <button 
+                onClick={() => handleBulkAction('Review All Medium Confidence')}
+                className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
+              >
+                Review All
+              </button>
             </div>
           </div>
           <div className="bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
@@ -406,7 +548,12 @@ export default function TransactionsTable() {
               These transactions need manual review due to uncertain patterns.
             </div>
             <div className="mt-3">
-              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">Fix Manually</button>
+              <button 
+                onClick={() => handleBulkAction('Fix Manually Low Confidence')}
+                className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
+              >
+                Fix Manually
+              </button>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, Users, Wallet, FileText, AlertTriangle, CheckCircle, Clock, DollarSign } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
 
 const stats = [
   {
@@ -97,6 +98,56 @@ const aiInsights = [
 ];
 
 export default function Dashboard() {
+  const { addNotification } = useNotifications();
+
+  const handleQuickAction = (action: string) => {
+    switch (action) {
+      case 'import':
+        addNotification({
+          type: 'info',
+          title: 'Import Started',
+          message: 'Opening transaction import wizard...',
+          duration: 2000
+        });
+        break;
+      case 'report':
+        addNotification({
+          type: 'info',
+          title: 'Report Generation',
+          message: 'Preparing your tax report...',
+          duration: 3000
+        });
+        setTimeout(() => {
+          addNotification({
+            type: 'success',
+            title: 'Report Ready',
+            message: 'Your IRS Form 8949 is ready for download.',
+            action: {
+              label: 'Download',
+              onClick: () => console.log('Download report')
+            }
+          });
+        }, 3000);
+        break;
+      case 'client':
+        addNotification({
+          type: 'success',
+          title: 'Client Added',
+          message: 'New client profile has been created successfully.',
+          duration: 3000
+        });
+        break;
+      case 'wallet':
+        addNotification({
+          type: 'info',
+          title: 'Wallet Connection',
+          message: 'Connecting to wallet and syncing transactions...',
+          duration: 4000
+        });
+        break;
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Stats Grid */}
@@ -184,19 +235,31 @@ export default function Dashboard() {
           <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
             <h2 className="text-xl font-bold text-gray-900 mb-6 font-sans">Quick Actions</h2>
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleQuickAction('import')}
+                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 <span className="text-sm font-medium text-gray-900">Import Transactions</span>
                 <TrendingUp className="h-4 w-4 text-gray-400" />
               </button>
-              <button className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleQuickAction('report')}
+                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 <span className="text-sm font-medium text-gray-900">Generate Report</span>
                 <FileText className="h-4 w-4 text-gray-400" />
               </button>
-              <button className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleQuickAction('client')}
+                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 <span className="text-sm font-medium text-gray-900">Add Client</span>
                 <Users className="h-4 w-4 text-gray-400" />
               </button>
-              <button className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleQuickAction('wallet')}
+                className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 <span className="text-sm font-medium text-gray-900">Connect Wallet</span>
                 <Wallet className="h-4 w-4 text-gray-400" />
               </button>

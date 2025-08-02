@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, DollarSign, GitBranch } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
 
 const anomalies = [
   {
@@ -32,6 +33,69 @@ const anomalies = [
 ];
 
 export default function AnomalyFlags() {
+  const { addNotification } = useNotifications();
+
+  const handleAnomalyAction = (anomalyId: number, action: string) => {
+    const anomaly = anomalies.find(a => a.id === anomalyId);
+    
+    if (action === 'investigate') {
+      addNotification({
+        type: 'info',
+        title: 'Investigation Started',
+        message: `Analyzing ${anomaly?.title.toLowerCase()}...`,
+        duration: 3000
+      });
+      
+      setTimeout(() => {
+        addNotification({
+          type: 'success',
+          title: 'Investigation Complete',
+          message: 'Anomaly has been reviewed and flagged for attention.',
+          duration: 4000
+        });
+      }, 3000);
+    } else if (action === 'dismiss') {
+      addNotification({
+        type: 'success',
+        title: 'Anomaly Dismissed',
+        message: `${anomaly?.title} has been marked as resolved.`,
+        duration: 3000
+      });
+    } else if (action === 'fix') {
+      addNotification({
+        type: 'info',
+        title: 'Fixing Values',
+        message: 'Updating fair market values from external sources...',
+        duration: 3000
+      });
+      
+      setTimeout(() => {
+        addNotification({
+          type: 'success',
+          title: 'Values Updated',
+          message: 'Fair market values have been successfully updated.',
+          duration: 4000
+        });
+      }, 3000);
+    } else if (action === 'resolve') {
+      addNotification({
+        type: 'info',
+        title: 'Resolving Conflict',
+        message: 'Analyzing rule conflicts and applying priority order...',
+        duration: 3000
+      });
+      
+      setTimeout(() => {
+        addNotification({
+          type: 'success',
+          title: 'Conflict Resolved',
+          message: 'Rule conflicts have been resolved based on priority settings.',
+          duration: 4000
+        });
+      }, 3000);
+    }
+  };
+
   return (
     <div className="px-8 py-6 border-t border-gray-200">
       <div className="flex items-center justify-between mb-4">
@@ -57,6 +121,7 @@ export default function AnomalyFlags() {
               {anomaly.actions.map((action, index) => (
                 <button 
                   key={index}
+                  onClick={() => handleAnomalyAction(anomaly.id, action.toLowerCase().replace(' ', '-'))}
                   className={`text-sm hover:underline hover:scale-105 transition-all duration-200 font-sans ${
                     index === 0 ? 'text-blue-600' : 'text-gray-600'
                   }`}

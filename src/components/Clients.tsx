@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Search, MoreVertical, User, Building, Mail, Phone, Calendar, TrendingUp } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
+import ConfirmDialog from './ConfirmDialog';
 
 const clients = [
   {
@@ -53,9 +55,12 @@ const clients = [
 ];
 
 export default function Clients() {
+  const { addNotification } = useNotifications();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
+  const [showAddClientDialog, setShowAddClientDialog] = useState(false);
+  const [isAddingClient, setIsAddingClient] = useState(false);
 
   const filteredClients = clients.filter(client => {
     const matchesSearch = client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -66,6 +71,50 @@ export default function Clients() {
     return matchesSearch && matchesType && matchesStatus;
   });
 
+  const handleAddClient = () => {
+    setShowAddClientDialog(true);
+  };
+
+  const confirmAddClient = async () => {
+    setIsAddingClient(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    addNotification({
+      type: 'success',
+      title: 'Client Added',
+      message: 'New client has been successfully created.',
+      duration: 4000
+    });
+    
+    setIsAddingClient(false);
+    setShowAddClientDialog(false);
+  };
+
+  const handleClientAction = (clientId: number, action: string) => {
+    const client = clients.find(c => c.id === clientId);
+    
+    switch (action) {
+      case 'view':
+        addNotification({
+          type: 'info',
+          title: 'Loading Client Details',
+          message: `Opening ${client?.name}'s profile...`,
+          duration: 2000
+        });
+        break;
+      case 'transactions':
+        addNotification({
+          type: 'info',
+          title: 'Loading Transactions',
+          message: `Fetching ${client?.name}'s transaction history...`,
+          duration: 2000
+        });
+        break;
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -73,6 +122,7 @@ export default function Clients() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 font-sans">Clients</h1>
           <p className="text-gray-600 mt-1 font-sans">Manage your clients and their crypto tax profiles</p>
+          onClick={handleAddClient}
         </div>
         <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
           <Plus className="w-4 h-4 mr-2" />
@@ -176,10 +226,16 @@ export default function Clients() {
             </div>
 
             <div className="mt-4 flex space-x-2">
-              <button className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleClientAction(client.id, 'view')}
+                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 View Details
               </button>
-              <button className="flex-1 px-3 py-2 text-sm bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={() => handleClientAction(client.id, 'transactions')}
+                className="flex-1 px-3 py-2 text-sm bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 <TrendingUp className="h-4 w-4 mr-1 inline" />
                 Transactions
               </button>
@@ -199,6 +255,18 @@ export default function Clients() {
           </button>
         </div>
       )}
+
+      {/* Add Client Dialog */}
+      <ConfirmDialog
+        isOpen={showAddClientDialog}
+        onClose={() => setShowAddClientDialog(false)}
+        onConfirm={confirmAddClient}
+        title="Add New Client"
+        message="This will create a new client profile. You can add details after creation."
+        type="success"
+        confirmText="Create Client"
+        isLoading={isAddingClient}
+      />
     </div>
   );
 }

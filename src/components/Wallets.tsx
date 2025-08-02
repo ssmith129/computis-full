@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Upload, Wallet, ExternalLink, AlertTriangle, CheckCircle, Clock, MoreVertical } from 'lucide-react';
+import { useNotifications } from './NotificationSystem';
+import ConfirmDialog from './ConfirmDialog';
 
 const wallets = [
   {
@@ -80,7 +82,80 @@ const importHistory = [
 ];
 
 export default function Wallets() {
+  const { addNotification } = useNotifications();
   const [activeTab, setActiveTab] = useState('wallets');
+  const [showConnectDialog, setShowConnectDialog] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+
+  const handleConnectWallet = () => {
+    setShowConnectDialog(true);
+  };
+
+  const confirmConnectWallet = async () => {
+    setIsConnecting(true);
+    
+    // Simulate wallet connection
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    addNotification({
+      type: 'success',
+      title: 'Wallet Connected',
+      message: 'Successfully connected to MetaMask wallet.',
+      duration: 4000
+    });
+    
+    setIsConnecting(false);
+    setShowConnectDialog(false);
+  };
+
+  const handleWalletAction = (walletId: number, action: string) => {
+    const wallet = wallets.find(w => w.id === walletId);
+    
+    switch (action) {
+      case 'sync':
+        addNotification({
+          type: 'info',
+          title: 'Syncing Wallet',
+          message: `Syncing ${wallet?.name}...`,
+          duration: 3000
+        });
+        setTimeout(() => {
+          addNotification({
+            type: 'success',
+            title: 'Sync Complete',
+            message: `${wallet?.name} has been synchronized successfully.`,
+            duration: 3000
+          });
+        }, 3000);
+        break;
+      case 'view':
+        addNotification({
+          type: 'info',
+          title: 'Loading Transactions',
+          message: `Fetching transactions from ${wallet?.name}...`,
+          duration: 2000
+        });
+        break;
+    }
+  };
+
+  const handleImportCSV = () => {
+    addNotification({
+      type: 'info',
+      title: 'Import Started',
+      message: 'Processing CSV file...',
+      duration: 3000
+    });
+    
+    setTimeout(() => {
+      addNotification({
+        type: 'success',
+        title: 'Import Complete',
+        message: 'Successfully imported 156 transactions from CSV.',
+        duration: 4000
+      });
+    }, 3000);
+  };
 
   return (
     <div className="space-y-6">
@@ -92,10 +167,12 @@ export default function Wallets() {
         </div>
         <div className="flex space-x-3">
           <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans">
+            onClick={handleImportCSV}
             <Upload className="w-4 h-4 mr-2" />
             Import CSV
           </button>
           <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
+            onClick={handleConnectWallet}
             <Plus className="w-4 h-4 mr-2" />
             Connect Wallet
           </button>
@@ -210,10 +287,16 @@ export default function Wallets() {
                     </div>
                   </div>
                   <div className="mt-4 flex space-x-3">
-                    <button className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+                    <button 
+                      onClick={() => handleWalletAction(wallet.id, 'sync')}
+                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                    >
                       Sync Now
                     </button>
-                    <button className="px-3 py-1 text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">
+                    <button 
+                      onClick={() => handleWalletAction(wallet.id, 'view')}
+                      className="px-3 py-1 text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
+                    >
                       <ExternalLink className="h-3 w-3 mr-1 inline" />
                       View Transactions
                     </button>
@@ -304,7 +387,10 @@ export default function Wallets() {
               Upload CSV files from exchanges, wallets, or other sources
             </p>
             <div className="flex justify-center space-x-3">
-              <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans">
+              <button 
+                onClick={handleImportCSV}
+                className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+              >
                 Choose File
               </button>
               <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
@@ -314,6 +400,18 @@ export default function Wallets() {
           </div>
         </div>
       )}
+
+      {/* Connect Wallet Dialog */}
+      <ConfirmDialog
+        isOpen={showConnectDialog}
+        onClose={() => setShowConnectDialog(false)}
+        onConfirm={confirmConnectWallet}
+        title="Connect New Wallet"
+        message="This will connect a new wallet and sync all transactions. Make sure your wallet is unlocked."
+        type="info"
+        confirmText="Connect Wallet"
+        isLoading={isConnecting}
+      />
     </div>
   );
 }
