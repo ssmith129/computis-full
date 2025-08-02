@@ -1141,9 +1141,10 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center p-6">
+      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Enhanced Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
+      <div className="bg-white border-b border-gray-200 px-10 py-8">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -1184,15 +1185,17 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="flex-1 px-10 py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
         <div className="min-h-96">
           {renderStepContent()}
+        </div>
         </div>
       </div>
 
       {/* Footer Navigation */}
       {currentStep < 3 && (
-        <div className="bg-white border-t border-gray-200 shadow-lg">
+        <div className="bg-white border-t border-gray-200 px-10 py-8">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
               <InteractiveButton
@@ -1242,6 +1245,7 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };
