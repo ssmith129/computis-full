@@ -39,7 +39,6 @@ export default function Header() {
       </div>
       <div className="flex items-center space-x-6">
         <button 
-          onClick={handleExport}
           className="flex items-center justify-center text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 w-24 h-[34px] rounded-md font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
         >
           <FileText className="w-3.5 h-3.5 mr-1.5" />

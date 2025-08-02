@@ -236,28 +236,24 @@ export default function Dashboard() {
             <h2 className="text-xl font-bold text-gray-900 mb-6 font-sans">Quick Actions</h2>
             <div className="space-y-3">
               <button 
-                onClick={() => handleQuickAction('import')}
                 className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-sm font-medium text-gray-900">Import Transactions</span>
                 <TrendingUp className="h-4 w-4 text-gray-400" />
               </button>
               <button 
-                onClick={() => handleQuickAction('report')}
                 className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-sm font-medium text-gray-900">Generate Report</span>
                 <FileText className="h-4 w-4 text-gray-400" />
               </button>
               <button 
-                onClick={() => handleQuickAction('client')}
                 className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-sm font-medium text-gray-900">Add Client</span>
                 <Users className="h-4 w-4 text-gray-400" />
               </button>
               <button 
-                onClick={() => handleQuickAction('wallet')}
                 className="w-full flex items-center justify-between p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <span className="text-sm font-medium text-gray-900">Connect Wallet</span>

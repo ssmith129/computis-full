@@ -122,9 +122,8 @@ export default function Clients() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 font-sans">Clients</h1>
           <p className="text-gray-600 mt-1 font-sans">Manage your clients and their crypto tax profiles</p>
-          onClick={handleAddClient}
         </div>
-        <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
+        <button onClick={handleAddClient} className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
           <Plus className="w-4 h-4 mr-2" />
           Add Client
         </button>
@@ -227,13 +226,11 @@ export default function Clients() {
 
             <div className="mt-4 flex space-x-2">
               <button 
-                onClick={() => handleClientAction(client.id, 'view')}
                 className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
               >
                 View Details
               </button>
               <button 
-                onClick={() => handleClientAction(client.id, 'transactions')}
                 className="flex-1 px-3 py-2 text-sm bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
               >
                 <TrendingUp className="h-4 w-4 mr-1 inline" />
