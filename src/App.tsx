@@ -5,6 +5,11 @@ import Dashboard from './components/Dashboard';
 import Clients from './components/Clients';
 import Wallets from './components/Wallets';
 import Reports from './components/Reports';
+import Settings from './components/Settings';
+import Preferences from './components/Preferences';
+import RuleEngine from './components/RuleEngine';
+import AccountSettings from './components/AccountSettings';
+import Exports from './components/Exports';
 import PageHeader from './components/PageHeader';
 import TransactionsTable from './components/TransactionsTable';
 import RuleBuilder from './components/RuleBuilder';
@@ -43,6 +48,36 @@ function App() {
         return (
           <div className="p-8">
             <Reports />
+          </div>
+        );
+      case 'settings':
+        return (
+          <div className="p-8">
+            <Settings />
+          </div>
+        );
+      case 'preferences':
+        return (
+          <div className="p-8">
+            <Preferences />
+          </div>
+        );
+      case 'rules':
+        return (
+          <div className="p-8">
+            <RuleEngine />
+          </div>
+        );
+      case 'account':
+        return (
+          <div className="p-8">
+            <AccountSettings />
+          </div>
+        );
+      case 'exports':
+        return (
+          <div className="p-8">
+            <Exports />
           </div>
         );
       case 'transactions':

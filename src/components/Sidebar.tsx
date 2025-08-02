@@ -36,6 +36,7 @@ const settingItems = [
   { icon: Settings, label: 'General', key: 'settings' },
   { icon: Sliders, label: 'Preferences', key: 'preferences' },
   { icon: GitBranch, label: 'Rule Engine', key: 'rules' },
+  { icon: Users, label: 'Account', key: 'account' },
 ];
 
   return (
