@@ -229,18 +229,160 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </AnimatedCard>
 
       {/* Clients Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {filteredClients.map((client) => (
           <AnimatedCard 
             key={client.id} 
-            className="p-6 cursor-pointer group" 
+            className="overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300" 
             hover
             onMouseEnter={() => setHoveredClient(client.id)}
             onMouseLeave={() => setHoveredClient(null)}
           >
-            <div className="flex items-start justify-between mb-2">
-              <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
+            {/* Card Header */}
+            <div className="p-6 pb-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-sm">
+                      {client.type === 'Business' ? (
+                        <Building className="h-6 w-6 text-blue-600" />
+                      ) : (
+                        <User className="h-6 w-6 text-blue-600" />
+                      )}
+                    </div>
+                    {/* Status Indicator Dot */}
+                    <div className={`absolute -top-1 -right-1 h-4 w-4 rounded-full border-2 border-white ${
+                      client.status === 'Active' ? 'bg-green-500' : 'bg-gray-400'
+                    }`} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-gray-900 font-display truncate group-hover:text-blue-600 transition-colors duration-200">
+                      {client.name}
+                    </h3>
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                        client.type === 'Business' 
+                          ? 'bg-purple-100 text-purple-800' 
+                          : 'bg-blue-100 text-blue-800'
+                      }`}>
+                        {client.type}
+                      </span>
+                      <StatusIndicator 
+                        status={client.status === 'Active' ? 'success' : 'pending'} 
+                        label={client.status}
+                        size="sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="opacity-0 group-hover:opacity-100 transition-all duration-200 flex-shrink-0">
+                  <ActionMenu actions={getClientActionMenu(client)} />
+                </div>
+              </div>
+            </div>
+
+            {/* Card Body */}
+            <div className="p-6 pt-4 space-y-4">
+              {/* Contact Information */}
+              <div className="space-y-3">
+                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200">
+                  <Mail className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                  <span className="truncate">{client.email}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200">
+                  <Phone className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                  <span>{client.phone}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200">
+                  <Calendar className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                  <span>Last activity: {client.lastActivity}</span>
+                </div>
+              </div>
+
+              {/* Metrics Section */}
+              <div className="pt-4 border-t border-gray-100">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors duration-200">
+                    <div className="text-xl font-bold text-gray-900 font-display">{client.transactions}</div>
+                    <div className="text-xs text-gray-600 font-sans">Transactions</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors duration-200">
+                    <div className="text-xl font-bold text-gray-900 font-display">{client.totalValue}</div>
+                    <div className="text-xs text-gray-600 font-sans">Total Value</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card Footer */}
+            <div className="px-6 pb-6">
+              <div className="grid grid-cols-2 gap-3">
+                <InteractiveButton 
+                  variant="secondary" 
+                  size="sm" 
+                  className="w-full justify-center text-xs"
+                  onClick={() => handleClientAction(client.id, 'view')}
+                >
+                  View Profile
+                </InteractiveButton>
+                <InteractiveButton 
+                  variant="primary" 
+                  size="sm" 
+                  icon={TrendingUp}
+                  className="w-full justify-center text-xs"
+                  onClick={() => handleClientAction(client.id, 'transactions')}
+                >
+                  Transactions
+                </InteractiveButton>
+              </div>
+            </div>
+          </AnimatedCard>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {filteredClients.length === 0 && (
+        <AnimatedCard className="text-center py-16">
+          <div className="max-w-sm mx-auto">
+            <div className="h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <User className="h-12 w-12 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3 font-display">No clients found</h3>
+            <p className="text-gray-600 mb-6 font-sans">
+              {searchTerm || filterType !== 'All' || filterStatus !== 'All' 
+                ? 'Try adjusting your search or filter criteria to find clients.'
+                : 'Get started by adding your first client to the system.'
+              }
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              {(searchTerm || filterType !== 'All' || filterStatus !== 'All') && (
+                <InteractiveButton 
+                  variant="secondary" 
+                  size="md"
+                  onClick={() => {
+                    setSearchTerm('');
+                    setFilterType('All');
+                    setFilterStatus('All');
+                  }}
+                >
+                  Clear Filters
+                </InteractiveButton>
+              )}
+              <InteractiveButton 
+                variant="primary" 
+                size="md" 
+                icon={Plus}
+                onClick={handleAddClient}
+              >
+                Add First Client
+              </InteractiveButton>
+            </div>
+          </div>
+        </AnimatedCard>
+      )}
+    </div>
+  );
+}
                   {client.type === 'Business' ? (
                     <Building className="h-4 w-4 text-gray-600" />
                   ) : (
