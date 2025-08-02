@@ -32,3 +32,24 @@
   animation: fade-in 0.2s ease-out;
 }
 
+/* Content Container Centering */
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .content-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
