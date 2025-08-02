@@ -3,6 +3,10 @@ import { ArrowUpDown, Check, AlertTriangle, HelpCircle, AlertCircle, Minus, Chev
 import { useNotifications } from './NotificationSystem';
 import ConfirmDialog from './ConfirmDialog';
 import LoadingSpinner from './LoadingSpinner';
+import StatusIndicator from './StatusIndicator';
+import ActionMenu from './ActionMenu';
+import InteractiveButton from './InteractiveButton';
+import AnimatedCard from './AnimatedCard';
 
 interface TransactionsTableProps {
   onTransactionSelect?: (transactionId: string) => void;
@@ -178,6 +182,7 @@ export default function TransactionsTable() {
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
   const [isProcessing, setIsProcessing] = React.useState(false);
+  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
 
   const handleAction = (type: string, transactionId: number) => {
     setSelectedAction({ type, transactionId });
@@ -234,6 +239,29 @@ export default function TransactionsTable() {
     setSelectedAction(null);
   };
 
+  const getActionMenuItems = (transaction: any) => [
+    {
+      label: 'View Details',
+      icon: HelpCircle,
+      onClick: () => handleAction('view', transaction.id)
+    },
+    {
+      label: 'Edit Transaction',
+      icon: AlertTriangle,
+      onClick: () => handleAction('edit', transaction.id)
+    },
+    {
+      label: 'Duplicate',
+      icon: Check,
+      onClick: () => handleAction('duplicate', transaction.id)
+    },
+    {
+      label: 'Delete',
+      icon: AlertTriangle,
+      onClick: () => handleAction('delete', transaction.id),
+      variant: 'danger' as const
+    }
+  ];
   const handleBulkAction = (action: string) => {
     addNotification({
       type: 'info',
@@ -255,153 +283,164 @@ export default function TransactionsTable() {
   return (
     <>
       {/* AI Confidence Legend */}
-      <div className="px-10 py-6 bg-gray-50 border-b border-gray-200">
+      <div className="px-12 py-8 bg-gray-50 border-b border-gray-200">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            <span className="text-base font-medium font-display">AI Confidence Levels:</span>
-            <div className="flex items-center hover:scale-105 transition-transform duration-200">
-              <div className="bg-green-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs mr-3">
+          <div className="flex items-center space-x-10">
+            <span className="text-lg font-medium font-display">AI Confidence Levels:</span>
+            <div className="flex items-center hover:scale-105 transition-transform duration-200 group">
+              <div className="bg-green-500 text-white rounded-full h-8 w-8 flex items-center justify-center text-sm mr-4 group-hover:animate-pulse">
                 <Check className="w-3 h-3" />
               </div>
-              <span className="text-base font-sans">High (90%+)</span>
+              <span className="text-lg font-sans">High (90%+)</span>
             </div>
-            <div className="flex items-center hover:scale-105 transition-transform duration-200">
-              <div className="bg-yellow-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs mr-3">
+            <div className="flex items-center hover:scale-105 transition-transform duration-200 group">
+              <div className="bg-yellow-500 text-white rounded-full h-8 w-8 flex items-center justify-center text-sm mr-4 group-hover:animate-pulse">
                 <AlertCircle className="w-3 h-3" />
               </div>
-              <span className="text-base font-sans">Medium (70-89%)</span>
+              <span className="text-lg font-sans">Medium (70-89%)</span>
             </div>
-            <div className="flex items-center hover:scale-105 transition-transform duration-200">
-              <div className="bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs mr-3">
+            <div className="flex items-center hover:scale-105 transition-transform duration-200 group">
+              <div className="bg-red-500 text-white rounded-full h-8 w-8 flex items-center justify-center text-sm mr-4 group-hover:animate-pulse">
                 <HelpCircle className="w-3 h-3" />
               </div>
-              <span className="text-base font-sans">Low (&lt;70%)</span>
+              <span className="text-lg font-sans">Low (&lt;70%)</span>
             </div>
           </div>
           <div>
-            <button className="text-base text-gray-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">Hide Legend</button>
+            <InteractiveButton variant="secondary" size="sm">
+              Hide Legend
+            </InteractiveButton>
           </div>
         </div>
       </div>
 
       {/* Transactions Grid */}
-      <div className="px-10 py-8">
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+      <div className="px-12 py-10">
+        <AnimatedCard className="overflow-hidden" hover>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 text-left">
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">
                     <div className="flex items-center">
-                      <input type="checkbox" className="mr-4 rounded border-gray-300 hover:scale-110 transition-transform duration-200 font-sans" />
+                      <input type="checkbox" className="mr-6 rounded border-gray-300 hover:scale-110 transition-transform duration-200 w-5 h-5" />
                       Date
-                      <ArrowUpDown className="w-4 h-4 ml-2 text-gray-400 hover:text-gray-600 transition-colors duration-200" />
+                      <ArrowUpDown className="w-5 h-5 ml-3 text-gray-400 hover:text-gray-600 transition-colors duration-200 hover:scale-110" />
                     </div>
                   </th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Type</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Asset</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Amount</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">FMV (USD)</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">AI Classification</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Confidence</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Status</th>
-                  <th className="px-6 py-4 text-base font-medium text-gray-700 font-display">Actions</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Type</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Asset</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Amount</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">FMV (USD)</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">AI Classification</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Confidence</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Status</th>
+                  <th className="px-8 py-6 text-lg font-medium text-gray-700 font-display">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {transactions.map((transaction) => (
                   <tr 
                     key={transaction.id} 
-                    className={`border-t border-gray-100 hover:bg-gray-50 hover:shadow-sm transition-all duration-200 group ${
+                    className={`border-t border-gray-100 hover:bg-gray-50 hover:shadow-sm transition-all duration-300 group ${
                       transaction.isHighlighted ? 'bg-red-50' : ''
-                    }`}
+                    } ${hoveredRow === transaction.id ? 'scale-105 shadow-lg' : ''}`}
+                    onMouseEnter={() => setHoveredRow(transaction.id)}
+                    onMouseLeave={() => setHoveredRow(null)}
                   >
-                    <td className="px-6 py-5">
+                    <td className="px-8 py-6">
                       <div className="flex items-center">
-                        <input type="checkbox" className="mr-4 rounded border-gray-300 hover:scale-110 transition-transform duration-200 font-sans" />
-                        <span className="text-base font-sans">{transaction.date}</span>
+                        <input type="checkbox" className="mr-6 rounded border-gray-300 hover:scale-110 transition-transform duration-200 w-5 h-5" />
+                        <span className="text-lg font-sans">{transaction.date}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className={`px-3 py-1 rounded-lg text-sm font-medium font-sans hover:scale-105 transition-transform duration-200 ${transaction.typeColor}`}>
+                    <td className="px-8 py-6">
+                      <span className={`px-4 py-2 rounded-xl text-base font-medium font-sans hover:scale-105 transition-transform duration-200 ${transaction.typeColor}`}>
                         {transaction.type}
                       </span>
                     </td>
-                    <td className="px-6 py-5">
+                    <td className="px-8 py-6">
                       <div className="flex items-center">
-                        <span className={`text-xl mr-3 ${transaction.assetColor} hover:scale-110 transition-transform duration-200`}>
+                        <span className={`text-2xl mr-4 ${transaction.assetColor} hover:scale-110 transition-transform duration-200 animate-float`}>
                           {transaction.assetIcon}
                         </span>
-                        <span className="text-base font-sans">{transaction.asset}</span>
+                        <span className="text-lg font-sans">{transaction.asset}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-5 text-base font-sans">{transaction.amount}</td>
-                    <td className="px-6 py-5">
+                    <td className="px-8 py-6 text-lg font-sans">{transaction.amount}</td>
+                    <td className="px-8 py-6">
                       <div className="flex items-center">
-                        <span className="text-base font-sans">{transaction.fmv}</span>
+                        <span className="text-lg font-sans">{transaction.fmv}</span>
                         {transaction.hasWarning && (
-                          <AlertTriangle className="w-5 h-5 text-red-500 ml-3 hover:scale-110 transition-transform duration-200" title="FMV may be inaccurate" />
+                          <AlertTriangle className="w-6 h-6 text-red-500 ml-4 hover:scale-110 transition-transform duration-200 animate-pulse" title="FMV may be inaccurate" />
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center space-x-3">
-                        <span className={`px-3 py-1 rounded-lg text-sm font-medium font-sans hover:scale-105 transition-transform duration-200 ${transaction.classificationColor}`}>
+                    <td className="px-8 py-6">
+                      <div className="flex items-center space-x-4">
+                        <span className={`px-4 py-2 rounded-xl text-base font-medium font-sans hover:scale-105 transition-transform duration-200 ${transaction.classificationColor}`}>
                           {transaction.classification}
                         </span>
                         {transaction.conflictingClassification && (
-                          <span className="px-3 py-1 bg-red-100 text-red-800 rounded-lg text-sm font-sans hover:scale-105 transition-transform duration-200">
+                          <span className="px-4 py-2 bg-red-100 text-red-800 rounded-xl text-base font-sans hover:scale-105 transition-transform duration-200 animate-shake">
                             {transaction.conflictingClassification}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-5">
+                    <td className="px-8 py-6">
                       <div className="flex items-center" title={
                         transaction.confidenceLevel === 'high' ? 'High confidence - Based on recurring pattern' :
                         transaction.confidenceLevel === 'medium' ? 'Medium confidence - Similar to past patterns' :
                         transaction.confidenceLevel === 'low' ? 'Low confidence - Unusual pattern, needs review' :
                         'No AI classification attempted yet'
                       }>
-                        <div className={`rounded-full h-6 w-6 flex items-center justify-center text-xs hover:scale-110 transition-transform duration-200 ${getConfidenceColor(transaction.confidenceLevel)}`}>
+                        <div className={`rounded-full h-8 w-8 flex items-center justify-center text-sm hover:scale-110 transition-transform duration-200 ${getConfidenceColor(transaction.confidenceLevel)} animate-pulse`}>
                           {getConfidenceIcon(transaction.confidenceLevel)}
                         </div>
-                        <span className="ml-2 text-base font-sans">
+                        <span className="ml-3 text-lg font-sans">
                           {transaction.confidence ? `${transaction.confidence}%` : 'N/A'}
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-5">
-                      <span className={`px-3 py-1 rounded-lg text-sm font-medium font-sans hover:scale-105 transition-transform duration-200 ${transaction.statusColor}`}>
-                        {transaction.status}
-                      </span>
+                    <td className="px-8 py-6">
+                      <StatusIndicator 
+                        status={
+                          transaction.status === 'Confirmed' ? 'success' :
+                          transaction.status === 'Suggested' ? 'pending' :
+                          transaction.status === 'Flagged' ? 'error' :
+                          'pending'
+                        }
+                        label={transaction.status}
+                        size="md"
+                      />
                     </td>
-                    <td className="px-6 py-5">
-                      <div className="flex space-x-3">
+                    <td className="px-8 py-6">
+                      <div className="flex items-center space-x-4">
                         {transaction.classification === 'Unclassified' ? (
-                          <button 
-                            className="text-blue-500 hover:text-blue-700 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
-                            title="AI Classify"
+                          <InteractiveButton 
+                            variant="primary" 
+                            size="sm" 
+                            icon={Check}
+                            tooltip="AI Classify"
+                            className="opacity-0 group-hover:opacity-100"
                           >
-                            <Check className="w-5 h-5" />
-                          </button>
+                            Classify
+                          </InteractiveButton>
                         ) : (
-                          <button 
-                            className="text-gray-400 hover:text-green-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
-                            title="Accept"
+                          <InteractiveButton 
+                            variant="success" 
+                            size="sm" 
+                            icon={Check}
+                            tooltip="Accept Classification"
+                            className="opacity-0 group-hover:opacity-100"
                           >
-                            <Check className="w-5 h-5" />
-                          </button>
+                            Accept
+                          </InteractiveButton>
                         )}
-                        <button 
-                          className="text-gray-400 hover:text-red-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" 
-                          title="Reject"
-                        >
-                          <AlertTriangle className="w-5 h-5" />
-                        </button>
-                        <button className="text-gray-400 hover:text-gray-600 hover:scale-110 transition-all duration-200 opacity-0 group-hover:opacity-100" title="More options">
-                          <HelpCircle className="w-5 h-5" />
-                        </button>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <ActionMenu actions={getActionMenuItems(transaction)} />
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -409,48 +448,56 @@ export default function TransactionsTable() {
               </tbody>
             </table>
           </div>
-          <div className="px-6 py-5 border-t border-gray-100 flex items-center justify-between bg-gray-50">
-            <div className="flex items-center space-x-6">
-              <div className="text-base text-gray-600 font-sans">
+          <div className="px-8 py-6 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+            <div className="flex items-center space-x-8">
+              <div className="text-lg text-gray-600 font-sans">
                 Showing 7 of 124 transactions
               </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-base text-gray-600 font-display">Bulk Actions:</span>
-                <button 
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+              <div className="flex items-center space-x-4">
+                <span className="text-lg text-gray-600 font-display">Bulk Actions:</span>
+                <InteractiveButton 
+                  variant="success" 
+                  size="sm" 
+                  icon={Check}
+                  tooltip="Accept all visible classifications"
                 >
-                  <Check className="w-4 h-4 mr-2 inline" />
                   Accept All
-                </button>
-                <button 
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+                </InteractiveButton>
+                <InteractiveButton 
+                  variant="warning" 
+                  size="sm" 
+                  icon={AlertTriangle}
+                  tooltip="Add tags to selected transactions"
                 >
-                  <AlertTriangle className="w-4 h-4 mr-2 inline" />
                   Tag
-                </button>
-                <button 
-                  className="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans"
+                </InteractiveButton>
+                <InteractiveButton 
+                  variant="secondary" 
+                  size="sm" 
+                  icon={ArrowUpDown}
+                  tooltip="Export selected transactions"
                 >
-                  <ArrowUpDown className="w-4 h-4 mr-2 inline" />
                   Export
-                </button>
+                </InteractiveButton>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 text-gray-600 hover:scale-105 transition-all duration-200 font-sans">
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg hover:scale-105 transition-all duration-200 font-sans font-medium">1</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">2</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">3</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">...</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 hover:scale-105 transition-all duration-200 font-sans">25</button>
-              <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 text-gray-600 hover:scale-105 transition-all duration-200 font-sans">
-                <ChevronRight className="w-4 h-4" />
-              </button>
+            <div className="flex items-center space-x-4">
+              <InteractiveButton variant="secondary" size="sm" icon={ChevronLeft} disabled>
+                Previous
+              </InteractiveButton>
+              <div className="flex items-center space-x-2">
+                <InteractiveButton variant="primary" size="sm">1</InteractiveButton>
+                <InteractiveButton variant="secondary" size="sm">2</InteractiveButton>
+                <InteractiveButton variant="secondary" size="sm">3</InteractiveButton>
+                <span className="text-gray-500 font-sans">...</span>
+                <InteractiveButton variant="secondary" size="sm">25</InteractiveButton>
+              </div>
+              <InteractiveButton variant="secondary" size="sm" icon={ChevronRight}>
+                Next
+              </InteractiveButton>
             </div>
           </div>
-        </div>
+        </AnimatedCard>
       </div>
 
       {/* Confirm Dialog */}
@@ -483,75 +530,71 @@ export default function TransactionsTable() {
       />
 
       {/* AI Classification Insights */}
-      <div className="px-10 py-8 bg-gray-50 border-t border-gray-200">
+      <div className="px-12 py-10 bg-gray-50 border-t border-gray-200">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 font-display">AI Classification Insights</h2>
-          <button className="text-base text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium">View Details</button>
+          <h2 className="text-3xl font-bold text-gray-900 font-display">AI Classification Insights</h2>
+          <InteractiveButton variant="secondary" size="md">
+            View Details
+          </InteractiveButton>
         </div>
-        <div className="grid grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+        <div className="grid grid-cols-3 gap-10">
+          <AnimatedCard className="p-8 cursor-pointer" hover glow>
             <div className="flex items-center">
-              <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-500 mr-4 hover:scale-110 transition-transform duration-200">
-                <Check className="w-6 h-6" />
+              <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center text-green-500 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse-glow">
+                <Check className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900 font-display">High Confidence</h3>
-                <p className="text-base text-gray-600 font-sans">68 transactions (55%)</p>
+                <h3 className="text-xl font-medium text-gray-900 font-display">High Confidence</h3>
+                <p className="text-lg text-gray-600 font-sans">68 transactions (55%)</p>
               </div>
             </div>
-            <div className="mt-4 text-base text-gray-700 font-sans">
+            <div className="mt-6 text-lg text-gray-700 font-sans">
               These transactions match known patterns with high confidence.
             </div>
-            <div className="mt-4">
-              <button 
-                className="text-base text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium"
-              >
+            <div className="mt-6">
+              <InteractiveButton variant="success" size="md" className="w-full">
                 Accept All
-              </button>
+              </InteractiveButton>
             </div>
-          </div>
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+          </AnimatedCard>
+          <AnimatedCard className="p-8 cursor-pointer" hover>
             <div className="flex items-center">
-              <div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 mr-4 hover:scale-110 transition-transform duration-200">
-                <AlertCircle className="w-6 h-6" />
+              <div className="h-16 w-16 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse">
+                <AlertCircle className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900 font-display">Medium Confidence</h3>
-                <p className="text-base text-gray-600 font-sans">42 transactions (34%)</p>
+                <h3 className="text-xl font-medium text-gray-900 font-display">Medium Confidence</h3>
+                <p className="text-lg text-gray-600 font-sans">42 transactions (34%)</p>
               </div>
             </div>
-            <div className="mt-4 text-base text-gray-700 font-sans">
+            <div className="mt-6 text-lg text-gray-700 font-sans">
               These transactions have somewhat reliable AI classifications.
             </div>
-            <div className="mt-4">
-              <button 
-                className="text-base text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium"
-              >
+            <div className="mt-6">
+              <InteractiveButton variant="warning" size="md" className="w-full">
                 Review All
-              </button>
+              </InteractiveButton>
             </div>
-          </div>
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+          </AnimatedCard>
+          <AnimatedCard className="p-8 cursor-pointer" hover>
             <div className="flex items-center">
-              <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center text-red-500 mr-4 hover:scale-110 transition-transform duration-200">
-                <HelpCircle className="w-6 h-6" />
+              <div className="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center text-red-500 mr-6 hover:scale-110 transition-transform duration-200 animate-shake">
+                <HelpCircle className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900 font-display">Low Confidence</h3>
-                <p className="text-base text-gray-600 font-sans">14 transactions (11%)</p>
+                <h3 className="text-xl font-medium text-gray-900 font-display">Low Confidence</h3>
+                <p className="text-lg text-gray-600 font-sans">14 transactions (11%)</p>
               </div>
             </div>
-            <div className="mt-4 text-base text-gray-700 font-sans">
+            <div className="mt-6 text-lg text-gray-700 font-sans">
               These transactions need manual review due to uncertain patterns.
             </div>
-            <div className="mt-4">
-              <button 
-                className="text-base text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium"
-              >
+            <div className="mt-6">
+              <InteractiveButton variant="danger" size="md" className="w-full">
                 Fix Manually
-              </button>
+              </InteractiveButton>
             </div>
-          </div>
+          </AnimatedCard>
         </div>
       </div>
     </>

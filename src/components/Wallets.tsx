@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Plus, Upload, Wallet, ExternalLink, AlertTriangle, CheckCircle, Clock, MoreVertical } from 'lucide-react';
 import { useNotifications } from './NotificationSystem';
 import ConfirmDialog from './ConfirmDialog';
+import InteractiveButton from './InteractiveButton';
+import AnimatedCard from './AnimatedCard';
+import StatusIndicator from './StatusIndicator';
+import ActionMenu from './ActionMenu';
 
 const wallets = [
   {
@@ -90,6 +94,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
   const [activeTab, setActiveTab] = useState('wallets');
   const [showConnectDialog, setShowConnectDialog] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [hoveredWallet, setHoveredWallet] = useState<number | null>(null);
 
   const handleConnectWallet = () => {
     setShowConnectDialog(true);
@@ -143,6 +148,29 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
     }
   };
 
+  const getWalletActionMenu = (wallet: any) => [
+    {
+      label: 'Sync Now',
+      icon: CheckCircle,
+      onClick: () => handleWalletAction(wallet.id, 'sync')
+    },
+    {
+      label: 'View Transactions',
+      icon: ExternalLink,
+      onClick: () => handleWalletAction(wallet.id, 'view')
+    },
+    {
+      label: 'Edit Settings',
+      icon: AlertTriangle,
+      onClick: () => handleWalletAction(wallet.id, 'edit')
+    },
+    {
+      label: 'Disconnect',
+      icon: AlertTriangle,
+      onClick: () => handleWalletAction(wallet.id, 'disconnect'),
+      variant: 'danger' as const
+    }
+  ];
   const handleImportCSV = () => {
     addNotification({
       type: 'info',
@@ -162,32 +190,40 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-sans">Wallets & Data Sources</h1>
-          <p className="text-gray-600 mt-1 font-sans">Connect wallets and import transaction data</p>
+          <h1 className="text-3xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
+          <p className="text-lg text-gray-600 mt-2 font-sans">Connect wallets and import transaction data</p>
         </div>
-        <div className="flex space-x-3">
-          <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 hover:shadow-md transition-all duration-200 font-sans">
-            <Upload className="w-4 h-4 mr-2" />
+        <div className="flex space-x-4">
+          <InteractiveButton 
+            variant="secondary" 
+            size="lg" 
+            icon={Upload}
+            tooltip="Import transaction data from CSV files"
+          >
             Import CSV
           </button>
-          <button className="flex items-center px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans"
-            onClick={() => onWorkflowOpen?.('connect-wallet')}>
-            <Plus className="w-4 h-4 mr-2" />
+          </InteractiveButton>
+          <InteractiveButton 
+            variant="primary" 
+            size="lg" 
+            icon={Plus}
+            tooltip="Connect a new wallet or exchange"
+          >
             Connect Wallet
-          </button>
+          </InteractiveButton>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-10">
           <button
             onClick={() => setActiveTab('wallets')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200 font-sans ${
+            className={`py-3 px-2 border-b-4 font-medium text-lg transition-all duration-300 font-display hover:scale-105 ${
               activeTab === 'wallets'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -197,7 +233,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           </button>
           <button
             onClick={() => setActiveTab('imports')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200 font-sans ${
+            className={`py-3 px-2 border-b-4 font-medium text-lg transition-all duration-300 font-display hover:scale-105 ${
               activeTab === 'imports'
                 ? 'border-yellow-400 text-yellow-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -209,195 +245,208 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       </div>
 
       {activeTab === 'wallets' && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <AnimatedCard className="p-8" hover glow>
               <div className="flex items-center">
-                <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center text-green-600 mr-4 hover:scale-110 transition-transform duration-200">
-                  <CheckCircle className="h-6 w-6" />
+                <div className="h-16 w-16 rounded-xl bg-green-100 flex items-center justify-center text-green-600 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse-glow">
+                  <CheckCircle className="h-8 w-8" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Connected Wallets</p>
-                  <p className="text-2xl font-bold text-gray-900 font-sans">4</p>
+                  <p className="text-base font-medium text-gray-600 font-sans">Connected Wallets</p>
+                  <p className="text-3xl font-bold text-gray-900 font-display">4</p>
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            </AnimatedCard>
+            <AnimatedCard className="p-8" hover>
               <div className="flex items-center">
-                <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-4 hover:scale-110 transition-transform duration-200">
-                  <Wallet className="h-6 w-6" />
+                <div className="h-16 w-16 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 mr-6 hover:scale-110 transition-transform duration-200 animate-float">
+                  <Wallet className="h-8 w-8" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Total Balance</p>
-                  <p className="text-2xl font-bold text-gray-900 font-sans">$409,330</p>
+                  <p className="text-base font-medium text-gray-600 font-sans">Total Balance</p>
+                  <p className="text-3xl font-bold text-gray-900 font-display">$409,330</p>
                 </div>
               </div>
-            </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            </AnimatedCard>
+            <AnimatedCard className="p-8" hover>
               <div className="flex items-center">
-                <div className="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center text-purple-600 mr-4 hover:scale-110 transition-transform duration-200">
-                  <Clock className="h-6 w-6" />
+                <div className="h-16 w-16 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mr-6 hover:scale-110 transition-transform duration-200 animate-pulse">
+                  <Clock className="h-8 w-8" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-600 font-sans">Total Transactions</p>
-                  <p className="text-2xl font-bold text-gray-900 font-sans">557</p>
+                  <p className="text-base font-medium text-gray-600 font-sans">Total Transactions</p>
+                  <p className="text-3xl font-bold text-gray-900 font-display">557</p>
                 </div>
               </div>
-            </div>
+            </AnimatedCard>
           </div>
 
           {/* Wallets List */}
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 font-sans">Connected Wallets</h2>
+          <AnimatedCard className="overflow-hidden" hover>
+            <div className="px-8 py-6 border-b border-gray-200">
+              <h2 className="text-2xl font-semibold text-gray-900 font-display">Connected Wallets</h2>
             </div>
             <div className="divide-y divide-gray-200">
               {wallets.map((wallet) => (
-                <div key={wallet.id} className="p-6 hover:bg-gray-50 transition-colors duration-200 group">
+                <div 
+                  key={wallet.id} 
+                  className="p-8 hover:bg-gray-50 transition-all duration-300 group hover:scale-105"
+                  onMouseEnter={() => setHoveredWallet(wallet.id)}
+                  onMouseLeave={() => setHoveredWallet(null)}
+                >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="text-2xl hover:scale-110 transition-transform duration-200">
+                    <div className="flex items-center space-x-6">
+                      <div className="text-3xl hover:scale-110 transition-transform duration-200 animate-float">
                         {wallet.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg font-medium text-gray-900 font-sans">{wallet.name}</h3>
-                        <p className="text-sm text-gray-600 font-sans">{wallet.type}</p>
-                        <p className="text-xs text-gray-500 font-mono mt-1">{wallet.address}</p>
+                        <h3 className="text-xl font-medium text-gray-900 font-display">{wallet.name}</h3>
+                        <p className="text-base text-gray-600 font-sans">{wallet.type}</p>
+                        <p className="text-sm text-gray-500 font-mono mt-2">{wallet.address}</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-8">
                       <div className="text-right">
-                        <p className="text-lg font-semibold text-gray-900 font-sans">{wallet.balance}</p>
-                        <p className="text-sm text-gray-600 font-sans">{wallet.usdValue}</p>
+                        <p className="text-xl font-semibold text-gray-900 font-display">{wallet.balance}</p>
+                        <p className="text-base text-gray-600 font-sans">{wallet.usdValue}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm text-gray-600 font-sans">{wallet.transactions} transactions</p>
-                        <p className="text-xs text-gray-500 font-sans">Last sync: {wallet.lastSync}</p>
+                        <p className="text-base text-gray-600 font-sans">{wallet.transactions} transactions</p>
+                        <p className="text-sm text-gray-500 font-sans">Last sync: {wallet.lastSync}</p>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-sans ${
-                          wallet.status === 'Connected' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {wallet.status}
-                        </span>
-                        <button className="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all duration-200">
-                          <MoreVertical className="h-5 w-5" />
-                        </button>
+                      <div className="flex items-center space-x-4">
+                        <StatusIndicator 
+                          status={wallet.status === 'Connected' ? 'success' : 'warning'} 
+                          label={wallet.status}
+                          size="md"
+                        />
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <ActionMenu actions={getWalletActionMenu(wallet)} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-4 flex space-x-3">
-                    <button 
-                      className="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                  <div className="mt-6 flex space-x-4">
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm"
+                      tooltip="Sync wallet transactions now"
                     >
                       Sync Now
-                    </button>
-                    <button 
-                      className="px-3 py-1 text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans"
+                    </InteractiveButton>
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm" 
+                      icon={ExternalLink}
+                      tooltip="View all transactions from this wallet"
                     >
-                      <ExternalLink className="h-3 w-3 mr-1 inline" />
                       View Transactions
-                    </button>
+                    </InteractiveButton>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </AnimatedCard>
         </div>
       )}
 
       {activeTab === 'imports' && (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Import History */}
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900 font-sans">Recent Imports</h2>
+          <AnimatedCard className="overflow-hidden" hover>
+            <div className="px-8 py-6 border-b border-gray-200">
+              <h2 className="text-2xl font-semibold text-gray-900 font-display">Recent Imports</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       File
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       Records
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       Errors
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-sans">
+                    <th className="px-8 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider font-display">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {importHistory.map((item) => (
-                    <tr key={item.id} className="hover:bg-gray-50 transition-colors duration-200">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900 font-sans">{item.filename}</div>
+                    <tr key={item.id} className="hover:bg-gray-50 transition-all duration-300 hover:scale-105">
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <div className="text-base font-medium text-gray-900 font-sans">{item.filename}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-600 font-sans">{item.date}</div>
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <div className="text-base text-gray-600 font-sans">{item.date}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900 font-sans">{item.records}</div>
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <div className="text-base text-gray-900 font-sans">{item.records}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-sans ${
-                          item.status === 'Completed' 
-                            ? 'bg-green-100 text-green-800'
-                            : item.status === 'Processing'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {item.status}
-                        </span>
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <StatusIndicator 
+                          status={
+                            item.status === 'Completed' ? 'success' :
+                            item.status === 'Processing' ? 'loading' :
+                            'error'
+                          }
+                          label={item.status}
+                          size="md"
+                        />
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className={`text-sm font-sans ${item.errors > 0 ? 'text-red-600' : 'text-gray-600'}`}>
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <div className={`text-base font-sans ${item.errors > 0 ? 'text-red-600 animate-pulse' : 'text-gray-600'}`}>
                           {item.errors}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button className="text-blue-600 hover:text-blue-900 hover:scale-105 transition-all duration-200 font-sans">
+                      <td className="px-8 py-5 whitespace-nowrap">
+                        <InteractiveButton variant="secondary" size="sm">
                           View Details
-                        </button>
+                        </InteractiveButton>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </div>
+          </AnimatedCard>
 
           {/* Upload Area */}
-          <div className="bg-white rounded-lg border border-gray-200 p-8 text-center hover:shadow-lg transition-shadow duration-300">
-            <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4 hover:scale-110 transition-transform duration-200" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2 font-sans">Import Transaction Data</h3>
-            <p className="text-gray-600 mb-4 font-sans">
+          <AnimatedCard className="p-12 text-center" hover glow>
+            <Upload className="h-16 w-16 text-gray-400 mx-auto mb-6 hover:scale-110 transition-transform duration-200 animate-float" />
+            <h3 className="text-2xl font-medium text-gray-900 mb-4 font-display">Import Transaction Data</h3>
+            <p className="text-lg text-gray-600 mb-8 font-sans">
               Upload CSV files from exchanges, wallets, or other sources
             </p>
-            <div className="flex justify-center space-x-3">
-              <button 
-                className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 transition-all duration-200 font-sans"
+            <div className="flex justify-center space-x-4">
+              <InteractiveButton 
+                variant="primary" 
+                size="lg"
+                tooltip="Upload CSV files from your computer"
               >
                 Choose File
-              </button>
-              <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+              </InteractiveButton>
+              <InteractiveButton 
+                variant="secondary" 
+                size="lg"
+                tooltip="Download CSV templates for different exchanges"
+              >
                 View Templates
-              </button>
+              </InteractiveButton>
             </div>
-          </div>
+          </AnimatedCard>
         </div>
       )}
 

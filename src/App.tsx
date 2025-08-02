@@ -195,7 +195,7 @@ function App() {
         <Header />
         <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
         
-        <main className={`${activeWorkflow ? 'ml-0 pt-0' : 'ml-72 pt-20'} min-h-screen`}>
+        <main className={`${activeWorkflow ? 'ml-0 pt-0' : 'ml-80 pt-24'} min-h-screen transition-all duration-300`}>
           {renderContent()}
         </main>
 

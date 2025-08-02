@@ -1,6 +1,10 @@
 import React from 'react';
 import { TrendingUp, Users, Wallet, FileText, AlertTriangle, CheckCircle, Clock, DollarSign } from 'lucide-react';
 import { useNotifications } from './NotificationSystem';
+import AnimatedCard from './AnimatedCard';
+import InteractiveButton from './InteractiveButton';
+import StatusIndicator from './StatusIndicator';
+import FloatingActionButton from './FloatingActionButton';
 
 const stats = [
   {
@@ -104,6 +108,32 @@ interface DashboardProps {
 export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   const { addNotification } = useNotifications();
 
+  const floatingActions = [
+    {
+      label: 'Import Transactions',
+      icon: TrendingUp,
+      onClick: () => onWorkflowOpen?.('import-transactions'),
+      color: 'bg-blue-600 hover:bg-blue-700'
+    },
+    {
+      label: 'Generate Report',
+      icon: FileText,
+      onClick: () => onWorkflowOpen?.('generate-report'),
+      color: 'bg-green-600 hover:bg-green-700'
+    },
+    {
+      label: 'Add Client',
+      icon: Users,
+      onClick: () => onWorkflowOpen?.('add-client'),
+      color: 'bg-purple-600 hover:bg-purple-700'
+    },
+    {
+      label: 'Connect Wallet',
+      icon: Wallet,
+      onClick: () => onWorkflowOpen?.('connect-wallet'),
+      color: 'bg-orange-600 hover:bg-orange-700'
+    }
+  ];
   const handleQuickAction = (action: string) => {
     switch (action) {
       case 'import':
@@ -155,122 +185,132 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   return (
     <div className="space-y-10">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {stats.map((stat) => (
-          <div key={stat.title} className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-all duration-300 hover:scale-105">
+          <AnimatedCard key={stat.title} className="p-10" hover glow={stat.title === 'Total Transactions'}>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
-                <p className="text-3xl font-bold text-gray-900 mt-3 font-display">{stat.value}</p>
-                <p className={`text-sm mt-1 font-sans ${
+                <p className="text-base font-medium text-gray-600 font-display">{stat.title}</p>
+                <p className="text-4xl font-bold text-gray-900 mt-4 font-display">{stat.value}</p>
+                <p className={`text-base mt-2 font-sans ${
                   stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {stat.change} from last month
                 </p>
               </div>
-              <div className={`h-16 w-16 rounded-xl flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200`}>
-                <stat.icon className="h-8 w-8" />
+              <div className={`h-20 w-20 rounded-2xl flex items-center justify-center ${stat.color} hover:scale-110 transition-transform duration-200 animate-float`}>
+                <stat.icon className="h-10 w-10" />
               </div>
             </div>
-          </div>
+          </AnimatedCard>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Recent Activity */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 font-display">Recent Activity</h2>
-              <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans font-medium">
+          <AnimatedCard className="p-10" hover>
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 font-display">Recent Activity</h2>
+              <InteractiveButton variant="secondary" size="sm">
                 View All
-              </button>
+              </InteractiveButton>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-5 p-5 rounded-xl hover:bg-gray-50 transition-colors duration-200">
-                  <div className={`h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} hover:scale-110 transition-transform duration-200`}>
-                    <activity.icon className="h-5 w-5" />
+                <div key={activity.id} className="flex items-start space-x-6 p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 hover:scale-105 group">
+                  <div className={`h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform duration-200`}>
+                    <activity.icon className="h-6 w-6" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-base font-medium text-gray-900 font-display">{activity.type}</p>
-                    <p className="text-sm text-gray-600 mt-2 font-sans">{activity.description}</p>
-                    <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
+                    <p className="text-lg font-medium text-gray-900 font-display">{activity.type}</p>
+                    <p className="text-base text-gray-600 mt-2 font-sans">{activity.description}</p>
+                    <p className="text-sm text-gray-500 mt-2 font-sans">{activity.time}</p>
                   </div>
                   <div className="flex-shrink-0">
-                    {activity.status === 'completed' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 font-sans">
-                        Completed
-                      </span>
-                    )}
-                    {activity.status === 'warning' && (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 font-sans">
-                        Review
-                      </span>
-                    )}
+                    <StatusIndicator 
+                      status={activity.status === 'completed' ? 'success' : 'warning'} 
+                      label={activity.status === 'completed' ? 'Completed' : 'Review'}
+                      size="md"
+                    />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </AnimatedCard>
         </div>
 
         {/* AI Insights */}
-        <div className="space-y-8">
-          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">AI Insights</h2>
-            <div className="space-y-8">
+        <div className="space-y-10">
+          <AnimatedCard className="p-10" hover float>
+            <h2 className="text-3xl font-bold text-gray-900 mb-10 font-display">AI Insights</h2>
+            <div className="space-y-10">
               {aiInsights.map((insight, index) => (
-                <div key={index} className="hover:bg-gray-50 p-4 rounded-xl transition-colors duration-200">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl font-bold text-gray-900 font-display">{insight.value}</span>
+                <div key={index} className="hover:bg-gray-50 p-6 rounded-2xl transition-all duration-300 hover:scale-105 group">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-4xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-300">{insight.value}</span>
                     {insight.trend === 'up' && (
-                      <TrendingUp className="h-5 w-5 text-green-500 hover:scale-110 transition-transform duration-200" />
+                      <TrendingUp className="h-6 w-6 text-green-500 group-hover:scale-110 transition-transform duration-200 animate-float" />
                     )}
                   </div>
-                  <p className="text-base font-medium text-gray-900 font-display">{insight.title}</p>
-                  <p className="text-sm text-gray-600 mt-2 font-sans">{insight.description}</p>
+                  <p className="text-lg font-medium text-gray-900 font-display">{insight.title}</p>
+                  <p className="text-base text-gray-600 mt-3 font-sans">{insight.description}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </AnimatedCard>
 
           {/* Quick Actions */}
           <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow duration-300">
             <h2 className="text-2xl font-bold text-gray-900 mb-8 font-display">Quick Actions</h2>
             <div className="space-y-4">
               <button 
-                onClick={() => onWorkflowOpen?.('import-transactions')}
-                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+          <AnimatedCard className="p-10" hover>
+            <h2 className="text-3xl font-bold text-gray-900 mb-10 font-display">Quick Actions</h2>
+            <div className="space-y-6">
+              <InteractiveButton 
+                variant="secondary" 
+                size="lg" 
+                icon={TrendingUp}
+                className="w-full justify-between"
+                tooltip="Import crypto transactions from exchanges and wallets"
               >
-                <span className="text-base font-medium text-gray-900">Import Transactions</span>
-                <TrendingUp className="h-5 w-5 text-gray-400" />
-              </button>
-              <button 
-                onClick={() => onWorkflowOpen?.('generate-report')}
-                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                <span className="text-lg font-medium text-gray-900">Import Transactions</span>
+              </InteractiveButton>
+              <InteractiveButton 
+                variant="secondary" 
+                size="lg" 
+                icon={FileText}
+                className="w-full justify-between"
+                tooltip="Generate tax reports and compliance documents"
               >
-                <span className="text-base font-medium text-gray-900">Generate Report</span>
-                <FileText className="h-5 w-5 text-gray-400" />
-              </button>
-              <button 
-                onClick={() => onWorkflowOpen?.('add-client')}
-                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                <span className="text-lg font-medium text-gray-900">Generate Report</span>
+              </InteractiveButton>
+              <InteractiveButton 
+                variant="secondary" 
+                size="lg" 
+                icon={Users}
+                className="w-full justify-between"
+                tooltip="Add new client to your portfolio"
               >
-                <span className="text-base font-medium text-gray-900">Add Client</span>
-                <Users className="h-5 w-5 text-gray-400" />
-              </button>
-              <button 
-                onClick={() => onWorkflowOpen?.('connect-wallet')}
-                className="w-full flex items-center justify-between p-4 text-left border border-gray-200 rounded-xl hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans"
+                <span className="text-lg font-medium text-gray-900">Add Client</span>
+              </InteractiveButton>
+              <InteractiveButton 
+                variant="secondary" 
+                size="lg" 
+                icon={Wallet}
+                className="w-full justify-between"
+                tooltip="Connect crypto wallets and exchanges"
               >
-                <span className="text-base font-medium text-gray-900">Connect Wallet</span>
-                <Wallet className="h-5 w-5 text-gray-400" />
-              </button>
+                <span className="text-lg font-medium text-gray-900">Connect Wallet</span>
+              </InteractiveButton>
             </div>
-          </div>
+          </AnimatedCard>
         </div>
       </div>
+
+      {/* Floating Action Button */}
+      <FloatingActionButton actions={floatingActions} position="bottom-right" />
     </div>
   );
 }

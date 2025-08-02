@@ -2,6 +2,7 @@ import React from 'react';
 import { Coins, FileText, User, ChevronDown } from 'lucide-react';
 import { NotificationBell } from './NotificationSystem';
 import { useNotifications } from './NotificationSystem';
+import InteractiveButton from './InteractiveButton';
 
 export default function Header() {
   const { addNotification } = useNotifications();
@@ -29,35 +30,39 @@ export default function Header() {
   };
 
   return (
-    <header className="text-white h-20 flex items-center justify-between px-10 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
+    <header className="text-white h-24 flex items-center justify-between px-12 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }}>
       <div className="flex items-center space-x-2">
         <img 
           src="/computis_v2_1.png" 
           alt="Computis Logo" 
-          className="h-12 w-auto"
+          className="h-16 w-auto hover:scale-105 transition-transform duration-300"
         />
       </div>
-      <div className="flex items-center space-x-8">
-        <button 
-          className="flex items-center justify-center text-gray-900 bg-yellow-400 hover:bg-yellow-300 hover:scale-105 px-6 h-10 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm"
+      <div className="flex items-center space-x-10">
+        <InteractiveButton 
+          variant="primary" 
+          size="md" 
+          icon={FileText}
+          tooltip="Export transaction data and reports"
         >
-          <FileText className="w-4 h-4 mr-2" />
           Export
-        </button>
-        <button 
-          className="flex items-center justify-center text-gray-900 bg-green-600 hover:bg-green-700 hover:scale-105 px-6 h-10 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md font-sans text-sm text-white"
+        </InteractiveButton>
+        <InteractiveButton 
+          variant="success" 
+          size="md"
+          tooltip="Import transaction data from exchanges and wallets"
         >
-          <span>Import Data</span>
-        </button>
-        <div className="flex items-center h-10">
+          Import Data
+        </InteractiveButton>
+        <div className="flex items-center h-12">
           <NotificationBell />
         </div>
-        <div className="flex items-center justify-center space-x-3 hover:bg-gray-800 px-4 rounded-lg transition-colors duration-200 cursor-pointer h-10">
-          <div className="h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center">
-            <User className="w-4 h-4 text-white" />
+        <div className="flex items-center justify-center space-x-4 hover:bg-gray-800 px-6 py-3 rounded-xl transition-all duration-300 cursor-pointer hover:scale-105 group">
+          <div className="h-10 w-10 rounded-full bg-gray-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+            <User className="w-5 h-5 text-white" />
           </div>
-          <span className="font-sans text-sm">John Smith</span>
-          <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+          <span className="font-sans text-base">John Smith</span>
+          <ChevronDown className="w-5 h-5 transition-transform duration-200 group-hover:rotate-180" />
         </div>
       </div>
     </header>
