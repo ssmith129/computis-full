@@ -177,11 +177,7 @@ const getConfidenceColor = (confidenceLevel: string | null) => {
   }
 };
 
-export default function TransactionsTable({ 
-  onTransactionSelect, 
-  selectedTransactions = [], 
-  onSelectionChange 
-}: TransactionsTableProps) {
+export default function TransactionsTable() {
   const { addNotification } = useNotifications();
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
@@ -189,11 +185,6 @@ export default function TransactionsTable({
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
 
   const handleAction = (type: string, transactionId: number) => {
-    if (type === 'view' && onTransactionSelect) {
-      onTransactionSelect(transactionId.toString());
-      return;
-    }
-    
     setSelectedAction({ type, transactionId });
     setShowConfirmDialog(true);
   };
@@ -271,23 +262,6 @@ export default function TransactionsTable({
       variant: 'danger' as const
     }
   ];
-
-  const handleTransactionClick = (transactionId: number) => {
-    if (onTransactionSelect) {
-      onTransactionSelect(transactionId.toString());
-    }
-  };
-
-  const handleSelectionChange = (transactionId: string, checked: boolean) => {
-    if (!onSelectionChange) return;
-    
-    if (checked) {
-      onSelectionChange([...selectedTransactions, transactionId]);
-    } else {
-      onSelectionChange(selectedTransactions.filter(id => id !== transactionId));
-    }
-  };
-
   const handleBulkAction = (action: string) => {
     addNotification({
       type: 'info',
@@ -349,18 +323,7 @@ export default function TransactionsTable({
                 <tr className="bg-gray-50 text-left">
                   <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">
                     <div className="flex items-center">
-                      <input 
-                        type="checkbox" 
-                        className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3"
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            onSelectionChange?.(transactions.map(t => t.id.toString()));
-                          } else {
-                            onSelectionChange?.([]);
-                          }
-                        }}
-                        checked={selectedTransactions.length === transactions.length}
-                      />
+                      <input type="checkbox" className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3" />
                       Date
                       <ArrowUpDown className="w-3 h-3 ml-1 text-gray-400 hover:text-gray-600 transition-colors duration-150" />
                     </div>
@@ -387,12 +350,7 @@ export default function TransactionsTable({
                   >
                     <td className="px-3 py-2">
                       <div className="flex items-center">
-                        <input 
-                          type="checkbox" 
-                          className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3"
-                          checked={selectedTransactions.includes(transaction.id.toString())}
-                          onChange={(e) => handleSelectionChange(transaction.id.toString(), e.target.checked)}
-                        />
+                        <input type="checkbox" className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3" />
                         <span className="text-xs font-sans">{transaction.date}</span>
                       </div>
                     </td>
@@ -465,7 +423,6 @@ export default function TransactionsTable({
                             size="sm" 
                             icon={Check}
                             className="opacity-0 group-hover:opacity-100"
-                            onClick={() => handleAction('ai-classify', transaction.id)}
                           >
                             Classify
                           </InteractiveButton>
@@ -475,7 +432,6 @@ export default function TransactionsTable({
                             size="sm" 
                             icon={Check}
                             className="opacity-0 group-hover:opacity-100"
-                            onClick={() => handleAction('accept', transaction.id)}
                           >
                             Accept
                           </InteractiveButton>
@@ -501,7 +457,6 @@ export default function TransactionsTable({
                   variant="success" 
                   size="sm" 
                   icon={Check}
-                  onClick={() => handleBulkAction('accept')}
                 >
                   Accept All
                 </InteractiveButton>
@@ -509,7 +464,6 @@ export default function TransactionsTable({
                   variant="warning" 
                   size="sm" 
                   icon={AlertTriangle}
-                  onClick={() => handleBulkAction('tag')}
                 >
                   Tag
                 </InteractiveButton>
@@ -517,7 +471,6 @@ export default function TransactionsTable({
                   variant="secondary" 
                   size="sm" 
                   icon={ArrowUpDown}
-                  onClick={() => handleBulkAction('export')}
                 >
                   Export
                 </InteractiveButton>
@@ -594,12 +547,7 @@ export default function TransactionsTable({
               Match known patterns
             </div>
             <div className="mt-2">
-              <InteractiveButton 
-                variant="success" 
-                size="sm" 
-                className="w-full"
-                onClick={() => handleBulkAction('accept-high-confidence')}
-              >
+              <InteractiveButton variant="success" size="sm" className="w-full">
                 Accept All
               </InteractiveButton>
             </div>
@@ -618,12 +566,7 @@ export default function TransactionsTable({
               Somewhat reliable
             </div>
             <div className="mt-2">
-              <InteractiveButton 
-                variant="warning" 
-                size="sm" 
-                className="w-full"
-                onClick={() => handleBulkAction('review-medium-confidence')}
-              >
+              <InteractiveButton variant="warning" size="sm" className="w-full">
                 Review All
               </InteractiveButton>
             </div>
@@ -642,12 +585,7 @@ export default function TransactionsTable({
               Need manual review
             </div>
             <div className="mt-2">
-              <InteractiveButton 
-                variant="danger" 
-                size="sm" 
-                className="w-full"
-                onClick={() => handleBulkAction('fix-low-confidence')}
-              >
+              <InteractiveButton variant="danger" size="sm" className="w-full">
                 Fix Manually
               </InteractiveButton>
             </div>

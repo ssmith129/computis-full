@@ -177,8 +177,8 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="heading-1">Clients</h1>
-          <p className="body-large mt-2">Manage client crypto tax profiles</p>
+          <h1 className="text-lg font-bold text-gray-900 font-display">Clients</h1>
+          <p className="text-xs text-gray-600 mt-1 font-sans">Manage client crypto tax profiles</p>
         </div>
         <InteractiveButton 
           variant="primary" 
@@ -191,17 +191,17 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       </div>
 
       {/* Filters */}
-      <AnimatedCard className="content-spacing">
+      <AnimatedCard className="p-3">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-              <Search className="icon-sm absolute left-3 top-3 text-gray-400" />
+              <Search className="w-3 h-3 absolute left-2 top-2.5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search clients..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full input-base pl-10"
+                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
               />
             </div>
           </div>
@@ -209,7 +209,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="input-base"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
             >
               <option>All Types</option>
               <option>Individual</option>
@@ -218,7 +218,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="input-base"
+              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
             >
               <option>All Status</option>
               <option>Active</option>
@@ -233,22 +233,22 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
         {filteredClients.map((client) => (
           <AnimatedCard 
             key={client.id} 
-            className="content-spacing cursor-pointer group" 
+            className="p-3 cursor-pointer group" 
             hover
             onMouseEnter={() => setHoveredClient(client.id)}
             onMouseLeave={() => setHoveredClient(null)}
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center space-x-2">
-                <div className="icon-lg rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
+                <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
                   {client.type === 'Business' ? (
-                    <Building className="icon-sm text-gray-600" />
+                    <Building className="h-3 w-3 text-gray-600" />
                   ) : (
-                    <User className="icon-sm text-gray-600" />
+                    <User className="h-3 w-3 text-gray-600" />
                   )}
                 </div>
                 <div>
-                  <h3 className="heading-4">{client.name}</h3>
+                  <h3 className="text-xs font-semibold text-gray-900 font-display">{client.name}</h3>
                   <div className="mt-1">
                     <StatusIndicator 
                       status={client.status === 'Active' ? 'success' : 'pending'} 
@@ -264,16 +264,16 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             </div>
 
             <div className="space-y-1">
-              <div className="flex items-center caption">
-                <Mail className="icon-xs mr-1" />
+              <div className="flex items-center text-xs text-gray-600 font-sans">
+                <Mail className="h-3 w-3 mr-1" />
                 {client.email}
               </div>
-              <div className="flex items-center caption">
-                <Phone className="icon-xs mr-1" />
+              <div className="flex items-center text-xs text-gray-600 font-sans">
+                <Phone className="h-3 w-3 mr-1" />
                 {client.phone}
               </div>
-              <div className="flex items-center caption">
-                <Calendar className="icon-xs mr-1" />
+              <div className="flex items-center text-xs text-gray-600 font-sans">
+                <Calendar className="h-3 w-3 mr-1" />
                 Last activity: {client.lastActivity}
               </div>
             </div>
@@ -281,12 +281,12 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
             <div className="mt-2 pt-2 border-t border-gray-100">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="caption">Transactions</p>
-                  <p className="label text-gray-900">{client.transactions}</p>
+                  <p className="text-xs text-gray-600 font-sans">Transactions</p>
+                  <p className="text-xs font-semibold text-gray-900 font-display">{client.transactions}</p>
                 </div>
                 <div className="text-right">
-                  <p className="caption">Total Value</p>
-                  <p className="label text-gray-900">{client.totalValue}</p>
+                  <p className="text-xs text-gray-600 font-sans">Total Value</p>
+                  <p className="text-xs font-semibold text-gray-900 font-display">{client.totalValue}</p>
                 </div>
               </div>
             </div>
@@ -316,10 +316,10 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
 
       {/* Empty State */}
       {filteredClients.length === 0 && (
-        <AnimatedCard className="text-center section-spacing">
-          <User className="icon-xl text-gray-400 mx-auto mb-4" />
-          <h3 className="heading-3 mb-2">No clients found</h3>
-          <p className="body-base mb-4">Try adjusting your search or filter criteria</p>
+        <AnimatedCard className="text-center py-8">
+          <User className="h-12 w-12 text-gray-400 mx-auto mb-4 animate-float" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2 font-display">No clients found</h3>
+          <p className="text-sm text-gray-600 mb-4 font-sans">Try adjusting your search or filter criteria</p>
           <InteractiveButton variant="primary" size="md">
             Clear Filters
           </InteractiveButton>

@@ -183,7 +183,6 @@ function App() {
             <BulkActions 
               selectedCount={selectedTransactions.length}
               onClose={() => setSelectedTransactions([])}
-              onWorkflowOpen={handleWorkflowOpen}
             />
           </>
         );
