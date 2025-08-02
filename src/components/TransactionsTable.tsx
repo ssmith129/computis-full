@@ -328,14 +328,14 @@ export default function TransactionsTable() {
                       <ArrowUpDown className="w-3 h-3 ml-1 text-gray-400 hover:text-gray-600 transition-colors duration-150" />
                     </div>
                   </th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Type</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Asset</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Amount</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">FMV (USD)</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Classification</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Confidence</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Status</th>
-                  <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">Actions</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Type</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Asset</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Amount</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">FMV (USD)</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Classification</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Confidence</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Status</th>
+                  <th className="px-3 py-2 text-xs font-bold text-gray-700 font-display">Actions</th>
                 </tr>
               </thead>
               <tbody>
