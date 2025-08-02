@@ -53,12 +53,11 @@ export default function InteractiveButton({
     <div className="relative inline-block">
       <button
         className={`
-          font-semibold rounded-md transition-all duration-150 transform
+          font-semibold rounded-md transition-all duration-150 transform !font-semibold
           ${variants[variant]}
           ${sizes[size]}
           ${isPressed ? 'scale-98' : 'hover:scale-102'}
           ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-          !font-semibold
           ${className}
         `}
         disabled={disabled || loading}

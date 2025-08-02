@@ -399,10 +399,10 @@ export default function RuleBuilder() {
         </div>
 
         <div className="flex justify-end space-x-3 mt-6">
-          <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans">
+          <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-105 transition-all duration-200 font-sans font-semibold">
             Cancel
           </button>
-          <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans">
+          <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-105 hover:shadow-lg transition-all duration-200 font-sans font-semibold">
             Save Rule
           </button>
         </div>

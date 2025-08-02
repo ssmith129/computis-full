@@ -67,7 +67,7 @@ export default function Header({ onWorkflowOpen }: HeaderProps) {
           <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center group-hover:scale-105 transition-transform duration-150">
             <User className="w-4 h-4 text-white" />
           </div>
-          <span className="font-sans text-xs">John Smith</span>
+          <span className="font-sans font-semibold text-xs">John Smith</span>
           <ChevronDown className="w-3 h-3 transition-transform duration-150 group-hover:rotate-180" />
         </div>
       </div>
