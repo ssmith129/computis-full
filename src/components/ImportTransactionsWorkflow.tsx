@@ -338,7 +338,6 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                 <p className="text-gray-600 font-sans">Choose the platform where your transaction data is located</p>
               </div>
 
-            <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dataSources.map((source) => (
                   <AnimatedCard
@@ -396,7 +395,6 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                   </AnimatedCard>
                 ))}
               </div>
-            </div>
 
               {/* Selected Source Instructions */}
               {selectedSource && (
@@ -1143,9 +1141,9 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
       {/* Enhanced Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
+      <div className="bg-white border-b border-gray-200 shadow-sm flex-shrink-0">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -1186,15 +1184,15 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       </div>
 
       {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="min-h-96">
+      <div className="flex-1 px-6 py-8 flex items-center justify-center">
+        <div className="w-full max-w-6xl mx-auto">
           {renderStepContent()}
         </div>
       </div>
 
       {/* Footer Navigation */}
       {currentStep < 3 && (
-        <div className="bg-white border-t border-gray-200 shadow-lg">
+        <div className="bg-white border-t border-gray-200 shadow-lg flex-shrink-0">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex justify-between items-center">
               <InteractiveButton
