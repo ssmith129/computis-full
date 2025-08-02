@@ -50,7 +50,7 @@ export default function Preferences() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
@@ -73,7 +73,7 @@ export default function Preferences() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Tax Calculation Preferences */}
         <FormSection 
           title="Tax Calculations" 
