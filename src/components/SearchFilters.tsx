@@ -3,9 +3,10 @@ import { Search, Filter, Calendar, X, ChevronDown } from 'lucide-react';
 
 interface SearchFiltersProps {
   onFiltersChange: (filters: any) => void;
+  onWorkflowOpen?: (workflow: string) => void;
 }
 
-const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange }) => {
+const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange, onWorkflowOpen }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [filters, setFilters] = useState({
     search: '',
@@ -47,6 +48,34 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange }) => {
 
   const activeFilterCount = Object.values(filters).filter(value => value !== '').length;
 
+  const handleQuickFilter = (filterType: string) => {
+    let newFilters = { ...filters };
+    
+    switch (filterType) {
+      case 'high-confidence':
+        newFilters.confidenceLevel = 'high';
+        break;
+      case 'needs-review':
+        newFilters.status = 'flagged';
+        break;
+      case 'flagged':
+        newFilters.status = 'flagged';
+        break;
+      case 'this-month':
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+        newFilters.dateFrom = firstDay.toISOString().split('T')[0];
+        newFilters.dateTo = now.toISOString().split('T')[0];
+        break;
+      case 'large-amounts':
+        newFilters.amountMin = '10000';
+        break;
+    }
+    
+    setFilters(newFilters);
+    onFiltersChange(newFilters);
+  };
+
   return (
     <div className="bg-white border-b border-gray-200">
       {/* Search Bar */}
@@ -84,6 +113,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange }) => {
 
           {activeFilterCount > 0 && (
             <button
+              onClick={clearFilters}
               className="px-4 py-2 text-gray-600 hover:text-gray-800 font-sans"
             >
               Clear All
@@ -233,19 +263,34 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange }) => {
           {/* Quick Filter Buttons */}
           <div className="mt-6 flex flex-wrap gap-2">
             <span className="text-sm font-medium text-gray-700 font-sans">Quick filters:</span>
-            <button className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200 transition-colors duration-200 font-sans">
+            <button 
+              onClick={() => handleQuickFilter('high-confidence')}
+              className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm hover:bg-blue-200 transition-colors duration-200 font-sans"
+            >
               High Confidence
             </button>
-            <button className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm hover:bg-yellow-200 transition-colors duration-200 font-sans">
+            <button 
+              onClick={() => handleQuickFilter('needs-review')}
+              className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm hover:bg-yellow-200 transition-colors duration-200 font-sans"
+            >
               Needs Review
             </button>
-            <button className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm hover:bg-red-200 transition-colors duration-200 font-sans">
+            <button 
+              onClick={() => handleQuickFilter('flagged')}
+              className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm hover:bg-red-200 transition-colors duration-200 font-sans"
+            >
               Flagged
             </button>
-            <button className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200 transition-colors duration-200 font-sans">
+            <button 
+              onClick={() => handleQuickFilter('this-month')}
+              className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200 transition-colors duration-200 font-sans"
+            >
               This Month
             </button>
-            <button className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm hover:bg-purple-200 transition-colors duration-200 font-sans">
+            <button 
+              onClick={() => handleQuickFilter('large-amounts')}
+              className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm hover:bg-purple-200 transition-colors duration-200 font-sans"
+            >
               Large Amounts
             </button>
           </div>

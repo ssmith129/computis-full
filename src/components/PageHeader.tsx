@@ -3,9 +3,47 @@ import { Filter, Upload, Plus, History } from 'lucide-react';
 
 interface PageHeaderProps {
   onAuditTrailToggle: () => void;
+  onWorkflowOpen?: (workflow: string) => void;
 }
 
-export default function PageHeader({ onAuditTrailToggle }: PageHeaderProps) {
+export default function PageHeader({ onAuditTrailToggle, onWorkflowOpen }: PageHeaderProps) {
+  const handleAIClassify = () => {
+    // This could open a workflow or trigger bulk AI classification
+    addNotification({
+      type: 'info',
+      title: 'AI Classification Started',
+      message: 'Running AI classification on all unclassified transactions...',
+      duration: 3000
+    });
+    
+    setTimeout(() => {
+      addNotification({
+        type: 'success',
+        title: 'AI Classification Complete',
+        message: 'Successfully classified 24 transactions with high confidence.',
+        duration: 4000
+      });
+    }, 3000);
+  };
+
+  const handleBulkTag = () => {
+    addNotification({
+      type: 'info',
+      title: 'Bulk Tagging',
+      message: 'Opening bulk tagging interface...',
+      duration: 2000
+    });
+  };
+
+  const handleFilters = () => {
+    addNotification({
+      type: 'info',
+      title: 'Filters',
+      message: 'Advanced filters panel opened.',
+      duration: 2000
+    });
+  };
+
   return (
     <div className="px-4 py-3 border-b border-gray-200 bg-white">
       <div className="flex justify-between items-center">

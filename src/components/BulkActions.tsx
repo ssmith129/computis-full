@@ -4,24 +4,71 @@ import { Check, X, Tag, Download, AlertTriangle, CheckCircle } from 'lucide-reac
 interface BulkActionsProps {
   selectedCount: number;
   onClose: () => void;
+  onWorkflowOpen?: (workflow: string) => void;
 }
 
-const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => {
+const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose, onWorkflowOpen }) => {
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [bulkClassification, setBulkClassification] = useState('');
   const [bulkTags, setBulkTags] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const { addNotification } = useNotifications();
 
   const handleBulkAction = async (action: string) => {
     setIsProcessing(true);
     setActiveAction(action);
     
+    let message = '';
+    switch (action) {
+      case 'accept':
+        message = `Accepting ${selectedCount} transactions...`;
+        break;
+      case 'reject':
+        message = `Rejecting ${selectedCount} transactions...`;
+        break;
+      case 'classify':
+        message = `Applying classification to ${selectedCount} transactions...`;
+        break;
+      case 'tag':
+        message = `Adding tags to ${selectedCount} transactions...`;
+        break;
+      case 'export':
+        message = `Exporting ${selectedCount} transactions...`;
+        break;
+    }
+    
+    addNotification({
+      type: 'info',
+      title: 'Bulk Action Started',
+      message,
+      duration: 2000
+    });
+    
     // Simulate processing
     await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    addNotification({
+      type: 'success',
+      title: 'Bulk Action Complete',
+      message: `Successfully processed ${selectedCount} transactions.`,
+      duration: 3000
+    });
     
     setIsProcessing(false);
     setActiveAction(null);
     onClose();
+  };
+
+  const handleApplyClassification = () => {
+    if (bulkClassification) {
+      handleBulkAction('classify');
+    }
+  };
+
+  const handleApplyTags = () => {
+    if (bulkTags) {
+      handleBulkAction('tag');
+    }
   };
 
   if (selectedCount === 0) return null;
@@ -41,6 +88,8 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
             <div className="flex items-center space-x-1">
               <button
                 className="flex items-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                onClick={() => handleBulkAction('accept')}
+                disabled={isProcessing}
               >
                 {isProcessing && activeAction === 'accept' ? (
                   <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
@@ -52,6 +101,8 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
               
               <button
                 className="flex items-center px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors duration-200 font-sans"
+                onClick={() => handleBulkAction('reject')}
+                disabled={isProcessing}
               >
                 {isProcessing && activeAction === 'reject' ? (
                   <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
@@ -78,6 +129,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
                 <button
                   disabled={!bulkClassification || isProcessing}
                   className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
+                  onClick={handleApplyClassification}
                 >
                   Apply
                 </button>
@@ -95,6 +147,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
                 <button
                   disabled={!bulkTags || isProcessing}
                   className="flex items-center px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
+                  onClick={handleApplyTags}
                 >
                   <Tag className="w-3 h-3 mr-1" />
                   Tag
@@ -104,6 +157,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
               <button
                 disabled={isProcessing}
                 className="flex items-center px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors duration-200 font-sans text-sm"
+                onClick={() => handleBulkAction('export')}
               >
                 <Download className="w-3 h-3 mr-1" />
                 Export
@@ -113,6 +167,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose }) => 
 
           <button
             className="text-gray-400 hover:text-gray-600 p-2"
+            onClick={onClose}
           >
             <X className="w-5 h-5" />
           </button>
