@@ -53,7 +53,7 @@ export default function InteractiveButton({
     <div className="relative inline-block">
       <button
         className={`
-          font-medium rounded-md transition-all duration-150 transform
+          font-semibold rounded-md transition-all duration-150 transform
           ${variants[variant]}
           ${sizes[size]}
           ${isPressed ? 'scale-98' : 'hover:scale-102'}
