@@ -338,6 +338,7 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                 <p className="text-gray-600 font-sans">Choose the platform where your transaction data is located</p>
               </div>
 
+            <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dataSources.map((source) => (
                   <AnimatedCard
@@ -395,6 +396,7 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                   </AnimatedCard>
                 ))}
               </div>
+            </div>
 
               {/* Selected Source Instructions */}
               {selectedSource && (
