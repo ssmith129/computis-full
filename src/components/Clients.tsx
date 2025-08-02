@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, MoreVertical, User, Building, Mail, Phone, Calendar, TrendingUp } from 'lucide-react';
+import { Plus, Search, MoreVertical, User, Building, Mail, Phone, Calendar, TrendingUp, FileText } from 'lucide-react';
 import { useNotifications } from './NotificationSystem';
 import ConfirmDialog from './ConfirmDialog';
 import InteractiveButton from './InteractiveButton';
