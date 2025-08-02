@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { ArrowLeft, Upload, FileText, CheckCircle, AlertTriangle, Download, X, AlertCircle, Zap, Shield, Wallet, Play, Pause, RotateCcw, Eye, HelpCircle, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Upload, FileText, CheckCircle, AlertTriangle, Download, X, AlertCircle, Zap, Shield, Wallet, Play, Pause, RotateCcw, Eye, HelpCircle, ArrowRight, Search, Clock } from 'lucide-react';
 import AnimatedCard from './AnimatedCard';
 import InteractiveButton from './InteractiveButton';
 import StatusIndicator from './StatusIndicator';
@@ -47,7 +47,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-blue-50 border-blue-200',
       badgeColor: 'success',
       instructions: 'Download your transaction history from Coinbase Pro > Reports > Transaction History',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'Exchange',
+      security: 'High',
+      supported: ['BTC', 'ETH', 'USDC', 'LTC'],
+      estimatedTime: '2-3 min'
     },
     {
       id: 'binance',
@@ -62,7 +66,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-yellow-50 border-yellow-200',
       badgeColor: 'warning',
       instructions: 'Go to Binance > Wallet > Transaction History > Export',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'Exchange',
+      security: 'High',
+      supported: ['BTC', 'ETH', 'BNB', 'USDT'],
+      estimatedTime: '2-4 min'
     },
     {
       id: 'metamask',
@@ -77,7 +85,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-orange-50 border-orange-200',
       badgeColor: 'warning',
       instructions: 'Use a blockchain explorer like Etherscan to export your address history',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'Wallet',
+      security: 'Medium',
+      supported: ['ETH', 'ERC-20'],
+      estimatedTime: '5-8 min'
     },
     {
       id: 'ledger',
@@ -92,7 +104,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-green-50 border-green-200',
       badgeColor: 'success',
       instructions: 'Export from Ledger Live > Accounts > Export account operations',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'Hardware',
+      security: 'High',
+      supported: ['BTC', 'ETH', 'ADA', 'DOT'],
+      estimatedTime: '5-10 min'
     },
     {
       id: 'custom',
@@ -107,7 +123,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-purple-50 border-purple-200',
       badgeColor: 'pending',
       instructions: 'Use our template or map your columns to our format',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'File',
+      security: 'Medium',
+      supported: ['Any'],
+      estimatedTime: '1-2 min'
     },
     {
       id: 'other',
@@ -122,7 +142,11 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
       color: 'bg-gray-50 border-gray-200',
       badgeColor: 'pending',
       instructions: 'Most exchanges provide CSV export in their transaction history section',
-      templateUrl: '#'
+      templateUrl: '#',
+      type: 'Exchange',
+      security: 'Medium',
+      supported: ['Various'],
+      estimatedTime: '3-6 min'
     }
   ];
 
@@ -303,141 +327,147 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
     switch (currentStep) {
       case 0:
         return (
-          <div className="space-y-8">
-            {/* Header Section */}
-            <div className="text-center max-w-2xl mx-auto">
-              <div className="h-16 w-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Upload className="h-8 w-8 text-white" />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Import Your Transaction Data</h2>
-              <p className="text-lg text-gray-600 font-sans leading-relaxed">
-                Choose your data source to get started. We'll guide you through each step to ensure your data is imported correctly.
-              </p>
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 font-display">Choose Data Source</h2>
+              <p className="text-gray-600 font-sans">Select where you'd like to import your transaction data from</p>
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
-              <div className="text-center p-4 bg-green-50 rounded-xl border border-green-200">
-                <div className="text-2xl font-bold text-green-700 font-display">50+</div>
-                <div className="text-xs text-green-600 font-sans">Supported Platforms</div>
-              </div>
-              <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
-                <div className="text-2xl font-bold text-blue-700 font-display">10M+</div>
-                <div className="text-xs text-blue-600 font-sans">Transactions Processed</div>
-              </div>
-              <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-200">
-                <div className="text-2xl font-bold text-purple-700 font-display">99.9%</div>
-                <div className="text-xs text-purple-600 font-sans">Accuracy Rate</div>
+            {/* Search and Filter */}
+            <div className="max-w-md mx-auto">
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search data sources..."
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans text-sm"
+                />
               </div>
             </div>
 
-            {/* Data Sources - Enhanced Cards */}
-            <div className="space-y-6">
-              <div className="text-center">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Select Your Data Source</h3>
-                <p className="text-gray-600 font-sans">Choose the platform where your transaction data is located</p>
+            {/* Category Tabs */}
+            <div className="flex justify-center">
+              <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+                <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-md text-sm font-medium font-sans">
+                  All Sources
+                </button>
+                <button className="px-4 py-2 text-gray-600 hover:text-gray-900 rounded-md text-sm font-medium font-sans">
+                  Exchanges
+                </button>
+                <button className="px-4 py-2 text-gray-600 hover:text-gray-900 rounded-md text-sm font-medium font-sans">
+                  Wallets
+                </button>
+                <button className="px-4 py-2 text-gray-600 hover:text-gray-900 rounded-md text-sm font-medium font-sans">
+                  Files
+                </button>
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {dataSources.map((source) => (
-                  <AnimatedCard
-                    key={source.id}
-                    className={`relative p-6 cursor-pointer transition-all duration-300 border-2 ${
-                      selectedSource === source.id
-                        ? 'ring-2 ring-yellow-400 bg-yellow-50 border-yellow-300 scale-105'
-                        : `${source.color} hover:shadow-lg hover:scale-102 border-gray-200`
-                    }`}
-                    onClick={() => setSelectedSource(source.id)}
-                  >
-                    {/* Popularity Badge */}
-                    <div className="absolute top-3 right-3">
-                      <Badge variant={source.badgeColor as any} tooltip={`${source.popularity} choice`}>
-                        {source.popularity}
-                      </Badge>
-                    </div>
+            {/* Compact Grid Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3">
+              {dataSources.map((source) => (
+                <div
+                  key={source.id}
+                  onClick={() => setSelectedSource(source.id)}
+                  className={`relative p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 hover:scale-102 ${
+                    selectedSource === source.id
+                      ? 'border-yellow-400 bg-yellow-50 shadow-lg'
+                      : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+                  }`}
+                >
+                  {/* Difficulty Badge */}
+                  <div className="absolute top-2 right-2">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium font-sans ${
+                      source.difficulty === 'Beginner' ? 'bg-green-100 text-green-700' :
+                      source.difficulty === 'Intermediate' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {source.difficulty}
+                    </span>
+                  </div>
 
-                    <div className="flex flex-col items-center text-center space-y-3">
-                      {/* Icon and Name */}
-                      <div className="text-4xl mb-2">{source.icon}</div>
-                      <h4 className="text-lg font-bold text-gray-900 font-display">{source.name}</h4>
-                      <p className="text-sm text-gray-600 font-sans leading-relaxed">{source.description}</p>
+                  {/* Compact Layout */}
+                  <div className="flex items-start space-x-3">
+                    <div className="text-2xl flex-shrink-0 mt-1">{source.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-bold text-gray-900 mb-1 font-display leading-tight">{source.name}</h3>
+                      <p className="text-gray-600 font-sans text-xs mb-2 line-clamp-2">{source.description}</p>
                       
-                      {/* Metadata */}
-                      <div className="w-full space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Category:</span>
-                          <span className="font-medium text-gray-700 font-sans">{source.category}</span>
+                      {/* Compact Info */}
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center space-x-2">
+                          <span className={`w-2 h-2 rounded-full ${
+                            source.security === 'High' ? 'bg-green-500' :
+                            source.security === 'Medium' ? 'bg-yellow-500' :
+                            'bg-red-500'
+                          }`} />
+                          <span className="text-gray-500 font-sans">{source.type}</span>
                         </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Difficulty:</span>
-                          <span className={`font-medium font-sans ${
-                            source.difficulty === 'Beginner' ? 'text-green-600' : 
-                            source.difficulty === 'Intermediate' ? 'text-yellow-600' : 'text-red-600'
-                          }`}>
-                            {source.difficulty}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Est. Time:</span>
-                          <span className="font-medium text-gray-700 font-sans">{source.avgTime}</span>
-                        </div>
+                        <span className="text-gray-400 font-sans">{source.estimatedTime}</span>
                       </div>
-
-                      {/* Supported Formats */}
-                      <div className="flex flex-wrap gap-1 justify-center">
-                        {source.formats.map((format) => (
-                          <span key={format} className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-sans">
-                            {format}
+                      
+                      {/* Asset Support */}
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {source.supported.slice(0, 2).map((coin, index) => (
+                          <span key={index} className="px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-xs font-sans">
+                            {coin}
                           </span>
                         ))}
-                      </div>
-                    </div>
-                  </AnimatedCard>
-                ))}
-              </div>
-
-              {/* Selected Source Instructions */}
-              {selectedSource && (
-                <AnimatedCard className="p-6 bg-blue-50 border-2 border-blue-200">
-                  <div className="flex items-start space-x-4">
-                    <div className="h-12 w-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <HelpCircle className="h-6 w-6 text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold text-blue-900 mb-2 font-display">
-                        How to get your {dataSources.find(s => s.id === selectedSource)?.name} data
-                      </h4>
-                      <p className="text-sm text-blue-800 mb-4 font-sans leading-relaxed">
-                        {dataSources.find(s => s.id === selectedSource)?.instructions}
-                      </p>
-                      <div className="flex space-x-3">
-                        <InteractiveButton variant="secondary" size="sm" icon={Download}>
-                          Download Template
-                        </InteractiveButton>
-                        <InteractiveButton variant="secondary" size="sm" icon={Eye}>
-                          View Example
-                        </InteractiveButton>
+                        {source.supported.length > 2 && (
+                          <span className="px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-xs font-sans">
+                            +{source.supported.length - 2}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
-                </AnimatedCard>
-              )}
 
-              {/* Quick Upload Option */}
-              {selectedSource && (
-                <div className="text-center">
-                  <p className="text-gray-600 mb-4 font-sans">Already have your data file ready?</p>
-                  <InteractiveButton 
-                    variant="primary" 
-                    size="lg"
-                    icon={ArrowRight}
-                    onClick={() => setCurrentStep(1)}
-                  >
-                    Skip to Upload
-                  </InteractiveButton>
+                  {/* Selection Indicator */}
+                  {selectedSource === source.id && (
+                    <div className="absolute top-2 left-2">
+                      <CheckCircle className="w-5 h-5 text-yellow-600" />
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
+
+            {/* Quick Stats */}
+            <div className="text-center">
+              <div className="inline-flex items-center space-x-6 text-xs text-gray-500 font-sans">
+                <div className="flex items-center space-x-1">
+                  <Shield className="w-3 h-3" />
+                  <span>Bank-level security</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-3 h-3" />
+                  <span>Import in minutes</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <CheckCircle className="w-3 h-3" />
+                  <span>50MB file limit</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Selected Source Details */}
+            {selectedSource && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <div className="text-lg">
+                    {dataSources.find(s => s.id === selectedSource)?.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900 font-sans">
+                      {dataSources.find(s => s.id === selectedSource)?.name} Selected
+                    </h4>
+                    <p className="text-sm text-gray-600 mt-1 font-sans">
+                      {dataSources.find(s => s.id === selectedSource)?.instructions}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         );
 
