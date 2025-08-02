@@ -256,42 +256,42 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
           {/* Quick Actions */}
           <AnimatedCard className="p-4" hover>
             <h2 className="text-lg font-bold text-gray-900 mb-4 font-display">Quick Actions</h2>
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 
                 icon={TrendingUp}
-                className="w-full justify-between"
+                className="w-full justify-center"
                 onClick={() => handleQuickAction('import')}
               >
-                <span className="text-xs font-medium text-gray-900">Import Transactions</span>
+                <span className="text-xs font-medium text-gray-900">Import</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 
                 icon={FileText}
-                className="w-full justify-between"
+                className="w-full justify-center"
                 onClick={() => handleQuickAction('report')}
               >
-                <span className="text-xs font-medium text-gray-900">Generate Report</span>
+                <span className="text-xs font-medium text-gray-900">Report</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 
                 icon={Users}
-                className="w-full justify-between"
+                className="w-full justify-center"
                 onClick={() => handleQuickAction('client')}
               >
-                <span className="text-xs font-medium text-gray-900">Add Client</span>
+                <span className="text-xs font-medium text-gray-900">Client</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 
                 icon={Wallet}
-                className="w-full justify-between"
+                className="w-full justify-center"
                 onClick={() => handleQuickAction('wallet')}
               >
-                <span className="text-xs font-medium text-gray-900">Connect Wallet</span>
+                <span className="text-xs font-medium text-gray-900">Wallet</span>
               </InteractiveButton>
             </div>
           </AnimatedCard>
