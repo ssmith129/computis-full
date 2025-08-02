@@ -91,7 +91,6 @@ const settingItems = [
             <span>{item.label}</span>
           </div>
         ))}
-      </div>
         <div className="px-2 py-1 text-xs text-gray-400 uppercase font-medium mt-3 font-display tracking-wide">Settings</div>
       <div className="absolute bottom-0 w-full p-2 border-t border-gray-800">
         <div className="flex items-center justify-between hover:bg-gray-800 p-2 rounded-md transition-all duration-200 group">
