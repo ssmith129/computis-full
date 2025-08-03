@@ -497,9 +497,10 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-8 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-start px-6 pt-12 pb-6">
+      <div className="w-full max-w-[1200px] mx-auto">
+        {/* Header */}
+        <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
@@ -516,67 +517,71 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
               Connect Wallet
             </button>
           )}
+          </div>
         </div>
 
-        {/* Progress Steps */}
-        {currentStep < 4 && (
-          <div className="mt-8">
-            <div className="flex items-center justify-between max-w-4xl">
-              {steps.slice(0, 3).map((step, index) => (
-                <div key={step.number} className="flex items-center">
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
-                    currentStep >= step.number 
-                      ? 'bg-yellow-400 border-yellow-400 text-gray-900' 
-                      : 'border-gray-300 text-gray-500'
-                  }`}>
-                    {currentStep > step.number ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      <span className="font-medium">{step.number}</span>
+          {/* Progress Steps */}
+          {currentStep < 4 && (
+            <div className="mt-8">
+              <div className="flex items-center justify-between max-w-4xl">
+                {steps.slice(0, 3).map((step, index) => (
+                  <div key={step.number} className="flex items-center">
+                    <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
+                      currentStep >= step.number 
+                        ? 'bg-yellow-400 border-yellow-400 text-gray-900' 
+                        : 'border-gray-300 text-gray-500'
+                    }`}>
+                      {currentStep > step.number ? (
+                        <CheckCircle className="w-5 h-5" />
+                      ) : (
+                        <span className="font-medium">{step.number}</span>
+                      )}
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-gray-900 font-display">{step.title}</p>
+                      <p className="text-xs text-gray-500 font-sans">{step.description}</p>
+                    </div>
+                    {index < 2 && (
+                      <div className="flex-1 h-px bg-gray-300 mx-8" />
                     )}
                   </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-900 font-display">{step.title}</p>
-                    <p className="text-xs text-gray-500 font-sans">{step.description}</p>
-                  </div>
-                  {index < 2 && (
-                    <div className="flex-1 h-px bg-gray-300 mx-8" />
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="bg-white px-8 py-12">
+          {renderStepContent()}
+        </div>
+
+        {/* Footer */}
+        {currentStep < 4 && currentStep !== 3 && (
+          <div className="bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl shadow-lg">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex justify-between">
+                <button
+                  disabled={currentStep === 1}
+                  className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans"
+                >
+                  Previous
+                </button>
+                
+                <button
+                  disabled={
+                    (currentStep === 1 && !selectedWallet) ||
+                    (currentStep === 2 && !connectionMethod)
+                  }
+                  className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans font-medium"
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         )}
       </div>
-
-      {/* Content */}
-      <div className="px-8 py-12">
-        {renderStepContent()}
-      </div>
-
-      {/* Footer */}
-      {currentStep < 4 && currentStep !== 3 && (
-        <div className="bg-white border-t border-gray-200 px-8 py-6">
-          <div className="flex justify-between">
-            <button
-              disabled={currentStep === 1}
-              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans"
-            >
-              Previous
-            </button>
-            
-            <button
-              disabled={
-                (currentStep === 1 && !selectedWallet) ||
-                (currentStep === 2 && !connectionMethod)
-              }
-              className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans font-medium"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
