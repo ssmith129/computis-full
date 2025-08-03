@@ -467,6 +467,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
       <div className="w-full max-w-[1200px] mx-auto">
       {/* Header */}
         <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">
+          <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
@@ -483,6 +484,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
               Generate Report
             </button>
           )}
+          </div>
         </div>
 
         {/* Progress Steps */}
