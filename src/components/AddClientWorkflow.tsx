@@ -545,6 +545,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
         {/* Footer */}
         {currentStep < 4 && (
           <div className="bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl shadow-lg">
+            <div className="max-w-4xl mx-auto">
             <div className="flex justify-between">
               <button
                 disabled={currentStep === 1}
@@ -565,6 +566,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
               >
                 {currentStep === 3 ? (isCreating ? 'Creating...' : 'Create Client') : 'Next'}
               </button>
+            </div>
             </div>
           </div>
         )}
