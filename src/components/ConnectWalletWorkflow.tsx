@@ -499,9 +499,9 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
   return (
     <>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-start px-6 pt-12 pb-6">
-      <div className="w-full max-w-[1200px] mx-auto">
+      <div className="w-full max-w-[1200px] mx-auto space-y-0">
         {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">
+        <div className="bg-white border-b border-gray-200 px-8 py-8 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
@@ -514,7 +514,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
           </div>
           
           {currentStep === 3 && !isConnecting && (connectionMethod?.includes('API') || connectionMethod?.includes('Address')) && (
-            <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-sans font-medium">
+            <button className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-sans font-semibold shadow-md hover:shadow-lg">
               Connect Wallet
             </button>
           )}
@@ -523,27 +523,27 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
 
           {/* Progress Steps */}
           {currentStep < 4 && (
-            <div className="mt-8">
-              <div className="flex items-center justify-between max-w-4xl">
+            <div className="mt-10 px-4">
+              <div className="flex items-center justify-between max-w-5xl mx-auto">
                 {steps.slice(0, 3).map((step, index) => (
                   <div key={step.number} className="flex items-center">
-                    <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
+                    <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 ${
                       currentStep >= step.number 
-                        ? 'bg-yellow-400 border-yellow-400 text-gray-900' 
-                        : 'border-gray-300 text-gray-500'
+                        ? 'bg-yellow-400 border-yellow-400 text-gray-900 shadow-md' 
+                        : 'border-gray-300 text-gray-500 hover:border-gray-400'
                     }`}>
                       {currentStep > step.number ? (
-                        <CheckCircle className="w-5 h-5" />
+                        <CheckCircle className="w-6 h-6" />
                       ) : (
-                        <span className="font-medium">{step.number}</span>
+                        <span className="font-semibold text-lg">{step.number}</span>
                       )}
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900 font-display">{step.title}</p>
-                      <p className="text-xs text-gray-500 font-sans">{step.description}</p>
+                    <div className="ml-6">
+                      <p className="text-base font-semibold text-gray-900 font-display">{step.title}</p>
+                      <p className="text-sm text-gray-600 font-sans mt-1">{step.description}</p>
                     </div>
                     {index < 2 && (
-                      <div className="flex-1 h-px bg-gray-300 mx-8" />
+                      <div className="flex-1 h-0.5 bg-gray-300 mx-10 rounded-full" />
                     )}
                   </div>
                 ))}
@@ -553,18 +553,18 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
         </div>
 
         {/* Content */}
-        <div className="bg-white px-8 py-12">
+        <div className="bg-white px-12 py-16">
           {renderStepContent()}
         </div>
 
         {/* Footer */}
         {currentStep < 4 && currentStep !== 3 && (
-          <div className="bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl shadow-lg">
-            <div className="max-w-4xl mx-auto">
+          <div className="bg-white border-t border-gray-200 px-12 py-8 rounded-b-2xl shadow-lg">
+            <div className="max-w-5xl mx-auto">
               <div className="flex justify-between">
                 <button
                   disabled={currentStep === 1}
-                  className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans"
+                  className="px-8 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-sans font-medium shadow-sm hover:shadow-md"
                 >
                   Previous
                 </button>
@@ -574,7 +574,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
                     (currentStep === 1 && !selectedWallet) ||
                     (currentStep === 2 && !connectionMethod)
                   }
-                  className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans font-medium"
+                  className="px-8 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-sans font-semibold shadow-md hover:shadow-lg"
                 >
                   Next
                 </button>
