@@ -75,7 +75,7 @@ const BulkActions: React.FC<BulkActionsProps> = ({ selectedCount, onClose, onWor
   if (selectedCount === 0) return null;
 
   return (
-    <div className="fixed bottom-0 left-64 right-0 bg-white border-t border-gray-200 shadow-lg z-40">
+    <div className="fixed bottom-0 right-0 bg-white border-t border-gray-200 shadow-lg z-40" style={{ left: '234px' }}>
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">

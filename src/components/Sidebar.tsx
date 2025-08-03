@@ -40,7 +40,7 @@ const settingItems = [
 ];
 
   return (
-    <nav className="fixed left-0 top-12 h-[calc(100vh-3rem)] w-48 text-white pt-3 overflow-y-auto" style={{ backgroundColor: '#1a1a1a' }}>
+    <nav className="fixed left-0 top-12 h-[calc(100vh-3rem)] text-white pt-3 overflow-y-auto" style={{ backgroundColor: '#1a1a1a', width: '234px' }}>
       <div className="px-3 mb-3">
         <div className="relative">
           <input 
