@@ -38,6 +38,18 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
   });
   const [isCreating, setIsCreating] = useState(false);
 
+  const nextStep = () => {
+    if (currentStep < 3) {
+      setCurrentStep(prev => prev + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(prev => prev - 1);
+    }
+  };
+
   const steps = [
     { number: 1, title: 'Client Type', description: 'Individual or Business' },
     { number: 2, title: 'Basic Info', description: 'Contact information' },
