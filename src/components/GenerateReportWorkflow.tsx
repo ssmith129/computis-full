@@ -467,7 +467,6 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
       <div className="w-full max-w-[1200px] mx-auto">
       {/* Header */}
         <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">
-          <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
@@ -484,7 +483,6 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
               Generate Report
             </button>
           )}
-          </div>
         </div>
 
         {/* Progress Steps */}
@@ -524,22 +522,24 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
 
       {/* Footer */}
         <div className="bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl shadow-lg">
-        <div className="flex justify-between">
-          <button
-            disabled={currentStep === 1}
-            className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans"
-          >
-            Previous
-          </button>
-          
-          <button
-            disabled={currentStep === 4}
-            className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans font-medium"
-          >
-            {currentStep === 4 ? 'Complete' : 'Next'}
-          </button>
+          <div className="max-w-4xl mx-auto">
+            <div className="flex justify-between">
+              <button
+                disabled={currentStep === 1}
+                className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans"
+              >
+                Previous
+              </button>
+              
+              <button
+                disabled={currentStep === 4}
+                className="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 font-sans font-medium"
+              >
+                {currentStep === 4 ? 'Complete' : 'Next'}
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
   );
 };
