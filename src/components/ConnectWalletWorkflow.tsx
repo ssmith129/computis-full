@@ -583,7 +583,6 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
           </div>
         )}
       </div>
-    </div>
     </>
   );
 };
