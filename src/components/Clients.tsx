@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Plus, Search, MoreVertical, User, Building, Mail, Phone, Calendar, TrendingUp, FileText } from 'lucide-react';
+import { Plus, Search, Filter, Users, Building, Mail, Phone, Calendar, TrendingUp, FileText, MoreVertical, User, Eye, Edit, Trash2, Star } from 'lucide-react';
 import { useNotifications } from './NotificationSystem';
-import ConfirmDialog from './ConfirmDialog';
 import InteractiveButton from './InteractiveButton';
 import AnimatedCard from './AnimatedCard';
-import ActionMenu from './ActionMenu';
 import StatusIndicator from './StatusIndicator';
 
 interface ClientsProps {
@@ -23,7 +21,12 @@ const clients = [
     transactions: 156,
     lastActivity: '2 days ago',
     totalValue: '$45,230.00',
-    avatar: null
+    joinDate: '2023-01-15',
+    tags: ['High Value', 'Regular Trader'],
+    priority: 'high',
+    avatar: null,
+    riskLevel: 'Low',
+    yearToDateGains: '$12,450.00'
   },
   {
     id: 2,
@@ -35,7 +38,12 @@ const clients = [
     transactions: 342,
     lastActivity: '1 day ago',
     totalValue: '$128,450.00',
-    avatar: null
+    joinDate: '2022-08-20',
+    tags: ['Enterprise', 'DeFi'],
+    priority: 'high',
+    avatar: null,
+    riskLevel: 'Medium',
+    yearToDateGains: '$28,750.00'
   },
   {
     id: 3,
@@ -47,7 +55,12 @@ const clients = [
     transactions: 89,
     lastActivity: '2 weeks ago',
     totalValue: '$23,100.00',
-    avatar: null
+    joinDate: '2023-03-10',
+    tags: ['New Investor'],
+    priority: 'medium',
+    avatar: null,
+    riskLevel: 'Low',
+    yearToDateGains: '$3,200.00'
   },
   {
     id: 4,
@@ -59,7 +72,12 @@ const clients = [
     transactions: 278,
     lastActivity: '3 hours ago',
     totalValue: '$89,750.00',
-    avatar: null
+    joinDate: '2022-11-05',
+    tags: ['Startup', 'NFTs'],
+    priority: 'high',
+    avatar: null,
+    riskLevel: 'High',
+    yearToDateGains: '$15,680.00'
   }
 ];
 
@@ -68,18 +86,35 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
-  const [showAddClientDialog, setShowAddClientDialog] = useState(false);
-  const [isAddingClient, setIsAddingClient] = useState(false);
-  const [hoveredClient, setHoveredClient] = useState<number | null>(null);
+  const [filterPriority, setFilterPriority] = useState('All');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState('name');
 
-  const filteredClients = clients.filter(client => {
-    const matchesSearch = client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         client.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesType = filterType === 'All' || client.type === filterType;
-    const matchesStatus = filterStatus === 'All' || client.status === filterStatus;
-    
-    return matchesSearch && matchesType && matchesStatus;
-  });
+  const filteredClients = clients
+    .filter(client => {
+      const matchesSearch = client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           client.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+      const matchesType = filterType === 'All' || client.type === filterType;
+      const matchesStatus = filterStatus === 'All' || client.status === filterStatus;
+      const matchesPriority = filterPriority === 'All' || client.priority === filterPriority;
+      
+      return matchesSearch && matchesType && matchesStatus && matchesPriority;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'value':
+          return parseFloat(b.totalValue.replace(/[$,]/g, '')) - parseFloat(a.totalValue.replace(/[$,]/g, ''));
+        case 'activity':
+          return new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime();
+        case 'transactions':
+          return b.transactions - a.transactions;
+        default:
+          return 0;
+      }
+    });
 
   const handleAddClient = () => {
     onWorkflowOpen?.('add-client');
@@ -89,23 +124,6 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       message: 'Starting client creation workflow...',
       duration: 2000
     });
-  };
-
-  const confirmAddClient = async () => {
-    setIsAddingClient(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    addNotification({
-      type: 'success',
-      title: 'Client Added',
-      message: 'New client has been successfully created.',
-      duration: 4000
-    });
-    
-    setIsAddingClient(false);
-    setShowAddClientDialog(false);
   };
 
   const handleClientAction = (clientId: number, action: string) => {
@@ -138,130 +156,266 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
           duration: 2000
         });
         break;
-      case 'edit':
-        onClientSelect?.(clientId.toString());
-        addNotification({
-          type: 'info',
-          title: 'Edit Client',
-          message: `Opening ${client?.name}'s profile for editing...`,
-          duration: 2000
-        });
-        break;
     }
   };
 
-  const getClientActionMenu = (client: any) => [
-    {
-      label: 'View Profile',
-      icon: User,
-      onClick: () => handleClientAction(client.id, 'view')
-    },
-    {
-      label: 'View Transactions',
-      icon: TrendingUp,
-      onClick: () => handleClientAction(client.id, 'transactions')
-    },
-    {
-      label: 'Generate Report',
-      icon: FileText,
-      onClick: () => handleClientAction(client.id, 'report')
-    },
-    {
-      label: 'Edit Client',
-      icon: Building,
-      onClick: () => handleClientAction(client.id, 'edit')
+  const getClientIcon = (client: any) => {
+    if (client.type === 'Business') {
+      return <Building className="h-6 w-6 text-blue-600" />;
     }
-  ];
-  
-  return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-display">Clients</h1>
-          <p className="text-base text-gray-600 mt-1 font-sans">Manage client crypto tax profiles</p>
-        </div>
-        <InteractiveButton 
-          variant="primary" 
-          size="sm" 
-          icon={Plus}
-          onClick={handleAddClient}
-        >
-          Add Client
-        </InteractiveButton>
-      </div>
+    return <User className="h-6 w-6 text-green-600" />;
+  };
 
-      {/* Filters */}
-      <AnimatedCard className="p-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="w-3 h-3 absolute left-2 top-2.5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search clients..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
-              />
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low':
+        return 'bg-green-100 text-green-800 border-green-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getRiskColor = (risk: string) => {
+    switch (risk) {
+      case 'High':
+        return 'text-red-600';
+      case 'Medium':
+        return 'text-yellow-600';
+      case 'Low':
+        return 'text-green-600';
+      default:
+        return 'text-gray-600';
+    }
+  };
+
+  return (
+    <div className="space-y-8 max-w-7xl mx-auto">
+      {/* Enhanced Header Section */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900 font-display">Client Management</h1>
+            <p className="text-lg text-gray-600 font-sans">
+              Manage and track your crypto tax clients
+            </p>
+            <div className="flex items-center space-x-6 text-sm text-gray-500 font-sans">
+              <span className="flex items-center">
+                <Users className="h-4 w-4 mr-1" />
+                {clients.length} Total Clients
+              </span>
+              <span className="flex items-center">
+                <TrendingUp className="h-4 w-4 mr-1" />
+                {clients.filter(c => c.status === 'Active').length} Active
+              </span>
+              <span className="flex items-center">
+                <FileText className="h-4 w-4 mr-1" />
+                {clients.reduce((sum, c) => sum + c.transactions, 0)} Total Transactions
+              </span>
             </div>
           </div>
-          <div className="flex gap-2">
-            <select
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
+          
+          <div className="flex items-center space-x-4">
+            <InteractiveButton 
+              variant="secondary" 
+              size="md" 
+              icon={FileText}
+              onClick={() => onWorkflowOpen?.('generate-report')}
             >
-              <option>All Types</option>
-              <option>Individual</option>
-              <option>Business</option>
-            </select>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-xs"
+              Bulk Report
+            </InteractiveButton>
+            <InteractiveButton 
+              variant="primary" 
+              size="md" 
+              icon={Plus}
+              onClick={handleAddClient}
             >
-              <option>All Status</option>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
+              Add New Client
+            </InteractiveButton>
           </div>
         </div>
-      </AnimatedCard>
+      </div>
 
-      {/* Clients Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12 max-w-7xl mx-auto">
-        {filteredClients.map((client) => (
-          <AnimatedCard 
-            key={client.id} 
-            className="overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 min-h-[400px]" 
-            hover
-            onMouseEnter={() => setHoveredClient(client.id)}
-            onMouseLeave={() => setHoveredClient(null)}
-          >
-            {/* Card Header */}
-            <div className="p-8 pb-6 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-4">
+      {/* Enhanced Search and Filters */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div className="space-y-6">
+          {/* Primary Search Bar */}
+          <div className="relative">
+            <Search className="w-5 h-5 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search clients by name, email, or tags..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans"
+            />
+          </div>
+
+          {/* Filter Controls */}
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+            <div className="flex flex-wrap gap-3">
+              <div className="flex items-center space-x-2">
+                <Filter className="h-4 w-4 text-gray-400" />
+                <span className="text-sm font-medium text-gray-700 font-sans">Filters:</span>
+              </div>
+              
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-sm"
+              >
+                <option value="All">All Types</option>
+                <option value="Individual">Individual</option>
+                <option value="Business">Business</option>
+              </select>
+
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-sm"
+              >
+                <option value="All">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+
+              <select
+                value={filterPriority}
+                onChange={(e) => setFilterPriority(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-sm"
+              >
+                <option value="All">All Priority</option>
+                <option value="high">High Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="low">Low Priority</option>
+              </select>
+
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent hover:border-gray-400 transition-all duration-200 font-sans text-sm"
+              >
+                <option value="name">Sort by Name</option>
+                <option value="value">Sort by Value</option>
+                <option value="activity">Sort by Activity</option>
+                <option value="transactions">Sort by Transactions</option>
+              </select>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-gray-600 font-sans">View:</span>
+              <div className="flex rounded-lg border border-gray-300 overflow-hidden">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3 py-2 text-sm transition-all duration-200 font-sans ${
+                    viewMode === 'grid' 
+                      ? 'bg-yellow-400 text-gray-900' 
+                      : 'bg-white text-gray-600 hover:bg-gray-50'
+                  }`}
+                >
+                  Grid
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-2 text-sm transition-all duration-200 font-sans ${
+                    viewMode === 'list' 
+                      ? 'bg-yellow-400 text-gray-900' 
+                      : 'bg-white text-gray-600 hover:bg-gray-50'
+                  }`}
+                >
+                  List
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Active Filters Display */}
+          {(searchTerm || filterType !== 'All' || filterStatus !== 'All' || filterPriority !== 'All') && (
+            <div className="flex items-center space-x-2 pt-2 border-t border-gray-200">
+              <span className="text-sm text-gray-600 font-sans">Active filters:</span>
+              {searchTerm && (
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium font-sans">
+                  Search: "{searchTerm}"
+                </span>
+              )}
+              {filterType !== 'All' && (
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium font-sans">
+                  Type: {filterType}
+                </span>
+              )}
+              {filterStatus !== 'All' && (
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium font-sans">
+                  Status: {filterStatus}
+                </span>
+              )}
+              {filterPriority !== 'All' && (
+                <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium font-sans">
+                  Priority: {filterPriority}
+                </span>
+              )}
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setFilterType('All');
+                  setFilterStatus('All');
+                  setFilterPriority('All');
+                }}
+                className="text-sm text-red-600 hover:text-red-800 font-sans hover:underline"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Results Summary */}
+      <div className="flex items-center justify-between">
+        <div className="text-sm text-gray-600 font-sans">
+          Showing {filteredClients.length} of {clients.length} clients
+        </div>
+        <div className="text-sm text-gray-500 font-sans">
+          Sorted by {sortBy.charAt(0).toUpperCase() + sortBy.slice(1)}
+        </div>
+      </div>
+
+      {/* Client Display */}
+      {viewMode === 'grid' ? (
+        /* Enhanced Grid View */
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          {filteredClients.map((client) => (
+            <AnimatedCard 
+              key={client.id} 
+              className="overflow-hidden group hover:shadow-xl transition-all duration-300 bg-white border border-gray-200"
+              hover
+            >
+              {/* Card Header with Priority Indicator */}
+              <div className="relative p-6 pb-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+                {client.priority === 'high' && (
+                  <div className="absolute top-4 right-4">
+                    <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                  </div>
+                )}
+                
+                <div className="flex items-start space-x-4">
                   <div className="relative">
-                    <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-md">
-                      {client.type === 'Business' ? (
-                        <Building className="h-8 w-8 text-blue-600" />
-                      ) : (
-                        <User className="h-8 w-8 text-blue-600" />
-                      )}
+                    <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-sm">
+                      {getClientIcon(client)}
                     </div>
-                    {/* Status Indicator Dot */}
-                    <div className={`absolute -top-1 -right-1 h-5 w-5 rounded-full border-3 border-white ${
+                    <div className={`absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white ${
                       client.status === 'Active' ? 'bg-green-500' : 'bg-gray-400'
                     }`} />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 font-display truncate group-hover:text-blue-600 transition-colors duration-200 mb-2">
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-bold text-gray-900 font-display truncate group-hover:text-blue-600 transition-colors duration-200">
                       {client.name}
                     </h3>
-                    <div className="flex items-center space-x-3">
-                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                    <div className="flex items-center space-x-2 mt-1">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${
                         client.type === 'Business' 
                           ? 'bg-purple-100 text-purple-800' 
                           : 'bg-blue-100 text-blue-800'
@@ -269,94 +423,248 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                         {client.type}
                       </span>
                       <StatusIndicator 
-                        status={client.status === 'Active' ? 'success' : 'pending'} 
+                        status={client.status === 'Active' ? 'success' : 'warning'} 
                         label={client.status}
                         size="sm"
                       />
                     </div>
                   </div>
                 </div>
-                <div className="opacity-0 group-hover:opacity-100 transition-all duration-200 flex-shrink-0 ml-4">
-                  <ActionMenu actions={getClientActionMenu(client)} />
-                </div>
-              </div>
-            </div>
 
-            {/* Card Body */}
-            <div className="p-8 pt-6 space-y-6 flex-1">
-              {/* Contact Information */}
-              <div className="space-y-4">
-                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200 py-1">
-                  <Mail className="h-5 w-5 mr-4 text-gray-400 flex-shrink-0" />
-                  <span className="truncate">{client.email}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200 py-1">
-                  <Phone className="h-5 w-5 mr-4 text-gray-400 flex-shrink-0" />
-                  <span>{client.phone}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600 font-sans group-hover:text-gray-800 transition-colors duration-200 py-1">
-                  <Calendar className="h-5 w-5 mr-4 text-gray-400 flex-shrink-0" />
-                  <span>Last activity: {client.lastActivity}</span>
+                {/* Client Tags */}
+                <div className="flex flex-wrap gap-1 mt-3">
+                  {client.tags.map((tag, index) => (
+                    <span 
+                      key={index} 
+                      className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-medium font-sans"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
 
-              {/* Metrics Section */}
-              <div className="pt-6 border-t border-gray-100 mt-auto">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-4 bg-gray-50 rounded-xl group-hover:bg-gray-100 transition-colors duration-200">
-                    <div className="text-2xl font-bold text-gray-900 font-display mb-1">{client.transactions}</div>
-                    <div className="text-xs text-gray-600 font-sans uppercase tracking-wide">Transactions</div>
+              {/* Card Body - Contact & Metrics */}
+              <div className="p-6 space-y-4">
+                {/* Contact Information */}
+                <div className="space-y-3">
+                  <div className="flex items-center text-sm text-gray-600 font-sans">
+                    <Mail className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                    <span className="truncate">{client.email}</span>
                   </div>
-                  <div className="text-center p-4 bg-gray-50 rounded-xl group-hover:bg-gray-100 transition-colors duration-200">
-                    <div className="text-2xl font-bold text-gray-900 font-display mb-1">{client.totalValue}</div>
-                    <div className="text-xs text-gray-600 font-sans uppercase tracking-wide">Total Value</div>
+                  <div className="flex items-center text-sm text-gray-600 font-sans">
+                    <Phone className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                    <span>{client.phone}</span>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600 font-sans">
+                    <Calendar className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
+                    <span>Joined {new Date(client.joinDate).toLocaleDateString()}</span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Card Footer */}
-            <div className="px-8 pb-8">
-              <div className="grid grid-cols-2 gap-4">
-                <InteractiveButton 
-                  variant="secondary" 
-                  size="md" 
-                  className="w-full justify-center"
-                  onClick={() => handleClientAction(client.id, 'view')}
-                >
-                  View Profile
-                </InteractiveButton>
-                <InteractiveButton 
-                  variant="primary" 
-                  size="md" 
-                  icon={TrendingUp}
-                  className="w-full justify-center"
-                  onClick={() => handleClientAction(client.id, 'transactions')}
-                >
-                  Transactions
-                </InteractiveButton>
-              </div>
-            </div>
-          </AnimatedCard>
-        ))}
-      </div>
+                {/* Key Metrics Grid */}
+                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-xl font-bold text-blue-600 font-display">{client.transactions}</div>
+                    <div className="text-xs text-blue-700 font-sans uppercase tracking-wide">Transactions</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-xl font-bold text-green-600 font-display">{client.totalValue}</div>
+                    <div className="text-xs text-green-700 font-sans uppercase tracking-wide">Portfolio</div>
+                  </div>
+                </div>
 
-      {/* Empty State */}
+                {/* Additional Metrics */}
+                <div className="grid grid-cols-2 gap-4 text-sm font-sans">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">YTD Gains:</span>
+                    <span className="font-medium text-green-600">{client.yearToDateGains}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Risk Level:</span>
+                    <span className={`font-medium ${getRiskColor(client.riskLevel)}`}>
+                      {client.riskLevel}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-500 font-sans pt-2 border-t border-gray-100">
+                  Last activity: {client.lastActivity}
+                </div>
+              </div>
+
+              {/* Card Actions */}
+              <div className="px-6 pb-6">
+                <div className="grid grid-cols-3 gap-2">
+                  <InteractiveButton 
+                    variant="secondary" 
+                    size="sm" 
+                    icon={Eye}
+                    className="text-xs"
+                    onClick={() => handleClientAction(client.id, 'view')}
+                  >
+                    View
+                  </InteractiveButton>
+                  <InteractiveButton 
+                    variant="secondary" 
+                    size="sm" 
+                    icon={TrendingUp}
+                    className="text-xs"
+                    onClick={() => handleClientAction(client.id, 'transactions')}
+                  >
+                    Transactions
+                  </InteractiveButton>
+                  <InteractiveButton 
+                    variant="primary" 
+                    size="sm" 
+                    icon={FileText}
+                    className="text-xs"
+                    onClick={() => handleClientAction(client.id, 'report')}
+                  >
+                    Report
+                  </InteractiveButton>
+                </div>
+              </div>
+            </AnimatedCard>
+          ))}
+        </div>
+      ) : (
+        /* Enhanced List View */
+        <AnimatedCard className="overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 font-display">Client</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 font-display">Contact</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 font-display">Portfolio</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 font-display">Activity</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 font-display">Risk</th>
+                  <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900 font-display">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {filteredClients.map((client) => (
+                  <tr key={client.id} className="hover:bg-gray-50 transition-colors duration-200 group">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="relative">
+                          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                            {getClientIcon(client)}
+                          </div>
+                          {client.priority === 'high' && (
+                            <Star className="absolute -top-1 -right-1 h-3 w-3 text-yellow-500 fill-current" />
+                          )}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-gray-900 font-display">{client.name}</div>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                              client.type === 'Business' 
+                                ? 'bg-purple-100 text-purple-800' 
+                                : 'bg-blue-100 text-blue-800'
+                            }`}>
+                              {client.type}
+                            </span>
+                            <StatusIndicator 
+                              status={client.status === 'Active' ? 'success' : 'warning'} 
+                              label={client.status}
+                              size="sm"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1 text-sm font-sans">
+                        <div className="flex items-center text-gray-900">
+                          <Mail className="h-3 w-3 mr-2 text-gray-400" />
+                          {client.email}
+                        </div>
+                        <div className="flex items-center text-gray-600">
+                          <Phone className="h-3 w-3 mr-2 text-gray-400" />
+                          {client.phone}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="space-y-1 text-sm font-sans">
+                        <div className="font-semibold text-gray-900">{client.totalValue}</div>
+                        <div className="text-green-600">+{client.yearToDateGains} YTD</div>
+                        <div className="text-gray-500">{client.transactions} transactions</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-600 font-sans">
+                        {client.lastActivity}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium font-sans ${
+                        client.riskLevel === 'High' ? 'bg-red-100 text-red-800' :
+                        client.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-green-100 text-green-800'
+                      }`}>
+                        {client.riskLevel}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <InteractiveButton 
+                          variant="secondary" 
+                          size="sm" 
+                          icon={Eye}
+                          onClick={() => handleClientAction(client.id, 'view')}
+                          tooltip="View Profile"
+                        />
+                        <InteractiveButton 
+                          variant="secondary" 
+                          size="sm" 
+                          icon={TrendingUp}
+                          onClick={() => handleClientAction(client.id, 'transactions')}
+                          tooltip="View Transactions"
+                        />
+                        <InteractiveButton 
+                          variant="primary" 
+                          size="sm" 
+                          icon={FileText}
+                          onClick={() => handleClientAction(client.id, 'report')}
+                          tooltip="Generate Report"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </AnimatedCard>
+      )}
+
+      {/* Enhanced Empty State */}
       {filteredClients.length === 0 && (
         <AnimatedCard className="text-center py-16">
-          <div className="max-w-sm mx-auto">
-            <div className="h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <User className="h-12 w-12 text-gray-400" />
+          <div className="max-w-md mx-auto space-y-6">
+            <div className="h-24 w-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto">
+              <Users className="h-12 w-12 text-blue-600" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-3 font-display">No clients found</h3>
-            <p className="text-gray-600 mb-6 font-sans">
-              {searchTerm || filterType !== 'All' || filterStatus !== 'All' 
-                ? 'Try adjusting your search or filter criteria to find clients.'
-                : 'Get started by adding your first client to the system.'
-              }
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              {(searchTerm || filterType !== 'All' || filterStatus !== 'All') && (
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold text-gray-900 font-display">
+                {searchTerm || filterType !== 'All' || filterStatus !== 'All' || filterPriority !== 'All' 
+                  ? 'No clients match your criteria'
+                  : 'No clients yet'
+                }
+              </h3>
+              <p className="text-gray-600 font-sans text-lg">
+                {searchTerm || filterType !== 'All' || filterStatus !== 'All' || filterPriority !== 'All' 
+                  ? 'Try adjusting your search terms or filters to find clients.'
+                  : 'Get started by adding your first client to begin managing crypto tax services.'
+                }
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {(searchTerm || filterType !== 'All' || filterStatus !== 'All' || filterPriority !== 'All') && (
                 <InteractiveButton 
                   variant="secondary" 
                   size="md"
@@ -364,9 +672,10 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                     setSearchTerm('');
                     setFilterType('All');
                     setFilterStatus('All');
+                    setFilterPriority('All');
                   }}
                 >
-                  Clear Filters
+                  Clear All Filters
                 </InteractiveButton>
               )}
               <InteractiveButton 
@@ -375,24 +684,35 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 icon={Plus}
                 onClick={handleAddClient}
               >
-                Add First Client
+                {filteredClients.length === 0 && !searchTerm ? 'Add First Client' : 'Add New Client'}
               </InteractiveButton>
             </div>
           </div>
         </AnimatedCard>
       )}
 
-      {/* Add Client Dialog */}
-      <ConfirmDialog
-        isOpen={showAddClientDialog}
-        onClose={() => setShowAddClientDialog(false)}
-        onConfirm={confirmAddClient}
-        title="Add New Client"
-        message="This will create a new client profile. You can add details after creation."
-        type="success"
-        confirmText="Create Client"
-        isLoading={isAddingClient}
-      />
+      {/* Pagination (if needed) */}
+      {filteredClients.length > 12 && (
+        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <div className="text-sm text-gray-600 font-sans">
+            Showing 1-12 of {filteredClients.length} clients
+          </div>
+          <div className="flex space-x-2">
+            <InteractiveButton variant="secondary" size="sm" disabled>
+              Previous
+            </InteractiveButton>
+            <InteractiveButton variant="primary" size="sm">
+              1
+            </InteractiveButton>
+            <InteractiveButton variant="secondary" size="sm">
+              2
+            </InteractiveButton>
+            <InteractiveButton variant="secondary" size="sm">
+              Next
+            </InteractiveButton>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
