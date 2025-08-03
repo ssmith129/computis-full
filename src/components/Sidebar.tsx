@@ -89,7 +89,6 @@ const settingItems = [
             <span>{item.label}</span>
           </div>
         ))}
-        <div className="px-2 py-1 text-xs text-gray-400 uppercase font-medium mt-3 font-display tracking-wide">Settings</div>
       </div>
     </nav>
   );
