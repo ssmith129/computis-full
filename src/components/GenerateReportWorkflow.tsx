@@ -463,9 +463,10 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-start px-6 pt-12 pb-6">
+      <div className="w-full max-w-[1200px] mx-auto">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-8 py-6">
+        <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200">
@@ -512,14 +513,16 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
           </div>
         </div>
       </div>
+      </div>
+    </div>
 
       {/* Content */}
-      <div className="px-8 py-12">
+        <div className="bg-white px-8 py-12">
         {renderStepContent()}
       </div>
 
       {/* Footer */}
-      <div className="bg-white border-t border-gray-200 px-8 py-6">
+        <div className="bg-white border-t border-gray-200 px-8 py-6 rounded-b-2xl shadow-lg">
         <div className="flex justify-between">
           <button
             disabled={currentStep === 1}
