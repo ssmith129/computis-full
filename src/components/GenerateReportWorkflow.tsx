@@ -514,7 +514,6 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
         </div>
       </div>
       </div>
-    </div>
 
       {/* Content */}
         <div className="bg-white px-8 py-12">
