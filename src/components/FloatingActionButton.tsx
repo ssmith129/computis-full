@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
+import InteractiveButton from './InteractiveButton';
 
 interface FloatingAction {
   label: string;

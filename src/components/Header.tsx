@@ -3,6 +3,7 @@ import { Coins, FileText, User, ChevronDown } from 'lucide-react';
 import { NotificationBell } from './NotificationSystem';
 import { useNotifications } from './NotificationSystem';
 import InteractiveButton from './InteractiveButton';
+import InteractiveButton from './InteractiveButton';
 
 interface HeaderProps {
   onWorkflowOpen?: (workflow: string) => void;
