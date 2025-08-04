@@ -160,7 +160,7 @@ export default function Reports({ onWorkflowOpen }: ReportsProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-sans">Reports & Exports</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-sans">Crypto Tax Reports & IRS Forms</h2>
           <p className="text-gray-600 mt-1 font-sans">Generate tax reports and export data</p>
         </div>
         <button 

@@ -92,7 +92,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Client Type</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Crypto Tax Client Type</h3>
               <p className="text-lg text-gray-600 font-sans">Choose the type of client you're adding</p>
             </div>
 
@@ -140,14 +140,14 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Basic Information</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Client Contact Information</h3>
               <p className="text-lg text-gray-600 font-sans">Enter the client's contact details</p>
             </div>
 
             <div className="max-w-2xl mx-auto space-y-8">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">
-                  {clientType === 'individual' ? 'Personal Information' : 'Business Information'}
+                  {clientType === 'individual' ? 'Personal Tax Information' : 'Business Tax Entity Information'}
                 </h3>
                 
                 <div className="space-y-6">
@@ -213,7 +213,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Address</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Mailing Address</h4>
                 
                 <div className="space-y-6">
                   <div>
@@ -285,13 +285,13 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Tax Details & Preferences</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Tax Configuration & Preferences</h3>
               <p className="text-lg text-gray-600 font-sans">Configure tax settings and preferences</p>
             </div>
 
             <div className="max-w-2xl mx-auto space-y-8">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Tax Information</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Tax Identification Information</h4>
                 
                 <div className="space-y-6">
                   <div>
@@ -354,7 +354,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Communication Preferences</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Communication & Reporting Preferences</h4>
                 
                 <div className="space-y-6">
                   <div>
@@ -407,7 +407,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
               <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Client Created Successfully!</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Crypto Tax Client Created Successfully!</h3>
               <p className="text-lg text-gray-600 font-sans">
                 {clientType === 'individual' 
                   ? `${clientData.firstName} ${clientData.lastName}` 
@@ -418,7 +418,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
 
             <div className="max-w-2xl mx-auto">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Next Steps</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Next Steps for Tax Preparation</h4>
                 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-4 p-4 bg-blue-50 rounded-lg">
@@ -490,7 +490,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
                 <ArrowLeft className="w-6 h-6 text-gray-600" />
               </button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 font-display">Add New Client</h1>
+                <h2 className="text-2xl font-bold text-gray-900 font-display">Add New Crypto Tax Client</h2>
                 <p className="text-gray-600 font-sans">Create a new client profile for crypto tax services</p>
               </div>
             </div>

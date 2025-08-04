@@ -192,7 +192,7 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 font-display">Wallets & Data Sources</h1>
+          <h2 className="text-2xl font-bold text-gray-900 font-display">Cryptocurrency Wallets & Data Sources</h2>
           <p className="text-base text-gray-600 mt-1 font-sans">Connect wallets and import data</p>
         </div>
         <div className="flex space-x-2">

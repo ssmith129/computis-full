@@ -161,7 +161,7 @@ export default function RuleEngine() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-sans">Rule Engine</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-sans">AI Classification Rule Engine</h2>
           <p className="text-gray-600 mt-1 font-sans">Create and manage automated classification rules</p>
         </div>
         <div className="flex space-x-3">

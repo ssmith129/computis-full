@@ -49,7 +49,7 @@ export default function Settings() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-display">General Settings</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-display">Tax Calculation Settings</h2>
           <p className="text-gray-600 mt-1 font-sans">Configure your application preferences and account settings</p>
         </div>
         <div className="flex space-x-3">

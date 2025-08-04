@@ -138,7 +138,7 @@ export default function Exports() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-sans">Data Exports</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-sans">Crypto Tax Data Exports</h2>
           <p className="text-gray-600 mt-1 font-sans">Export transaction data and generate reports</p>
         </div>
       </div>

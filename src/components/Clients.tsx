@@ -198,9 +198,9 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900 font-display">Client Management</h1>
+            <h2 className="text-3xl font-bold text-gray-900 font-display">Crypto Tax Client Management</h2>
             <p className="text-lg text-gray-600 font-sans">
-              Manage and track your crypto tax clients
+              Manage cryptocurrency tax clients and track portfolio performance
             </p>
             <div className="flex items-center space-x-6 text-sm text-gray-500 font-sans">
               <span className="flex items-center">

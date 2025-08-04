@@ -54,7 +54,7 @@ export default function Preferences() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-sans">Preferences</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-sans">Crypto Tax Calculation Preferences</h2>
           <p className="text-gray-600 mt-1 font-sans">Configure tax calculations, AI behavior, and data handling</p>
         </div>
         <div className="flex space-x-3">

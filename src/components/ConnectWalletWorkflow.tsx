@@ -112,7 +112,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Wallet Type</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Crypto Wallet Type</h3>
               <p className="text-lg text-gray-600 font-sans">Choose the wallet or exchange you want to connect</p>
             </div>
 
@@ -173,7 +173,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Connection Method</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Wallet Connection Method</h3>
               <p className="text-lg text-gray-600 font-sans">
                 How would you like to connect your {walletTypes.find(w => w.id === selectedWallet)?.name}?
               </p>
@@ -237,7 +237,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Authentication</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Secure Wallet Authentication</h3>
               <p className="text-lg text-gray-600 font-sans">
                 Provide the required information to connect your wallet
               </p>
@@ -250,9 +250,9 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
                     {walletTypes.find(w => w.id === selectedWallet)?.icon}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 font-display">
+                    <h4 className="text-xl font-bold text-gray-900 font-display">
                       {walletTypes.find(w => w.id === selectedWallet)?.name}
-                    </h3>
+                    </h4>
                     <p className="text-gray-600 font-sans">{connectionMethod}</p>
                   </div>
                 </div>
@@ -390,7 +390,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
               <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Wallet Connected Successfully!</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Crypto Wallet Connected Successfully!</h3>
               <p className="text-lg text-gray-600 font-sans">
                 Your {walletTypes.find(w => w.id === selectedWallet)?.name} wallet has been connected and synced
               </p>
@@ -398,7 +398,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
 
             <div className="max-w-2xl mx-auto space-y-6">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Connection Summary</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Wallet Connection Summary</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   <div className="text-center">
@@ -438,7 +438,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Next Steps</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Next Steps for Tax Processing</h4>
                 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-4 p-4 bg-blue-50 rounded-lg">
@@ -508,7 +508,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
               <ArrowLeft className="w-6 h-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 font-display">Connect Wallet</h1>
+              <h2 className="text-2xl font-bold text-gray-900 font-display">Connect Crypto Wallet</h2>
               <p className="text-gray-600 font-sans">Connect your crypto wallet or exchange account</p>
             </div>
           </div>

@@ -204,7 +204,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         <div className="lg:col-span-2 xl:col-span-2">
           <AnimatedCard className="p-6" hover>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900 font-display">Recent Activity</h2>
+              <h3 className="text-xl font-bold text-gray-900 font-display">Recent Crypto Tax Activity</h3>
               <InteractiveButton variant="secondary" size="sm">
                 View All
               </InteractiveButton>
@@ -236,7 +236,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         {/* AI Insights */}
         <div className="space-y-4">
           <AnimatedCard className="p-4" hover>
-            <h2 className="text-xl font-bold text-gray-900 mb-4 font-display">AI Insights</h2>
+            <h3 className="text-xl font-bold text-gray-900 mb-4 font-display">AI Tax Classification Insights</h3>
             <div className="space-y-3">
               {aiInsights.map((insight, index) => (
                 <div key={index} className="hover:bg-gray-50 p-3 rounded-md transition-all duration-150 group">
@@ -255,7 +255,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
 
           {/* Quick Actions */}
           <AnimatedCard className="p-4" hover>
-            <h2 className="text-xl font-bold text-gray-900 mb-4 font-display">Quick Actions</h2>
+            <h3 className="text-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
             <div className="grid grid-cols-2 gap-3">
               <InteractiveButton 
                 variant="secondary" 

@@ -68,7 +68,7 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 font-display">Analytics Dashboard</h1>
+          <h2 className="text-3xl font-bold text-gray-900 font-display">Crypto Tax Analytics Dashboard</h2>
           <p className="text-gray-600 mt-1 font-sans">Comprehensive analysis of your crypto tax position</p>
         </div>
         <div className="flex space-x-4">

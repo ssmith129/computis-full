@@ -10,7 +10,7 @@ export default function PageHeader({ onAuditTrailToggle }: PageHeaderProps) {
     <div className="px-4 py-3 border-b border-gray-200 bg-white">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-bold text-gray-900 font-display">AI-Enhanced Transactions</h1>
+          <h2 className="text-lg font-bold text-gray-900 font-display">AI-Enhanced Crypto Transaction Management</h2>
           <p className="text-gray-600 mt-1 font-sans text-xs">Review and manage AI-classified transactions</p>
         </div>
         <div className="flex space-x-2">
