@@ -312,7 +312,6 @@ export default function TransactionsTable() {
             </InteractiveButton>
           </div>
         </div>
-      </div>
 
       {/* Transactions Grid */}
       <div className="px-4 py-3">
