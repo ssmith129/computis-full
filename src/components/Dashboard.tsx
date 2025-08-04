@@ -264,7 +264,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('import')}
               >
-                <span className="text-sm font-semibold text-gray-900">Import Data</span>
+                <span className="text-sm font-semibold text-gray-900">Import</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -273,7 +273,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('report')}
               >
-                <span className="text-sm font-semibold text-gray-900">Generate Report</span>
+                <span className="text-sm font-semibold text-gray-900">Report</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -282,7 +282,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('client')}
               >
-                <span className="text-sm font-semibold text-gray-900">Add Client</span>
+                <span className="text-sm font-semibold text-gray-900">Client</span>
               </InteractiveButton>
               <InteractiveButton 
                 variant="secondary" 
@@ -291,7 +291,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
                 className="w-full justify-center"
                 onClick={() => handleQuickAction('wallet')}
               >
-                <span className="text-sm font-semibold text-gray-900">Connect Wallet</span>
+                <span className="text-sm font-semibold text-gray-900">Wallet</span>
               </InteractiveButton>
             </div>
           </AnimatedCard>

@@ -684,7 +684,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 icon={Plus}
                 onClick={handleAddClient}
               >
-                Add Client Profile
+                {filteredClients.length === 0 && !searchTerm ? 'Add First Client' : 'Add New Client'}
               </InteractiveButton>
             </div>
           </div>

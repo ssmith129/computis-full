@@ -239,7 +239,7 @@ const ConnectWalletWorkflow: React.FC<ConnectWalletWorkflowProps> = ({ onBack })
             <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Authentication</h2>
               <p className="text-lg text-gray-600 font-sans">
-                Enter your credentials to securely import transaction data
+                Provide the required information to connect your wallet
               </p>
             </div>
 
