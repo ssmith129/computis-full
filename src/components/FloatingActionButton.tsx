@@ -49,24 +49,6 @@ export default function FloatingActionButton({
 
   return (
     <div className={`fixed ${positionClasses[position]} z-50`}>
-      {/* Always-Active Import Button */}
-      <div className="absolute -top-16 right-0">
-        <InteractiveButton
-          variant="primary"
-          size="md"
-          icon={TrendingUp}
-          alwaysActive={true}
-          onClick={() => {
-            // Navigate to review and import workflow
-            window.location.hash = '#/transactions';
-          }}
-          tooltip="Review & Import Transactions - Always Available"
-          className="shadow-2xl border-2 border-white"
-        >
-          Review & Import
-        </InteractiveButton>
-      </div>
-
       {/* Action Buttons */}
       {isOpen && actions.map((action, index) => (
         <div
