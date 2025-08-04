@@ -116,7 +116,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Report Type</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Tax Report Type</h3>
               <p className="text-lg text-gray-600 font-sans">Choose the type of report you want to generate</p>
             </div>
 
@@ -171,13 +171,13 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Configure Report</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Configure Tax Report Parameters</h3>
               <p className="text-lg text-gray-600 font-sans">Set up your report parameters</p>
             </div>
 
             <div className="max-w-2xl mx-auto space-y-8">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Basic Settings</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Basic Report Settings</h4>
                 
                 <div className="space-y-6">
                   <div>
@@ -245,7 +245,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
               </div>
 
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Advanced Options</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Advanced Tax Calculation Options</h4>
                 
                 <div className="space-y-6">
                   <div>
@@ -321,13 +321,13 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Review Settings</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Review Tax Report Settings</h3>
               <p className="text-lg text-gray-600 font-sans">Verify your report configuration before generating</p>
             </div>
 
             <div className="max-w-2xl mx-auto">
               <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-6 font-display">Report Summary</h3>
+                <h4 className="text-xl font-bold text-gray-900 mb-6 font-display">Tax Report Configuration Summary</h4>
                 
                 <div className="space-y-4">
                   <div className="flex justify-between py-3 border-b border-gray-100">
@@ -382,7 +382,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
         return (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Generate Report</h2>
+              <h3 className="text-3xl font-bold text-gray-900 mb-4 font-display">Generate Crypto Tax Report</h3>
               <p className="text-lg text-gray-600 font-sans">
                 {isGenerating ? 'Generating your report...' : 'Your report is ready!'}
               </p>
@@ -418,7 +418,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
                     </div>
                     
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 font-display">Report Generated Successfully!</h3>
+                      <h4 className="text-xl font-bold text-gray-900 mb-2 font-display">Tax Report Generated Successfully!</h4>
                       <p className="text-gray-600 font-sans">Your report is ready for download</p>
                     </div>
 
@@ -473,7 +473,7 @@ const GenerateReportWorkflow: React.FC<GenerateReportWorkflowProps> = ({ onBack 
               <ArrowLeft className="w-6 h-6 text-gray-600" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 font-display">Generate Report</h1>
+              <h2 className="text-2xl font-bold text-gray-900 font-display">Generate Crypto Tax Report</h2>
               <p className="text-gray-600 font-sans">Create tax reports and compliance documents</p>
             </div>
           </div>

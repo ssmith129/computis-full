@@ -306,7 +306,7 @@ export default function TransactionsTable() {
               <span className="text-xs font-sans">Low</span>
             </div>
           </div>
-          <div>
+            <h3 className="text-lg font-bold text-gray-900 font-display">AI Classification Insights</h3>
             <InteractiveButton variant="secondary" size="sm">
               Hide Legend
             </InteractiveButton>

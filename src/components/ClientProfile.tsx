@@ -56,7 +56,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 font-display">{clientData.name}</h1>
+            <h2 className="text-3xl font-bold text-gray-900 font-display">{clientData.name} - Crypto Tax Client</h2>
             <p className="text-gray-600 font-sans">{clientData.company}</p>
           </div>
         </div>
@@ -116,7 +116,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
           {/* Client Information */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Client Information</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Tax Client Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <User className="w-5 h-5 text-gray-400" />
@@ -212,7 +212,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
           {/* Recent Activity */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Recent Transactions</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Recent Crypto Transactions</h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -257,7 +257,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
             </div>
 
             <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Generated Reports</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-6 font-display">Generated Tax Reports</h3>
               <div className="space-y-4">
                 {reports.map((report, index) => (
                   <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
@@ -287,7 +287,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
       {activeTab === 'transactions' && (
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900 font-display">All Transactions</h3>
+            <h3 className="text-lg font-bold text-gray-900 font-display">All Crypto Transactions</h3>
             <div className="flex space-x-3">
               <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-sans">
                 Filter
@@ -304,7 +304,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
       {activeTab === 'reports' && (
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900 font-display">Tax Reports</h3>
+            <h3 className="text-lg font-bold text-gray-900 font-display">IRS Tax Reports & Forms</h3>
             <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 font-sans">
               Generate New Report
             </button>
@@ -316,7 +316,7 @@ const ClientProfile: React.FC<ClientProfileProps> = ({ clientId, onBack }) => {
       {activeTab === 'documents' && (
         <div className="bg-white rounded-xl border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900 font-display">Documents</h3>
+            <h3 className="text-lg font-bold text-gray-900 font-display">Tax Documents & Supporting Files</h3>
             <button className="px-4 py-2 bg-yellow-400 text-gray-900 rounded-lg hover:bg-yellow-300 font-sans">
               Upload Document
             </button>
