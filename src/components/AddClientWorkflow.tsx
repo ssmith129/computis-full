@@ -93,7 +93,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
           <div className="space-y-8">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-4 font-display">Select Client Type</h2>
-              <p className="text-lg text-gray-600 font-sans">Choose the type of client you're adding</p>
+              <p className="text-lg text-gray-600 font-sans">This helps us set up the right tax forms and calculations</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
