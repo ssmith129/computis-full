@@ -8,6 +8,7 @@ interface InteractiveButtonProps {
   icon?: LucideIcon;
   loading?: boolean;
   disabled?: boolean;
+  alwaysActive?: boolean;
   className?: string;
   onClick?: () => void;
   tooltip?: string;
@@ -20,6 +21,7 @@ export default function InteractiveButton({
   icon: Icon,
   loading = false,
   disabled = false,
+  alwaysActive = false,
   className = '',
   onClick,
   tooltip
@@ -27,8 +29,10 @@ export default function InteractiveButton({
   const [isPressed, setIsPressed] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  // Override disabled state when alwaysActive is true
+  const isDisabled = alwaysActive ? false : (disabled || loading);
   const variants = {
-    primary: 'bg-yellow-400 hover:bg-yellow-300 text-gray-900 shadow-lg hover:shadow-xl',
+    primary: `bg-yellow-400 hover:bg-yellow-300 text-gray-900 shadow-lg hover:shadow-xl ${alwaysActive ? 'ring-2 ring-yellow-300 ring-opacity-50' : ''}`,
     secondary: 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 shadow-sm hover:shadow-md',
     success: 'bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl',
     warning: 'bg-orange-500 hover:bg-orange-600 text-white shadow-lg hover:shadow-xl',
@@ -42,7 +46,7 @@ export default function InteractiveButton({
   };
 
   const handleClick = () => {
-    if (!disabled && !loading && onClick) {
+    if (!isDisabled && onClick) {
       setIsPressed(true);
       setTimeout(() => setIsPressed(false), 100);
       onClick();
@@ -57,21 +61,30 @@ export default function InteractiveButton({
           ${variants[variant]}
           ${sizes[size]}
           ${isPressed ? 'scale-98' : 'hover:scale-102'}
-          ${disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+          ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+          ${alwaysActive ? 'animate-pulse-glow' : ''}
           ${className}
         `}
-        disabled={disabled || loading}
+        disabled={isDisabled}
+        aria-label={alwaysActive ? `${children} - Always available` : children?.toString()}
+        aria-pressed={isPressed}
         onMouseEnter={() => tooltip && setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onMouseDown={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
         onClick={handleClick}
       >
         <div className="flex items-center justify-center space-x-2">
           {loading ? (
             <div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
           ) : Icon ? (
-            <Icon className={`${size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'} transition-transform duration-150 ${isPressed ? 'scale-95' : ''}`} />
+            <Icon className={`${size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'} transition-transform duration-150 ${isPressed ? 'scale-95' : ''} ${alwaysActive ? 'animate-bounce' : ''}`} />
           ) : null}
           <span className={`transition-transform duration-150 ${isPressed ? 'scale-98' : ''}`}>
             {children}
@@ -79,9 +92,9 @@ export default function InteractiveButton({
         </div>
       </button>
       
-      {tooltip && showTooltip && (
+      {tooltip && (showTooltip || alwaysActive) && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap z-50">
-          {tooltip}
+          {alwaysActive ? `${tooltip} - Click anytime to access` : tooltip}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
         </div>
       )}

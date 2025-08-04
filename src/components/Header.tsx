@@ -55,10 +55,12 @@ export default function Header({ onWorkflowOpen }: HeaderProps) {
         <InteractiveButton 
           variant="success" 
           size="sm"
+          alwaysActive={true}
           className="text-xs"
           onClick={() => onWorkflowOpen?.('import-transactions')}
+          tooltip="Start import workflow - always available"
         >
-          Import Data
+          Review & Import
         </InteractiveButton>
         <div className="flex items-center h-6">
           <NotificationBell />
