@@ -1167,7 +1167,7 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                 size="sm"
                 onClick={() => {
                   if (currentStep > 1) {
-                    prevStep();
+                    setCurrentStep(Math.max(0, currentStep - 1));
                   }
                 }}
                 tooltip="Get help with importing"
@@ -1229,23 +1229,17 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
                   }}
                   disabled={
                     currentStep === 3 ||
-              <InteractiveButton
-                variant="primary"
-                size="lg"
-                alwaysActive={true}
-                loading={isProcessing}
-                onClick={() => {
-                  if (currentStep === 3) {
-                    processImport();
-                  } else {
-                    nextStep();
+                    (currentStep === 0 && !selectedSource) ||
+                    (currentStep === 1 && uploadedFiles.length === 0) ||
+                    isProcessing
                   }
-                }}
-                tooltip="Continue to review and import transactions"
-                className="px-6 py-3 font-medium"
-              >
-                {currentStep === 3 ? (isProcessing ? 'Processing...' : 'Review & Import') : 'Continue to Review'}
-              </InteractiveButton>
+                  icon={ArrowRight}
+                >
+                  {currentStep === 0 ? 'Continue' : 
+                   currentStep === 1 ? 'Review Data' : 
+                   'Next'}
+                </InteractiveButton>
+              </div>
             </div>
           )}
         </div>
