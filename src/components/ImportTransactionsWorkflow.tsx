@@ -1247,5 +1247,3 @@ const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({
     </div>
   );
 };
-
-export default ImportTransactionsWorkflow;
