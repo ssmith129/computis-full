@@ -424,7 +424,7 @@ export default function TransactionsTable() {
                             icon={Check}
                             className="opacity-0 group-hover:opacity-100"
                           >
-                            Classify
+                            Add Category
                           </InteractiveButton>
                         ) : (
                           <InteractiveButton 
@@ -433,7 +433,7 @@ export default function TransactionsTable() {
                             icon={Check}
                             className="opacity-0 group-hover:opacity-100"
                           >
-                            Accept
+                            Looks Good
                           </InteractiveButton>
                         )}
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">

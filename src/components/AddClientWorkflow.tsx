@@ -160,7 +160,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
                           value={clientData.firstName}
                           onChange={(e) => setClientData(prev => ({ ...prev, firstName: e.target.value }))}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans"
-                          placeholder="John (for tax forms and reports)"
+                          placeholder="John"
                         />
                       </div>
                       <div>
@@ -170,7 +170,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
                           value={clientData.lastName}
                           onChange={(e) => setClientData(prev => ({ ...prev, lastName: e.target.value }))}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent font-sans"
-                          placeholder="Smith (appears on all documents)"
+                          placeholder="Smith"
                         />
                       </div>
                     </div>
@@ -501,7 +501,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
                 onClick={createClient}
                 className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors duration-200 font-sans font-medium"
               >
-                {isCreating ? 'Creating...' : 'Create Client'}
+                {isCreating ? 'Creating Profile...' : 'Create Client Profile'}
               </button>
             )}
           </div>
