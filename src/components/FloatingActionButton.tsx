@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, TrendingUp } from 'lucide-react';
 import InteractiveButton from './InteractiveButton';
 
 interface FloatingAction {
