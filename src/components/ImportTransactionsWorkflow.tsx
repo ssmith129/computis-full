@@ -13,7 +13,7 @@ interface ImportTransactionsWorkflowProps {
   onBack: () => void;
 }
 
-export default ImportTransactionsWorkflow;
+export default function ImportTransactionsWorkflow({ onBack }: ImportTransactionsWorkflowProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedSource, setSelectedSource] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -1246,4 +1246,4 @@ export default ImportTransactionsWorkflow;
       </div>
     </div>
   );
-};
+}
