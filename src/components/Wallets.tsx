@@ -423,9 +423,9 @@ export default function Wallets({ onWorkflowOpen }: WalletsProps) {
           {/* Upload Area */}
           <AnimatedCard className="p-8 text-center" hover glow>
             <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4 hover:scale-110 transition-transform duration-200 animate-float" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2 font-display">Import Transaction Data</h3>
+            <h3 className="text-xl font-medium text-gray-900 mb-2 font-display">Upload Your Transaction History</h3>
             <p className="text-sm text-gray-600 mb-4 font-sans">
-              Upload CSV files from exchanges, wallets, or other sources
+              Drag & drop CSV files from any exchange or wallet (we'll help you format them correctly)
             </p>
             <div className="flex justify-center space-x-3">
               <InteractiveButton 
