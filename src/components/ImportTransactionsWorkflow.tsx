@@ -13,7 +13,7 @@ interface ImportTransactionsWorkflowProps {
   onBack: () => void;
 }
 
-const ImportTransactionsWorkflow: React.FC<ImportTransactionsWorkflowProps> = ({ onBack }) => {
+export default ImportTransactionsWorkflow;
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedSource, setSelectedSource] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
