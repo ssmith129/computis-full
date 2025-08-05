@@ -51,7 +51,6 @@ const auditEvents = [
 
 export default function AuditTrail({ isOpen, onClose }: AuditTrailProps) {
   return (
-    <div className={`fixed right-0 top-16 h-[calc(100vh-4rem)] w-[552px] bg-white border-l border-gray-200 shadow-xl transform transition-all duration-500 ease-in-out overflow-y-auto z-40 ${
       isOpen ? 'translate-x-0' : 'translate-x-full'
     }`}>
       <div className="p-6 border-b border-gray-200">
