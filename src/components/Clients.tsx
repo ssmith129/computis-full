@@ -385,24 +385,24 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
       {/* Client Display */}
       {viewMode === 'grid' ? (
         /* Enhanced Grid View */
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8 xl:gap-8">
           {filteredClients.map((client) => (
             <AnimatedCard 
               key={client.id} 
-              className="overflow-hidden group hover:shadow-xl transition-all duration-300 bg-white border border-gray-200"
+              className="overflow-hidden group hover:shadow-xl transition-all duration-300 bg-white border border-gray-200 h-full"
               hover
             >
               {/* Card Header with Priority Indicator */}
-              <div className="relative p-6 pb-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
+              <div className="relative p-4 md:p-6 pb-3 md:pb-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
                 {client.priority === 'high' && (
-                  <div className="absolute top-4 right-4">
+                  <div className="absolute top-3 md:top-4 right-3 md:right-4">
                     <Star className="h-5 w-5 text-yellow-500 fill-current" />
                   </div>
                 )}
                 
                 <div className="flex items-start space-x-4">
                   <div className="relative">
-                    <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-sm">
+                    <div className="h-12 w-12 md:h-14 md:w-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center group-hover:scale-105 transition-all duration-300 shadow-sm">
                       {getClientIcon(client)}
                     </div>
                     <div className={`absolute -bottom-1 -right-1 h-4 w-4 rounded-full border-2 border-white ${
@@ -411,7 +411,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-bold text-gray-900 font-display truncate group-hover:text-blue-600 transition-colors duration-200">
+                    <h3 className="text-base md:text-lg font-bold text-gray-900 font-display truncate group-hover:text-blue-600 transition-colors duration-200">
                       {client.name}
                     </h3>
                     <div className="flex items-center space-x-2 mt-1">
@@ -432,7 +432,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 </div>
 
                 {/* Client Tags */}
-                <div className="flex flex-wrap gap-1 mt-3">
+                <div className="flex flex-wrap gap-1 mt-2 md:mt-3">
                   {client.tags.map((tag, index) => (
                     <span 
                       key={index} 
@@ -445,9 +445,9 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
               </div>
 
               {/* Card Body - Contact & Metrics */}
-              <div className="p-6 space-y-4">
+              <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-1 flex flex-col">
                 {/* Contact Information */}
-                <div className="space-y-3">
+                <div className="space-y-2 md:space-y-3 flex-1">
                   <div className="flex items-center text-sm text-gray-600 font-sans">
                     <Mail className="h-4 w-4 mr-3 text-gray-400 flex-shrink-0" />
                     <span className="truncate">{client.email}</span>
@@ -463,19 +463,19 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                 </div>
 
                 {/* Key Metrics Grid */}
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+                <div className="grid grid-cols-2 gap-3 md:gap-4 pt-3 md:pt-4 border-t border-gray-100 mt-auto">
                   <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-xl font-bold text-blue-600 font-display">{client.transactions}</div>
+                    <div className="text-lg md:text-xl font-bold text-blue-600 font-display">{client.transactions}</div>
                     <div className="text-xs text-blue-700 font-sans uppercase tracking-wide">Transactions</div>
                   </div>
                   <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-xl font-bold text-green-600 font-display">{client.totalValue}</div>
+                    <div className="text-lg md:text-xl font-bold text-green-600 font-display">{client.totalValue}</div>
                     <div className="text-xs text-green-700 font-sans uppercase tracking-wide">Portfolio</div>
                   </div>
                 </div>
 
                 {/* Additional Metrics */}
-                <div className="grid grid-cols-2 gap-4 text-sm font-sans">
+                <div className="grid grid-cols-2 gap-3 md:gap-4 text-sm font-sans">
                   <div className="flex justify-between">
                     <span className="text-gray-600">YTD Gains:</span>
                     <span className="font-medium text-green-600">{client.yearToDateGains}</span>
@@ -488,19 +488,19 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                   </div>
                 </div>
 
-                <div className="text-xs text-gray-500 font-sans pt-2 border-t border-gray-100">
+                <div className="text-xs text-gray-500 font-sans pt-2 md:pt-2 border-t border-gray-100">
                   Last activity: {client.lastActivity}
                 </div>
               </div>
 
               {/* Card Actions */}
-              <div className="px-6 pb-6">
-                <div className="grid grid-cols-3 gap-2">
+              <div className="px-4 md:px-6 pb-4 md:pb-6 mt-auto">
+                <div className="grid grid-cols-3 gap-1.5 md:gap-2">
                   <InteractiveButton 
                     variant="secondary" 
                     size="sm" 
                     icon={Eye}
-                    className="text-xs"
+                    className="text-xs w-full justify-center"
                     onClick={() => handleClientAction(client.id, 'view')}
                   >
                     View
@@ -509,7 +509,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                     variant="secondary" 
                     size="sm" 
                     icon={TrendingUp}
-                    className="text-xs"
+                    className="text-xs w-full justify-center"
                     onClick={() => handleClientAction(client.id, 'transactions')}
                   >
                     Transactions
@@ -518,7 +518,7 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
                     variant="primary" 
                     size="sm" 
                     icon={FileText}
-                    className="text-xs"
+                    className="text-xs w-full justify-center"
                     onClick={() => handleClientAction(client.id, 'report')}
                   >
                     Report

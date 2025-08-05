@@ -62,14 +62,22 @@
 .content-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-@media (max-width: 640px) {
+/* Responsive Container Padding */
+@media (min-width: 640px) {
   .content-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -77,5 +85,23 @@
   .content-container {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+  }
+}
+
+/* Card Grid Spacing Utilities */
+.card-grid-responsive {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .card-grid-responsive {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-grid-responsive {
+    gap: 2rem;
   }
 }
