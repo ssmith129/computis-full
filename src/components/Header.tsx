@@ -34,7 +34,6 @@ export default function Header({ onWorkflowOpen }: HeaderProps) {
   };
 
   return (
-    <header className="text-white h-12 flex items-center justify-between px-4 fixed w-full z-50 top-0" style={{ backgroundColor: '#1a1a1a' }} role="banner">
       <div className="flex items-center space-x-2">
         <h1 className="sr-only">Computis - Professional Crypto Tax Management Platform</h1>
         <img 
