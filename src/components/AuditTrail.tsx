@@ -78,8 +78,8 @@ export default function AuditTrail({ isOpen, onClose }: AuditTrailProps) {
         
         <div className="space-y-6">
           {auditEvents.map((event, index) => (
-            <div key={event.id} className={\`relative pl-6 hover:bg-gray-50 p-2 rounded-md transition-colors duration-200 ${index !== auditEvents.length - 1 ? 'pb-6 border-l-2 border-gray-200' : ''}`}>
-              <div className={\`absolute left-[-8px] top-2 h-4 w-4 rounded-full ${event.color} hover:scale-110 transition-transform duration-200`}></div>
+            <div key={event.id} className={`relative pl-6 hover:bg-gray-50 p-2 rounded-md transition-colors duration-200 ${index !== auditEvents.length - 1 ? 'pb-6 border-l-2 border-gray-200' : ''}`}>
+              <div className={`absolute left-[-8px] top-2 h-4 w-4 rounded-full ${event.color} hover:scale-110 transition-transform duration-200`}></div>
               <div className="flex justify-between">
                 <span className="text-sm font-medium text-gray-900 font-sans">{event.type}</span>
                 <span className="text-xs text-gray-500 font-sans">{event.time}</span>

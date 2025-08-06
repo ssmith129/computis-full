@@ -40,6 +40,7 @@ const settingItems = [
 ];
 
   return (
+    <nav className="fixed left-0 top-16 h-full w-64 bg-gray-900 text-white z-40 overflow-y-auto flex flex-col">
       <div className="px-3 mb-3">
         <div className="relative">
           <input 

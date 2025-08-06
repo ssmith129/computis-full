@@ -34,6 +34,7 @@ export default function Header({ onWorkflowOpen }: HeaderProps) {
   };
 
   return (
+    <header className="fixed top-0 left-0 right-0 bg-gray-900 text-white border-b border-gray-800 h-16 z-50 flex items-center justify-between px-6">
       <div className="flex items-center space-x-2">
         <h1 className="sr-only">Computis - Professional Crypto Tax Management Platform</h1>
         <img 
