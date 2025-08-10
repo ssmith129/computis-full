@@ -195,7 +195,7 @@ function App() {
         <Header onWorkflowOpen={handleWorkflowOpen} />
         <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
         
-        <main className={`${activeWorkflow ? 'ml-0 pt-0 flex items-center justify-center' : 'pt-16 min-h-screen transition-all duration-200'} min-h-screen transition-all duration-200`} style={{ marginLeft: activeWorkflow ? '0' : '234px' }} role="main" aria-label="Crypto tax management workspace">
+        <main className={`${activeWorkflow ? 'ml-0 pt-0 flex items-center justify-center' : 'ml-64 pt-16'} min-h-screen transition-all duration-200`} role="main" aria-label="Crypto tax management workspace">
           <div className={`${activeWorkflow ? 'w-full' : 'content-container'}`}>
             {renderContent()}
           </div>

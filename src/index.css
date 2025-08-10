@@ -66,6 +66,43 @@
   padding-right: 1rem;
 }
 
+/* Main Content Layout Alignment */
+.main-content-layout {
+  /* Align with fixed header (64px height) */
+  padding-top: 4rem; /* 64px - matches h-16 header */
+  
+  /* Align with fixed sidebar (256px width) */
+  margin-left: 16rem; /* 256px - matches w-64 sidebar */
+  
+  /* Ensure smooth transitions when layout changes */
+  transition: margin-left 200ms ease-in-out, padding-top 200ms ease-in-out;
+}
+
+/* Workflow overlay mode - no sidebar/header offset */
+.main-content-overlay {
+  margin-left: 0;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .main-content-layout {
+    /* On mobile, sidebar should overlay instead of push content */
+    margin-left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Ensure content doesn't get cut off */
+.main-content-safe-area {
+  min-height: calc(100vh - 4rem); /* Full height minus header */
+  padding-bottom: 2rem; /* Add bottom padding for breathing room */
+}
+
 /* Responsive Container Padding */
 @media (min-width: 640px) {
   .content-container {
