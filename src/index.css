@@ -105,3 +105,60 @@
     gap: 2rem;
   }
 }
+
+/* Navigation Active State Animations */
+@keyframes slide-in-indicator {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes nav-item-activate {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(250, 204, 21, 0.1);
+  }
+  100% {
+    background-color: rgb(31, 41, 55);
+  }
+}
+
+.nav-item-active {
+  animation: nav-item-activate 0.3s ease-out;
+}
+
+.nav-indicator {
+  animation: slide-in-indicator 0.2s ease-out;
+}
+
+/* Navigation Focus States */
+.nav-item:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: -2px;
+}
+
+/* Navigation Hover Enhancement */
+.nav-item:not(.nav-item-active):hover {
+  background-color: rgb(31, 41, 55);
+  transform: translateX(2px);
+}
+
+/* Mobile Navigation Improvements */
+@media (max-width: 768px) {
+  .sidebar-nav {
+    width: 100vw;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar-nav.mobile-open {
+    transform: translateX(0);
+  }
+}
