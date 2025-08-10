@@ -105,16 +105,6 @@ export default function InteractiveButton({
         </div>
       </button>
       
-      {tooltip && (showTooltip || alwaysActive) && (
-        <div 
-          className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap z-50"
-          role="tooltip"
-          aria-hidden="true"
-        >
-          {alwaysActive ? `${tooltip} - Click anytime to access` : tooltip}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
-        </div>
-      )}
     </div>
   );
 }
