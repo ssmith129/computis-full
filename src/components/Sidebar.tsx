@@ -12,6 +12,7 @@ import {
   Sliders,
   GitBranch,
   Crown
+} from 'lucide-react';
 import InteractiveButton from './InteractiveButton';
 
 interface SidebarProps {
