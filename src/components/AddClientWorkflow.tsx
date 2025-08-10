@@ -477,7 +477,7 @@ const AddClientWorkflow: React.FC<AddClientWorkflowProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-start px-6 pt-12 pb-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center px-4 py-8 md:px-6 md:py-12">
       <div className="w-full max-w-[1200px] mx-auto">
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-8 py-6 rounded-t-2xl shadow-sm">

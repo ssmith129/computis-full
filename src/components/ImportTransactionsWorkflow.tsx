@@ -1141,7 +1141,7 @@ export default function ImportTransactionsWorkflow({ onBack }: ImportTransaction
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-start px-6 pt-12 pb-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center px-4 py-8 md:px-6 md:py-12">
       <div className="w-full max-w-[1200px] mx-auto">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
