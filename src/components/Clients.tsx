@@ -127,15 +127,37 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
   };
 
   const handleClientAction = (clientId: number, action: string) => {
+    if (!clientId || typeof clientId !== 'number') {
+      addNotification({
+        type: 'error',
+        title: 'Invalid Client',
+        message: 'Unable to process client action',
+        duration: 3000
+      });
+      return;
+    }
+    
     const client = clients.find(c => c.id === clientId);
+    
+    if (!client) {
+      addNotification({
+        type: 'error',
+        title: 'Client Not Found',
+        message: 'The selected client could not be found',
+        duration: 3000
+      });
+      return;
+    }
     
     switch (action) {
       case 'view':
-        onClientSelect?.(clientId.toString());
+        if (onClientSelect) {
+          onClientSelect(clientId.toString());
+        }
         addNotification({
           type: 'info',
           title: 'Loading Client Details',
-          message: `Opening ${client?.name}'s profile...`,
+          message: `Opening ${client.name}'s profile...`,
           duration: 2000
         });
         break;
@@ -143,19 +165,28 @@ export default function Clients({ onClientSelect, onWorkflowOpen }: ClientsProps
         addNotification({
           type: 'info',
           title: 'Loading Transactions',
-          message: `Fetching ${client?.name}'s transaction history...`,
+          message: `Fetching ${client.name}'s transaction history...`,
           duration: 2000
         });
         break;
       case 'report':
-        onWorkflowOpen?.('generate-report');
+        if (onWorkflowOpen) {
+          onWorkflowOpen('generate-report');
+        }
         addNotification({
           type: 'info',
           title: 'Generate Report',
-          message: `Opening report generation for ${client?.name}...`,
+          message: `Opening report generation for ${client.name}...`,
           duration: 2000
         });
         break;
+      default:
+        addNotification({
+          type: 'error',
+          title: 'Unknown Action',
+          message: 'The requested action is not supported',
+          duration: 3000
+        });
     }
   };
 

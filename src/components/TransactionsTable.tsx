@@ -151,7 +151,7 @@ const transactions = [
   }
 ];
 
-const getConfidenceIcon = (confidenceLevel: string | null) => {
+const getConfidenceIcon = (confidenceLevel: string | null): JSX.Element => {
   switch (confidenceLevel) {
     case 'high':
       return <Check className="w-3 h-3" />;
@@ -164,7 +164,7 @@ const getConfidenceIcon = (confidenceLevel: string | null) => {
   }
 };
 
-const getConfidenceColor = (confidenceLevel: string | null) => {
+const getConfidenceColor = (confidenceLevel: string | null): string => {
   switch (confidenceLevel) {
     case 'high':
       return 'bg-green-500 text-white';
@@ -177,14 +177,32 @@ const getConfidenceColor = (confidenceLevel: string | null) => {
   }
 };
 
-export default function TransactionsTable() {
+export default function TransactionsTable({ onTransactionSelect, selectedTransactions, onSelectionChange }: TransactionsTableProps) {
   const { addNotification } = useNotifications();
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
   const [selectedAction, setSelectedAction] = React.useState<{ type: string; transactionId: number } | null>(null);
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const itemsPerPage = 10;
+
+  // Calculate pagination
+  const totalPages = Math.ceil(transactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentTransactions = transactions.slice(startIndex, endIndex);
 
   const handleAction = (type: string, transactionId: number) => {
+    if (!transactionId || typeof transactionId !== 'number') {
+      addNotification({
+        type: 'error',
+        title: 'Invalid Transaction',
+        message: 'Unable to process transaction action',
+        duration: 3000
+      });
+      return;
+    }
+    
     setSelectedAction({ type, transactionId });
     setShowConfirmDialog(true);
   };
@@ -237,6 +255,36 @@ export default function TransactionsTable() {
     setIsProcessing(false);
     setShowConfirmDialog(false);
     setSelectedAction(null);
+  };
+
+  const handleTransactionClick = (transactionId: string) => {
+    if (onTransactionSelect) {
+      onTransactionSelect(transactionId);
+    }
+  };
+
+  const handleSelectionToggle = (transactionId: string) => {
+    if (!onSelectionChange || !selectedTransactions) return;
+    
+    const isSelected = selectedTransactions.includes(transactionId);
+    if (isSelected) {
+      onSelectionChange(selectedTransactions.filter(id => id !== transactionId));
+    } else {
+      onSelectionChange([...selectedTransactions, transactionId]);
+    }
+  };
+
+  const handleSelectAll = () => {
+    if (!onSelectionChange) return;
+    
+    const allCurrentIds = currentTransactions.map(t => t.id.toString());
+    const allSelected = allCurrentIds.every(id => selectedTransactions?.includes(id));
+    
+    if (allSelected) {
+      onSelectionChange(selectedTransactions?.filter(id => !allCurrentIds.includes(id)) || []);
+    } else {
+      onSelectionChange([...(selectedTransactions || []), ...allCurrentIds.filter(id => !selectedTransactions?.includes(id))]);
+    }
   };
 
   const getActionMenuItems = (transaction: any) => [
@@ -322,7 +370,13 @@ export default function TransactionsTable() {
                 <tr className="bg-gray-50 text-left">
                   <th className="px-3 py-2 text-xs font-medium text-gray-700 font-display">
                     <div className="flex items-center">
-                      <input type="checkbox" className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3" />
+                      <input 
+                        type="checkbox" 
+                        className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3"
+                        checked={selectedTransactions && currentTransactions.every(t => selectedTransactions.includes(t.id.toString()))}
+                        onChange={handleSelectAll}
+                        aria-label="Select all transactions on this page"
+                      />
                       Date
                       <ArrowUpDown className="w-3 h-3 ml-1 text-gray-400 hover:text-gray-600 transition-colors duration-150" />
                     </div>
@@ -338,7 +392,7 @@ export default function TransactionsTable() {
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((transaction) => (
+                {currentTransactions.map((transaction) => (
                   <tr 
                     key={transaction.id} 
                     className={`border-t border-gray-100 hover:bg-gray-50 transition-all duration-150 group ${
@@ -346,10 +400,28 @@ export default function TransactionsTable() {
                     }`}
                     onMouseEnter={() => setHoveredRow(transaction.id)}
                     onMouseLeave={() => setHoveredRow(null)}
+                    onClick={() => handleTransactionClick(transaction.id.toString())}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleTransactionClick(transaction.id.toString());
+                      }
+                    }}
                   >
                     <td className="px-3 py-2">
                       <div className="flex items-center">
-                        <input type="checkbox" className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3" />
+                        <input 
+                          type="checkbox" 
+                          className="mr-2 rounded border-gray-300 hover:scale-105 transition-transform duration-150 w-3 h-3"
+                          checked={selectedTransactions?.includes(transaction.id.toString()) || false}
+                          onChange={(e) => {
+                            e.stopPropagation();
+                            handleSelectionToggle(transaction.id.toString());
+                          }}
+                          aria-label={`Select transaction ${transaction.id}`}
+                        />
                         <span className="text-xs font-sans">{transaction.date}</span>
                       </div>
                     </td>
@@ -448,7 +520,7 @@ export default function TransactionsTable() {
           <div className="px-3 py-2 border-t border-gray-100 flex items-center justify-between bg-gray-50">
             <div className="flex items-center space-x-4">
               <div className="text-xs text-gray-600 font-sans">
-                Showing 7 of 124 transactions
+                Showing {startIndex + 1}-{Math.min(endIndex, transactions.length)} of {transactions.length} transactions
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-xs text-gray-600 font-display">Bulk:</span>
@@ -476,17 +548,46 @@ export default function TransactionsTable() {
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <InteractiveButton variant="secondary" size="sm" icon={ChevronLeft} disabled>
+              <InteractiveButton 
+                variant="secondary" 
+                size="sm" 
+                icon={ChevronLeft} 
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              >
                 Previous
               </InteractiveButton>
               <div className="flex items-center space-x-2">
-                <InteractiveButton variant="primary" size="sm">1</InteractiveButton>
-                <InteractiveButton variant="secondary" size="sm">2</InteractiveButton>
-                <InteractiveButton variant="secondary" size="sm">3</InteractiveButton>
-                <span className="text-gray-500 font-sans">...</span>
-                <InteractiveButton variant="secondary" size="sm">25</InteractiveButton>
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(page => (
+                  <InteractiveButton 
+                    key={page}
+                    variant={currentPage === page ? "primary" : "secondary"} 
+                    size="sm"
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </InteractiveButton>
+                ))}
+                {totalPages > 5 && (
+                  <>
+                    <span className="text-gray-500 font-sans">...</span>
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm"
+                      onClick={() => setCurrentPage(totalPages)}
+                    >
+                      {totalPages}
+                    </InteractiveButton>
+                  </>
+                )}
               </div>
-              <InteractiveButton variant="secondary" size="sm" icon={ChevronRight}>
+              <InteractiveButton 
+                variant="secondary" 
+                size="sm" 
+                icon={ChevronRight}
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+              >
                 Next
               </InteractiveButton>
             </div>

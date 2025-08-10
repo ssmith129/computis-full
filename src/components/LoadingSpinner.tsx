@@ -4,9 +4,10 @@ interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   color?: 'primary' | 'white' | 'gray';
   text?: string;
+  className?: string;
 }
 
-export default function LoadingSpinner({ size = 'md', color = 'primary', text }: LoadingSpinnerProps) {
+export default function LoadingSpinner({ size = 'md', color = 'primary', text, className = '' }: LoadingSpinnerProps) {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
@@ -20,7 +21,7 @@ export default function LoadingSpinner({ size = 'md', color = 'primary', text }:
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2">
+    <div className={`flex items-center justify-center space-x-2 ${className}`} role="status" aria-label={text || 'Loading'}>
       <div className={`${sizeClasses[size]} ${colorClasses[color]} animate-spin`}>
         <svg className="w-full h-full" fill="none" viewBox="0 0 24 24">
           <circle
@@ -39,10 +40,11 @@ export default function LoadingSpinner({ size = 'md', color = 'primary', text }:
         </svg>
       </div>
       {text && (
-        <span className={`text-sm font-sans ${colorClasses[color]}`}>
+        <span className={`text-sm font-sans ${colorClasses[color]}`} aria-live="polite">
           {text}
         </span>
       )}
+      <span className="sr-only">Loading content</span>
     </div>
   );
 }

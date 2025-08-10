@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 interface InteractiveButtonProps {
   children: React.ReactNode;
@@ -49,7 +49,12 @@ export default function InteractiveButton({
     if (!isDisabled && onClick) {
       setIsPressed(true);
       setTimeout(() => setIsPressed(false), 100);
-      onClick();
+      try {
+        onClick();
+      } catch (error) {
+        console.error('Button click handler error:', error);
+        setIsPressed(false);
+      }
     }
   };
 
@@ -75,7 +80,15 @@ export default function InteractiveButton({
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            e.stopPropagation();
             handleClick();
+          }
+        }}
+        onFocus={() => {
+          // Announce button state to screen readers
+          if (alwaysActive) {
+            const announcement = `${children} button, always available`;
+            // In a real app, you might use a live region for announcements
           }
         }}
         onClick={handleClick}
@@ -93,7 +106,11 @@ export default function InteractiveButton({
       </button>
       
       {tooltip && (showTooltip || alwaysActive) && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap z-50">
+        <div 
+          className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-md whitespace-nowrap z-50"
+          role="tooltip"
+          aria-hidden="true"
+        >
           {alwaysActive ? `${tooltip} - Click anytime to access` : tooltip}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900" />
         </div>
