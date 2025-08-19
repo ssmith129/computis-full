@@ -48,56 +48,63 @@ const recentActivity = [
     description: 'Classified 24 Bitcoin transactions as Income',
     time: '2 hours ago',
     status: 'completed',
-    icon: CheckCircle,
-    color: 'text-green-500'
+    priority: 'normal'
   },
   {
     id: 2,
-    type: 'Anomaly Detected',
-    description: 'Unusual trading volume detected for Client ABC',
+    type: 'Client Import',
+    description: 'John Smith uploaded new transaction data',
     time: '4 hours ago',
-    status: 'warning',
-    icon: AlertTriangle,
-    color: 'text-yellow-500'
+    status: 'pending',
+    priority: 'high'
   },
   {
     id: 3,
-    type: 'Report Generated',
-    description: 'IRS 8949 form completed for Q4 2023',
-    time: '6 hours ago',
+    type: 'Report Generation',
+    description: 'Q3 tax report completed for Sarah Johnson',
+    time: '1 day ago',
     status: 'completed',
-    icon: FileText,
-    color: 'text-blue-500'
+    priority: 'normal'
   },
   {
     id: 4,
-    type: 'Data Import',
-    description: 'Imported 156 transactions from Coinbase',
-    time: '1 day ago',
+    type: 'Anomaly Detection',
+    description: 'Suspicious transaction pattern detected in wallet 0x4f2a...',
+    time: '2 days ago',
+    status: 'flagged',
+    priority: 'high'
+  },
+  {
+    id: 5,
+    type: 'Compliance Check',
+    description: 'All transactions validated for regulatory compliance',
+    time: '3 days ago',
     status: 'completed',
-    icon: TrendingUp,
-    color: 'text-purple-500'
+    priority: 'normal'
   }
 ];
 
-const aiInsights = [
+const upcomingTasks = [
   {
-    title: 'High Confidence Classifications',
-    value: '89%',
-    description: 'of transactions classified with 90%+ confidence',
-    trend: 'up'
+    id: 1,
+    task: 'Review flagged transactions',
+    dueDate: 'Today',
+    priority: 'high',
+    client: 'Multiple clients'
   },
   {
-    title: 'Anomalies Detected',
-    value: '12',
-    description: 'potential issues flagged for review',
-    trend: 'neutral'
+    id: 2,
+    task: 'Generate monthly reports',
+    dueDate: 'Tomorrow',
+    priority: 'medium',
+    client: 'All active clients'
   },
   {
-    title: 'Time Saved',
-    value: '47 hrs',
-    description: 'estimated manual work automated this month',
-    trend: 'up'
+    id: 3,
+    task: 'Client onboarding session',
+    dueDate: 'Friday',
+    priority: 'low',
+    client: 'TechCorp Inc.'
   }
 ];
 
@@ -150,7 +157,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         onWorkflowOpen?.('generate-report');
         addNotification({
           type: 'info',
-          title: 'Report Generation',
+          title: 'Report Generator',
           message: 'Opening report generation workflow...',
           duration: 2000
         });
@@ -159,172 +166,252 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         onWorkflowOpen?.('add-client');
         addNotification({
           type: 'info',
-          title: 'Client Added',
-          message: 'Opening add client workflow...',
-          duration: 2000
-        });
-        break;
-      case 'wallet':
-        onWorkflowOpen?.('connect-wallet');
-        addNotification({
-          type: 'info',
-          title: 'Wallet Connection',
-          message: 'Opening wallet connection workflow...',
+          title: 'Client Management',
+          message: 'Opening client addition workflow...',
           duration: 2000
         });
         break;
     }
   };
 
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return <CheckCircle className="w-4 h-4 text-green-600" />;
+      case 'pending':
+        return <Clock className="w-4 h-4 text-yellow-600" />;
+      case 'flagged':
+        return <AlertTriangle className="w-4 h-4 text-red-600" />;
+      default:
+        return <Clock className="w-4 h-4 text-gray-400" />;
+    }
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'bg-red-100 text-red-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'low':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   return (
-    <div className="space-y-6 lg:space-y-8">
-      {/* Stats Grid */}
-      <div className="flex flex-col">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+    <div className="content-wrapper">
+      {/* Page Header with proper semantic structure */}
+      <div className="section-gap">
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="heading-1">Dashboard</h1>
+            <p className="text-secondary">Overview of your crypto tax management platform</p>
+          </div>
+          <div className="flex space-x-3">
+            <InteractiveButton
+              variant="outline"
+              size="md"
+              className="btn-typography-md"
+              onClick={() => handleQuickAction('import')}
+            >
+              Quick Import
+            </InteractiveButton>
+            <InteractiveButton
+              variant="primary"
+              size="md"
+              className="btn-typography-md"
+              onClick={() => handleQuickAction('report')}
+            >
+              Generate Report
+            </InteractiveButton>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Grid */}
+      <div className="section-gap">
+        <h2 className="heading-3 element-gap">Key Metrics</h2>
+        <div className="dashboard-stats-grid">
           {stats.map((stat, index) => (
-            <div key={stat.title} className={`flex flex-col leading-normal w-1/4 ${index > 0 ? 'ml-5' : 'ml-0'} max-md:w-full max-md:ml-0`}>
-              <AnimatedCard className="p-4 max-w-[250px]" hover>
+            <AnimatedCard key={index} delay={index * 100}>
+              <div className="card-optimized">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
-                    <p className="text-xl font-bold text-gray-900 mt-1 font-display">{stat.value}</p>
-                    <p className={`text-sm mt-1 font-sans ${
-                      stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                    <p className="text-caption">
+                      {stat.title}
+                    </p>
+                    <p className="heading-4 font-bold text-primary">
+                      {stat.value}
+                    </p>
+                    <p className={`text-small font-medium ${
+                      stat.changeType === 'positive' ? 'text-success' : 'text-error'
                     }`}>
                       {stat.change} from last month
                     </p>
                   </div>
-                  <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${stat.color} hover:scale-105 transition-transform duration-150`}>
-                    <stat.icon className="h-5 w-5" />
+                  <div className={`p-3 rounded-lg ${stat.color}`}>
+                    <stat.icon className="w-6 h-6" />
                   </div>
                 </div>
-              </AnimatedCard>
-            </div>
+              </div>
+            </AnimatedCard>
           ))}
         </div>
       </div>
 
+      {/* Main Content Grid */}
       <div className="dashboard-main-grid">
         {/* Recent Activity */}
-        <div className="">
-          <AnimatedCard className="card-responsive flex flex-col gap-20" hover>
-            <div className="m-5">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-gray-900 font-display">Recent Crypto Tax Activity</h3>
-                <InteractiveButton variant="secondary" size="sm">
-                  View All
-                </InteractiveButton>
-              </div>
-              <div className="space-y-2">
+        <div className="space-component">
+          <h2 className="heading-3 element-gap">Recent Activity</h2>
+          <AnimatedCard>
+            <div className="card-optimized">
+              <div className="space-y-4">
                 {recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-50 transition-all duration-150 group">
-                    <div className={`h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-105 transition-transform duration-150`}>
-                      <activity.icon className="h-5 w-5" />
+                  <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                    <div className="flex-shrink-0 mt-1">
+                      {getStatusIcon(activity.status)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 font-display">{activity.type}</p>
-                      <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
-                      <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <StatusIndicator 
-                        status={activity.status === 'completed' ? 'success' : 'warning'} 
-                        label={activity.status === 'completed' ? 'Completed' : 'Review'}
-                        size="sm"
-                      />
+                      <p className="text-body font-medium text-primary">
+                        {activity.type}
+                      </p>
+                      <p className="text-secondary">
+                        {activity.description}
+                      </p>
+                      <div className="flex items-center mt-2 space-x-2">
+                        <span className="text-small text-muted">
+                          {activity.time}
+                        </span>
+                        <span className={`badge-typography px-2 py-1 rounded-full ${getPriorityColor(activity.priority)}`}>
+                          {activity.priority}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 ))}
+              </div>
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <InteractiveButton
+                  variant="ghost"
+                  size="sm"
+                  className="w-full btn-typography-sm"
+                  onClick={() => addNotification({
+                    type: 'info',
+                    title: 'Activity Log',
+                    message: 'Opening full activity history...',
+                    duration: 2000
+                  })}
+                >
+                  View All Activity
+                </InteractiveButton>
               </div>
             </div>
           </AnimatedCard>
         </div>
 
-        {/* AI Insights */}
-        <div className="space-y-4">
-          <AnimatedCard className="card-responsive flex flex-col gap-20 mt-5" hover>
-            <div className="m-5">
-              <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">AI Tax Classification Insights</h3>
-              <div className="flex flex-col">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                  {aiInsights.map((insight, index) => (
-                    <div key={index} className={`flex flex-col leading-normal w-1/3 ${index > 0 ? 'ml-5' : 'ml-0'} max-md:w-full max-md:ml-0`}>
-                      <div className="hover:bg-gray-50 p-3 rounded-md transition-all duration-150 group mt-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-200">{insight.value}</span>
-                          {insight.trend === 'up' && (
-                            <TrendingUp className="h-3 w-3 text-green-500 group-hover:scale-105 transition-transform duration-150" />
-                          )}
-                        </div>
-                        <p className="text-sm font-medium text-gray-900 font-display">{insight.title}</p>
-                        <p className="text-xs text-gray-600 mt-1 font-sans">{insight.description}</p>
+        {/* Sidebar Content */}
+        <div className="space-y-6">
+          {/* Upcoming Tasks */}
+          <div>
+            <h3 className="heading-4 element-gap">Upcoming Tasks</h3>
+            <AnimatedCard delay={200}>
+              <div className="card-optimized">
+                <div className="space-y-3">
+                  {upcomingTasks.map((task) => (
+                    <div key={task.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                      <div className="flex-1">
+                        <p className="text-body font-medium text-primary">
+                          {task.task}
+                        </p>
+                        <p className="text-caption">
+                          {task.client}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-small text-muted">
+                          {task.dueDate}
+                        </p>
+                        <span className={`badge-typography px-2 py-1 rounded-full ${getPriorityColor(task.priority)}`}>
+                          {task.priority}
+                        </span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
-          </AnimatedCard>
+            </AnimatedCard>
+          </div>
 
           {/* Quick Actions */}
-          <AnimatedCard className="flex flex-col justify-center items-start mt-4" hover>
-            <div className="m-5">
-              <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
-              <div className="flex flex-col max-w-[500px]">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                  <div className="flex flex-col leading-normal w-1/4 ml-0 max-md:w-full max-md:ml-0">
-                    <InteractiveButton 
-                      variant="secondary" 
-                      size="sm" 
-                      icon={TrendingUp}
-                      className="w-full justify-center"
-                      onClick={() => handleQuickAction('import')}
-                    >
-                      <span className="text-sm font-semibold text-gray-900">Import</span>
-                    </InteractiveButton>
-                  </div>
-                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
-                    <InteractiveButton 
-                      variant="secondary" 
-                      size="sm" 
-                      icon={FileText}
-                      className="w-full justify-center"
-                      onClick={() => handleQuickAction('report')}
-                    >
-                      <span className="text-sm font-semibold text-gray-900">Report</span>
-                    </InteractiveButton>
-                  </div>
-                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
-                    <InteractiveButton 
-                      variant="secondary" 
-                      size="sm" 
-                      icon={Users}
-                      className="w-full justify-center"
-                      onClick={() => handleQuickAction('client')}
-                    >
-                      <span className="text-sm font-semibold text-gray-900">Client</span>
-                    </InteractiveButton>
-                  </div>
-                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
-                    <InteractiveButton 
-                      variant="secondary" 
-                      size="sm" 
-                      icon={Wallet}
-                      className="w-full justify-center"
-                      onClick={() => handleQuickAction('wallet')}
-                    >
-                      <span className="text-sm font-semibold text-gray-900">Wallet</span>
-                    </InteractiveButton>
-                  </div>
+          <div>
+            <h3 className="heading-4 element-gap">Quick Actions</h3>
+            <AnimatedCard delay={300}>
+              <div className="card-optimized">
+                <div className="grid grid-cols-1 gap-3">
+                  <button
+                    onClick={() => handleQuickAction('import')}
+                    className="btn-typography-md flex items-center justify-center p-4 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors duration-200"
+                  >
+                    <TrendingUp className="w-5 h-5 mr-2" />
+                    Import Transactions
+                  </button>
+                  <button
+                    onClick={() => handleQuickAction('client')}
+                    className="btn-typography-md flex items-center justify-center p-4 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors duration-200"
+                  >
+                    <Users className="w-5 h-5 mr-2" />
+                    Add New Client
+                  </button>
+                  <button
+                    onClick={() => handleQuickAction('report')}
+                    className="btn-typography-md flex items-center justify-center p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors duration-200"
+                  >
+                    <FileText className="w-5 h-5 mr-2" />
+                    Generate Report
+                  </button>
                 </div>
               </div>
-            </div>
-          </AnimatedCard>
+            </AnimatedCard>
+          </div>
+
+          {/* Status Overview */}
+          <div>
+            <h3 className="heading-4 element-gap">System Status</h3>
+            <AnimatedCard delay={400}>
+              <div className="card-optimized">
+                <div className="space-y-3">
+                  <StatusIndicator
+                    label="AI Classification Engine"
+                    status="active"
+                    description="Processing transactions in real-time"
+                  />
+                  <StatusIndicator
+                    label="Blockchain Sync"
+                    status="active"
+                    description="Latest block: 15,847,392"
+                  />
+                  <StatusIndicator
+                    label="Data Backup"
+                    status="warning"
+                    description="Last backup: 2 hours ago"
+                  />
+                  <StatusIndicator
+                    label="API Connections"
+                    status="active"
+                    description="All exchanges connected"
+                  />
+                </div>
+              </div>
+            </AnimatedCard>
+          </div>
         </div>
       </div>
 
       {/* Floating Action Button */}
-      <FloatingActionButton actions={floatingActions} position="bottom-right" size="sm" />
+      <FloatingActionButton actions={floatingActions} />
     </div>
   );
 }
