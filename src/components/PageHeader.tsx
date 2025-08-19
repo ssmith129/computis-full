@@ -8,7 +8,7 @@ interface PageHeaderProps {
 export default function PageHeader({ onAuditTrailToggle }: PageHeaderProps) {
   return (
     <div className="container-padding section-spacing border-b border-gray-200 bg-white">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center" style={{ margin: '0 0 20px 20px' }}>
         <div>
           <h2 className="text-lg font-bold text-gray-900 font-display">AI-Enhanced Crypto Transaction Management</h2>
           <p className="text-gray-600 margin-micro font-sans text-xs">Review and manage AI-classified transactions</p>
