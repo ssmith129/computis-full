@@ -176,9 +176,9 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+      <div className="dashboard-stats-grid">
         {stats.map((stat) => (
           <AnimatedCard key={stat.title} className="p-4" hover>
             <div className="flex items-center justify-between">
@@ -199,10 +199,10 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="dashboard-main-grid">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 xl:col-span-2">
-          <AnimatedCard className="p-6" hover>
+        <div className="">
+          <AnimatedCard className="card-responsive" hover>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-gray-900 font-display">Recent Crypto Tax Activity</h3>
               <InteractiveButton variant="secondary" size="sm">
@@ -235,7 +235,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
 
         {/* AI Insights */}
         <div className="space-y-4">
-          <AnimatedCard className="p-4" hover>
+          <AnimatedCard className="card-responsive" hover>
             <h3 className="text-xl font-bold text-gray-900 mb-4 font-display">AI Tax Classification Insights</h3>
             <div className="space-y-3">
               {aiInsights.map((insight, index) => (
@@ -254,9 +254,9 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
           </AnimatedCard>
 
           {/* Quick Actions */}
-          <AnimatedCard className="p-4" hover>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
-            <div className="grid grid-cols-2 gap-3">
+          <AnimatedCard className="card-responsive" hover>
+            <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
+            <div className="grid-responsive-2">
               <InteractiveButton 
                 variant="secondary" 
                 size="sm" 

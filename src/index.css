@@ -58,70 +58,60 @@
   animation: gentle-bounce 1s infinite;
 }
 
-/* Content Container Centering */
+/* ===== RESPONSIVE LAYOUT SYSTEM ===== */
+
+/* Content Container with Smart Responsive Padding */
 .content-container {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+
+  /* Base mobile padding */
   padding-left: 1rem;
   padding-right: 1rem;
-}
 
-/* Main Content Layout Alignment */
-.main-content-layout {
-  /* Align with fixed header (64px height) */
-  padding-top: 4rem; /* 64px - matches h-16 header */
-  
-  /* Align with fixed sidebar (256px width) */
-  margin-left: 16rem; /* 256px - matches w-64 sidebar */
-  
-  /* Ensure smooth transitions when layout changes */
-  transition: margin-left 200ms ease-in-out, padding-top 200ms ease-in-out;
-}
-
-/* Workflow overlay mode - no sidebar/header offset */
-.main-content-overlay {
-  margin-left: 0;
-  padding-top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
-  .main-content-layout {
-    /* On mobile, sidebar should overlay instead of push content */
-    margin-left: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
+  /* Ensure minimum safe areas on very small screens */
+  @media (max-width: 375px) {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
-}
 
-/* Ensure content doesn't get cut off */
-.main-content-safe-area {
-  min-height: calc(100vh - 4rem); /* Full height minus header */
-  padding-bottom: 2rem; /* Add bottom padding for breathing room */
-}
-
-/* Responsive Container Padding */
-@media (min-width: 640px) {
-  .content-container {
+  /* Enhanced padding for larger screens */
+  @media (min-width: 640px) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-}
 
-@media (min-width: 1024px) {
-  .content-container {
+  @media (min-width: 1024px) {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+
+  @media (min-width: 1280px) {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
-@media (max-width: 480px) {
-  .content-container {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+/* Responsive Padding Utility */
+.responsive-padding {
+  /* Mobile-first approach */
+  padding: 1rem;
+
+  @media (min-width: 480px) {
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 2.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding: 3rem;
   }
 }
 

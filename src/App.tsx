@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotificationProvider } from './components/NotificationSystem';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -36,9 +36,26 @@ function App() {
   const [selectedTransactions, setSelectedTransactions] = useState<string[]>([]);
   const [searchFilters, setSearchFilters] = useState({});
   const [activeWorkflow, setActiveWorkflow] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Responsive detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const toggleAuditTrail = () => {
     setIsAuditTrailOpen(!isAuditTrailOpen);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const handleTransactionSelect = (transactionId: string) => {
@@ -66,7 +83,7 @@ function App() {
   };
 
   const renderContent = () => {
-    // Workflow Views
+    // Workflow Views - Full screen
     if (activeWorkflow) {
       switch (activeWorkflow) {
         case 'import-transactions':
@@ -85,7 +102,7 @@ function App() {
     // Transaction Detail View
     if (selectedTransactionId) {
       return (
-        <div className="p-8">
+        <div className="responsive-padding">
           <TransactionDetail 
             transactionId={selectedTransactionId} 
             onBack={handleBackToTransactions}
@@ -97,7 +114,7 @@ function App() {
     // Client Profile View
     if (selectedClientId) {
       return (
-        <div className="p-8">
+        <div className="responsive-padding">
           <ClientProfile 
             clientId={selectedClientId} 
             onBack={handleBackToClients}
@@ -106,64 +123,65 @@ function App() {
       );
     }
 
+    // Standard module views
     switch (activeModule) {
       case 'dashboard':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Dashboard onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'analytics':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Analytics />
           </div>
         );
       case 'clients':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Clients onClientSelect={handleClientSelect} onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'wallets':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Wallets onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'reports':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Reports onWorkflowOpen={handleWorkflowOpen} />
           </div>
         );
       case 'settings':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Settings />
           </div>
         );
       case 'preferences':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Preferences />
           </div>
         );
       case 'rules':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <RuleEngine />
           </div>
         );
       case 'account':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <AccountSettings />
           </div>
         );
       case 'exports':
         return (
-          <div className="p-8">
+          <div className="responsive-padding">
             <Exports />
           </div>
         );
@@ -189,30 +207,78 @@ function App() {
     }
   };
 
+  // Main layout classes based on state
+  const getMainLayoutClasses = () => {
+    if (activeWorkflow) {
+      return 'workflow-container';
+    }
+    
+    if (isMobile) {
+      return `pt-16 min-h-screen transition-all duration-300 ${
+        isSidebarOpen ? 'ml-0' : 'ml-0'
+      }`;
+    }
+    
+    return 'ml-64 pt-16 min-h-screen transition-all duration-300';
+  };
+
   return (
     <NotificationProvider>
-      <div className="min-h-screen bg-gray-100">
-        <Header onWorkflowOpen={handleWorkflowOpen} />
-        <Sidebar activeModule={activeModule} onModuleChange={setActiveModule} />
+      <div className="min-h-screen bg-gray-100 relative">
+        {/* Header */}
+        <Header 
+          onWorkflowOpen={handleWorkflowOpen} 
+          onMenuToggle={toggleSidebar}
+          isMobile={isMobile}
+        />
         
-        <main className={`${activeWorkflow ? 'ml-0 pt-0 flex items-center justify-center' : 'ml-64 pt-16'} min-h-screen transition-all duration-200`} role="main" aria-label="Crypto tax management workspace">
-          <div className={`${activeWorkflow ? 'w-full' : 'content-container'}`}>
+        {/* Sidebar */}
+        <Sidebar 
+          activeModule={activeModule} 
+          onModuleChange={setActiveModule}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          isMobile={isMobile}
+        />
+        
+        {/* Main Content */}
+        <main 
+          className={getMainLayoutClasses()}
+          role="main" 
+          aria-label="Crypto tax management workspace"
+        >
+          <div className={activeWorkflow ? 'w-full' : 'content-container'}>
             {renderContent()}
           </div>
         </main>
 
-        <AuditTrail isOpen={isAuditTrailOpen} onClose={() => setIsAuditTrailOpen(false)} />
+        {/* Audit Trail Sidebar */}
+        <AuditTrail 
+          isOpen={isAuditTrailOpen} 
+          onClose={() => setIsAuditTrailOpen(false)} 
+        />
         
+        {/* Import Wizard Modal */}
         <ImportWizard 
           isOpen={isImportWizardOpen} 
           onClose={() => setIsImportWizardOpen(false)} 
         />
         
-        {/* Overlay */}
+        {/* Mobile Sidebar Overlay */}
+        {isMobile && isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+        
+        {/* Audit Trail Overlay */}
         {isAuditTrailOpen && (
           <div 
             className="fixed inset-0 bg-black bg-opacity-25 z-30"
             onClick={() => setIsAuditTrailOpen(false)}
+            aria-hidden="true"
           />
         )}
       </div>
