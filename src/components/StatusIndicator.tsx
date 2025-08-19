@@ -2,8 +2,9 @@ import React from 'react';
 import { CheckCircle, Clock, AlertTriangle, XCircle, Loader } from 'lucide-react';
 
 interface StatusIndicatorProps {
-  status: 'success' | 'pending' | 'warning' | 'error' | 'loading';
+  status: 'success' | 'pending' | 'warning' | 'error' | 'loading' | 'active';
   label: string;
+  description?: string;
   animated?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
