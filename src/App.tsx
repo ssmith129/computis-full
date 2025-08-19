@@ -209,17 +209,17 @@ function App() {
 
   // Main layout classes based on state
   const getMainLayoutClasses = () => {
+    const baseClasses = 'optimized-main';
+
     if (activeWorkflow) {
-      return 'workflow-container';
+      return `${baseClasses} workflow-container`;
     }
-    
+
     if (isMobile) {
-      return `pt-16 min-h-screen transition-all duration-300 ${
-        isSidebarOpen ? 'ml-0' : 'ml-0'
-      }`;
+      return `${baseClasses} mobile-layout`;
     }
-    
-    return 'ml-64 pt-16 min-h-screen transition-all duration-300';
+
+    return baseClasses;
   };
 
   return (
@@ -243,12 +243,11 @@ function App() {
         
         {/* Main Content */}
         <main
-          className={getMainLayoutClasses()}
+          className={`optimized-main ${activeWorkflow ? 'workflow-mode' : ''}`}
           role="main"
           aria-label="Crypto tax management workspace"
-          style={{ margin: '64px 0 0 256px' }}
         >
-          <div className={activeWorkflow ? 'w-full' : 'max-w-[1200px] w-full mx-auto'}>
+          <div className={activeWorkflow ? 'w-full' : 'optimized-content-container'}>
             {renderContent()}
           </div>
         </main>
