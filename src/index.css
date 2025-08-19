@@ -210,9 +210,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   /* Responsive padding system */
   padding: 2rem 1rem; /* Mobile: 32px vertical, 16px horizontal */
+
+  /* Optimize for workflow mode */
+  margin-left: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Mobile layout optimizations */
+.mobile-layout {
+  margin-left: 0 !important;
+}
+
+.mobile-layout + .optimized-sidebar {
+  transform: translateX(-100%);
+}
+
+.mobile-layout + .optimized-sidebar.mobile-open {
+  transform: translateX(0);
 }
 
 @media (min-width: 768px) {
