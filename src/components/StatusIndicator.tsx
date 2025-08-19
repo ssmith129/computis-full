@@ -25,6 +25,13 @@ export default function StatusIndicator({
           iconClass: 'text-green-600',
           animation: ''
         };
+      case 'active':
+        return {
+          icon: CheckCircle,
+          className: 'bg-green-100 text-green-800 border-green-200',
+          iconClass: 'text-green-600',
+          animation: ''
+        };
       case 'pending':
         return {
           icon: Clock,
@@ -52,6 +59,13 @@ export default function StatusIndicator({
           className: 'bg-blue-100 text-blue-800 border-blue-200',
           iconClass: 'text-blue-600',
           animation: 'animate-spin'
+        };
+      default:
+        return {
+          icon: Clock,
+          className: 'bg-gray-100 text-gray-800 border-gray-200',
+          iconClass: 'text-gray-600',
+          animation: ''
         };
     }
   };
