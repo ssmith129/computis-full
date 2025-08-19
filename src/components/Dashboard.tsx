@@ -134,6 +134,7 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
       color: 'bg-orange-600 hover:bg-orange-700'
     }
   ];
+  
   const handleQuickAction = (action: string) => {
     switch (action) {
       case 'import':
@@ -178,121 +179,145 @@ export default function Dashboard({ onWorkflowOpen }: DashboardProps) {
   return (
     <div className="space-y-6 lg:space-y-8">
       {/* Stats Grid */}
-      <div className="dashboard-stats-grid">
-        {stats.map((stat) => (
-          <AnimatedCard key={stat.title} className="p-4" hover>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
-                <p className="text-xl font-bold text-gray-900 mt-1 font-display">{stat.value}</p>
-                <p className={`text-sm mt-1 font-sans ${
-                  stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {stat.change} from last month
-                </p>
-              </div>
-              <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${stat.color} hover:scale-105 transition-transform duration-150`}>
-                <stat.icon className="h-5 w-5" />
-              </div>
+      <div className="flex flex-col">
+        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+          {stats.map((stat, index) => (
+            <div key={stat.title} className={`flex flex-col leading-normal w-1/4 ${index > 0 ? 'ml-5' : 'ml-0'} max-md:w-full max-md:ml-0`}>
+              <AnimatedCard className="p-4 max-w-[250px]" hover>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 font-display">{stat.title}</p>
+                    <p className="text-xl font-bold text-gray-900 mt-1 font-display">{stat.value}</p>
+                    <p className={`text-sm mt-1 font-sans ${
+                      stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {stat.change} from last month
+                    </p>
+                  </div>
+                  <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${stat.color} hover:scale-105 transition-transform duration-150`}>
+                    <stat.icon className="h-5 w-5" />
+                  </div>
+                </div>
+              </AnimatedCard>
             </div>
-          </AnimatedCard>
-        ))}
+          ))}
+        </div>
       </div>
 
       <div className="dashboard-main-grid">
         {/* Recent Activity */}
         <div className="">
-          <AnimatedCard className="card-responsive" hover>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-900 font-display">Recent Crypto Tax Activity</h3>
-              <InteractiveButton variant="secondary" size="sm">
-                View All
-              </InteractiveButton>
-            </div>
-            <div className="space-y-2">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-50 transition-all duration-150 group">
-                  <div className={`h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-105 transition-transform duration-150`}>
-                    <activity.icon className="h-5 w-5" />
+          <AnimatedCard className="card-responsive flex flex-col gap-20" hover>
+            <div className="m-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-gray-900 font-display">Recent Crypto Tax Activity</h3>
+                <InteractiveButton variant="secondary" size="sm">
+                  View All
+                </InteractiveButton>
+              </div>
+              <div className="space-y-2">
+                {recentActivity.map((activity) => (
+                  <div key={activity.id} className="flex items-start space-x-3 p-2 rounded-md hover:bg-gray-50 transition-all duration-150 group">
+                    <div className={`h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center ${activity.color} group-hover:scale-105 transition-transform duration-150`}>
+                      <activity.icon className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 font-display">{activity.type}</p>
+                      <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
+                      <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <StatusIndicator 
+                        status={activity.status === 'completed' ? 'success' : 'warning'} 
+                        label={activity.status === 'completed' ? 'Completed' : 'Review'}
+                        size="sm"
+                      />
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 font-display">{activity.type}</p>
-                    <p className="text-sm text-gray-600 mt-1 font-sans">{activity.description}</p>
-                    <p className="text-xs text-gray-500 mt-1 font-sans">{activity.time}</p>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <StatusIndicator 
-                      status={activity.status === 'completed' ? 'success' : 'warning'} 
-                      label={activity.status === 'completed' ? 'Completed' : 'Review'}
-                      size="sm"
-                    />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </AnimatedCard>
         </div>
 
         {/* AI Insights */}
         <div className="space-y-4">
-          <AnimatedCard className="card-responsive" hover>
-            <h3 className="text-xl font-bold text-gray-900 mb-4 font-display">AI Tax Classification Insights</h3>
-            <div className="space-y-3">
-              {aiInsights.map((insight, index) => (
-                <div key={index} className="hover:bg-gray-50 p-3 rounded-md transition-all duration-150 group">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-200">{insight.value}</span>
-                    {insight.trend === 'up' && (
-                      <TrendingUp className="h-3 w-3 text-green-500 group-hover:scale-105 transition-transform duration-150" />
-                    )}
-                  </div>
-                  <p className="text-sm font-medium text-gray-900 font-display">{insight.title}</p>
-                  <p className="text-xs text-gray-600 mt-1 font-sans">{insight.description}</p>
+          <AnimatedCard className="card-responsive flex flex-col gap-20 mt-5" hover>
+            <div className="m-5">
+              <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">AI Tax Classification Insights</h3>
+              <div className="flex flex-col">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  {aiInsights.map((insight, index) => (
+                    <div key={index} className={`flex flex-col leading-normal w-1/3 ${index > 0 ? 'ml-5' : 'ml-0'} max-md:w-full max-md:ml-0`}>
+                      <div className="hover:bg-gray-50 p-3 rounded-md transition-all duration-150 group mt-3">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xl font-bold text-gray-900 font-display group-hover:text-yellow-600 transition-colors duration-200">{insight.value}</span>
+                          {insight.trend === 'up' && (
+                            <TrendingUp className="h-3 w-3 text-green-500 group-hover:scale-105 transition-transform duration-150" />
+                          )}
+                        </div>
+                        <p className="text-sm font-medium text-gray-900 font-display">{insight.title}</p>
+                        <p className="text-xs text-gray-600 mt-1 font-sans">{insight.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </AnimatedCard>
 
           {/* Quick Actions */}
-          <AnimatedCard className="card-responsive" hover>
-            <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
-            <div className="grid-responsive-2">
-              <InteractiveButton 
-                variant="secondary" 
-                size="sm" 
-                icon={TrendingUp}
-                className="w-full justify-center"
-                onClick={() => handleQuickAction('import')}
-              >
-                <span className="text-sm font-semibold text-gray-900">Import</span>
-              </InteractiveButton>
-              <InteractiveButton 
-                variant="secondary" 
-                size="sm" 
-                icon={FileText}
-                className="w-full justify-center"
-                onClick={() => handleQuickAction('report')}
-              >
-                <span className="text-sm font-semibold text-gray-900">Report</span>
-              </InteractiveButton>
-              <InteractiveButton 
-                variant="secondary" 
-                size="sm" 
-                icon={Users}
-                className="w-full justify-center"
-                onClick={() => handleQuickAction('client')}
-              >
-                <span className="text-sm font-semibold text-gray-900">Client</span>
-              </InteractiveButton>
-              <InteractiveButton 
-                variant="secondary" 
-                size="sm" 
-                icon={Wallet}
-                className="w-full justify-center"
-                onClick={() => handleQuickAction('wallet')}
-              >
-                <span className="text-sm font-semibold text-gray-900">Wallet</span>
-              </InteractiveButton>
+          <AnimatedCard className="flex flex-col justify-center items-start mt-4" hover>
+            <div className="m-5">
+              <h3 className="text-responsive-xl font-bold text-gray-900 mb-4 font-display">Quick Tax Management Actions</h3>
+              <div className="flex flex-col max-w-[500px]">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col leading-normal w-1/4 ml-0 max-md:w-full max-md:ml-0">
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm" 
+                      icon={TrendingUp}
+                      className="w-full justify-center"
+                      onClick={() => handleQuickAction('import')}
+                    >
+                      <span className="text-sm font-semibold text-gray-900">Import</span>
+                    </InteractiveButton>
+                  </div>
+                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm" 
+                      icon={FileText}
+                      className="w-full justify-center"
+                      onClick={() => handleQuickAction('report')}
+                    >
+                      <span className="text-sm font-semibold text-gray-900">Report</span>
+                    </InteractiveButton>
+                  </div>
+                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm" 
+                      icon={Users}
+                      className="w-full justify-center"
+                      onClick={() => handleQuickAction('client')}
+                    >
+                      <span className="text-sm font-semibold text-gray-900">Client</span>
+                    </InteractiveButton>
+                  </div>
+                  <div className="flex flex-col leading-normal w-1/4 ml-5 max-md:w-full max-md:ml-0">
+                    <InteractiveButton 
+                      variant="secondary" 
+                      size="sm" 
+                      icon={Wallet}
+                      className="w-full justify-center"
+                      onClick={() => handleQuickAction('wallet')}
+                    >
+                      <span className="text-sm font-semibold text-gray-900">Wallet</span>
+                    </InteractiveButton>
+                  </div>
+                </div>
+              </div>
             </div>
           </AnimatedCard>
         </div>
