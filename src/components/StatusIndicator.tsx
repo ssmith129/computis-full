@@ -85,6 +85,26 @@ export default function StatusIndicator({
     lg: 'w-5 h-5'
   };
 
+  if (description) {
+    // Layout for status with description (used in dashboard)
+    return (
+      <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+        <div className="flex-shrink-0 mt-1">
+          <Icon className={`${iconSizes[size]} ${config.iconClass} ${config.animation}`} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-body font-medium text-primary">
+            {label}
+          </p>
+          <p className="text-secondary">
+            {description}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Compact badge layout (original)
   return (
     <span className={`
       inline-flex items-center rounded-full font-medium border transition-all duration-150
