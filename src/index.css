@@ -11,6 +11,9 @@
 /* Import layout validation utilities */
 @import './styles/layout-validation.css';
 
+/* Import optimized layout system */
+@import './styles/optimized-layout.css';
+
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
