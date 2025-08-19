@@ -4,54 +4,54 @@
 .grid-responsive-1 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--space-base);
 }
 
 .grid-responsive-2 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  
+  gap: var(--space-base);
+
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-lg);
   }
 }
 
 .grid-responsive-3 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  
+  gap: var(--space-base);
+
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-lg);
   }
-  
+
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: var(--space-xl);
   }
 }
 
 .grid-responsive-4 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  
+  gap: var(--space-base);
+
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-lg);
   }
-  
+
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: var(--space-xl);
   }
-  
+
   @media (min-width: 1280px) {
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: var(--space-xl);
   }
 }
 
@@ -59,11 +59,11 @@
 .grid-auto-fit {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  
+  gap: var(--space-lg);
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: var(--space-base);
   }
 }
 
@@ -71,27 +71,27 @@
 .dashboard-stats-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  
+  gap: var(--space-base);
+
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-lg);
   }
-  
+
   @media (min-width: 1024px) {
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: var(--space-xl);
   }
 }
 
 .dashboard-main-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
-  
+  gap: var(--space-xl);
+
   @media (min-width: 1024px) {
     grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    gap: var(--space-xl);
   }
 }
 

@@ -1,0 +1,301 @@
+/* ===== LAYOUT VALIDATION & CONSISTENCY UTILITIES ===== */
+
+/* Visual grid overlay for layout debugging */
+.debug-grid {
+  position: relative;
+}
+
+.debug-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: var(--space-base) var(--space-base);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Layout consistency checks */
+.layout-check {
+  /* Ensure minimum touch targets */
+  min-height: 44px;
+  min-width: 44px;
+  
+  /* Ensure consistent spacing */
+  margin: 0;
+  padding: 0;
+  
+  /* Reset box model */
+  box-sizing: border-box;
+}
+
+/* Container width validation */
+.container-width-check {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Safe area enforcement */
+.safe-area {
+  padding-left: max(var(--space-base), env(safe-area-inset-left));
+  padding-right: max(var(--space-base), env(safe-area-inset-right));
+  padding-top: max(var(--space-base), env(safe-area-inset-top));
+  padding-bottom: max(var(--space-base), env(safe-area-inset-bottom));
+}
+
+/* ===== RESPONSIVE BREAKPOINT VALIDATION ===== */
+
+/* Viewport size indicators (development only) */
+.viewport-indicator {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: var(--space-sm);
+  border-radius: 4px;
+  font-size: 12px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.viewport-indicator::before {
+  content: 'XS: <640px';
+}
+
+@media (min-width: 640px) {
+  .viewport-indicator::before {
+    content: 'SM: 640px+';
+  }
+}
+
+@media (min-width: 768px) {
+  .viewport-indicator::before {
+    content: 'MD: 768px+';
+  }
+}
+
+@media (min-width: 1024px) {
+  .viewport-indicator::before {
+    content: 'LG: 1024px+';
+  }
+}
+
+@media (min-width: 1280px) {
+  .viewport-indicator::before {
+    content: 'XL: 1280px+';
+  }
+}
+
+@media (min-width: 1536px) {
+  .viewport-indicator::before {
+    content: '2XL: 1536px+';
+  }
+}
+
+/* ===== SPACING CONSISTENCY VALIDATORS ===== */
+
+/* Highlight elements with inconsistent padding */
+.validate-spacing [class*="p-"]:not([class*="btn-spacing"]):not([class*="card-spacing"]):not([class*="input-spacing"]) {
+  outline: 2px solid rgba(255, 165, 0, 0.5);
+}
+
+/* Highlight elements with inconsistent margins */
+.validate-spacing [class*="m-"]:not([class*="margin-"]) {
+  outline: 2px solid rgba(255, 0, 0, 0.5);
+}
+
+/* Highlight elements with inconsistent gaps */
+.validate-spacing [class*="gap-"]:not([class*="gap-micro"]):not([class*="gap-sm"]):not([class*="gap-md"]):not([class*="gap-base"]):not([class*="gap-lg"]):not([class*="gap-xl"]) {
+  outline: 2px solid rgba(0, 0, 255, 0.5);
+}
+
+/* ===== ACCESSIBILITY VALIDATION ===== */
+
+/* Minimum touch target validation */
+@media (max-width: 767px) {
+  .validate-touch-targets button:not(.touch-target):not(.touch-target-sm),
+  .validate-touch-targets a:not(.touch-target):not(.touch-target-sm),
+  .validate-touch-targets [role="button"]:not(.touch-target):not(.touch-target-sm) {
+    outline: 2px solid rgba(255, 0, 255, 0.8);
+  }
+  
+  .validate-touch-targets button:not(.touch-target):not(.touch-target-sm)::after,
+  .validate-touch-targets a:not(.touch-target):not(.touch-target-sm)::after,
+  .validate-touch-targets [role="button"]:not(.touch-target):not(.touch-target-sm)::after {
+    content: 'Touch target too small';
+    position: absolute;
+    background: rgba(255, 0, 255, 0.9);
+    color: white;
+    padding: 2px 4px;
+    font-size: 10px;
+    border-radius: 2px;
+    z-index: 1000;
+    white-space: nowrap;
+  }
+}
+
+/* Focus indicator validation */
+.validate-focus *:focus:not(.focus-visible-enhanced) {
+  outline: 2px solid rgba(255, 215, 0, 0.8);
+}
+
+/* ===== LAYOUT MEASUREMENT TOOLS ===== */
+
+/* Ruler overlay for precise measurements */
+.layout-ruler {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.1) 1px, 
+    transparent 1px
+  );
+  background-size: 10px 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.layout-ruler::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(
+    transparent 0%, 
+    rgba(0, 0, 0, 0.1) 1px, 
+    transparent 1px
+  );
+  background-size: 100% 10px;
+}
+
+/* ===== LAYOUT PERFORMANCE MONITORING ===== */
+
+/* Highlight elements causing layout thrashing */
+.monitor-performance * {
+  transition-property: transform, opacity;
+  transition-duration: 0.2s;
+  will-change: transform;
+}
+
+/* Detect elements without hardware acceleration */
+.validate-performance [style*="transform"]:not([style*="translateZ"]) {
+  outline: 2px dashed rgba(255, 140, 0, 0.6);
+}
+
+/* ===== CONTENT OVERFLOW DETECTION ===== */
+
+/* Highlight elements with horizontal overflow */
+.detect-overflow {
+  overflow-x: hidden;
+}
+
+.detect-overflow * {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Visual indicator for overflowing content */
+.overflow-indicator {
+  position: relative;
+}
+
+.overflow-indicator::after {
+  content: '⚠️ Overflow';
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 0, 0, 0.9);
+  color: white;
+  padding: 2px 4px;
+  font-size: 10px;
+  border-radius: 0 0 0 4px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* ===== UTILITY CLASSES FOR TESTING ===== */
+
+/* Enable all validation modes */
+.validate-all {
+  @extend .validate-spacing;
+  @extend .validate-touch-targets;
+  @extend .validate-focus;
+  @extend .validate-performance;
+  @extend .detect-overflow;
+}
+
+/* Quick layout debug mode */
+.debug-layout {
+  @extend .debug-grid;
+  @extend .layout-ruler;
+  @extend .viewport-indicator;
+}
+
+/* Production-safe validation (subtle indicators) */
+.validate-production {
+  /* Minimal visual debugging for production */
+}
+
+.validate-production .layout-issue {
+  box-shadow: inset 0 0 0 1px rgba(255, 0, 0, 0.2);
+}
+
+/* ===== RESPONSIVE BEHAVIOR VALIDATION ===== */
+
+/* Test responsive behavior at common breakpoints */
+@media (max-width: 374px) {
+  .responsive-test::before {
+    content: 'Small mobile (≤374px)';
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: var(--space-xs);
+    border-radius: 4px;
+    font-size: 10px;
+    z-index: 10000;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 639px) {
+  .responsive-test::before {
+    content: 'Mobile (375px-639px)';
+    background: rgba(255, 165, 0, 0.8);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .responsive-test::before {
+    content: 'Large mobile (640px-767px)';
+    background: rgba(255, 255, 0, 0.8);
+    color: black;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-test::before {
+    content: 'Tablet (768px-1023px)';
+    background: rgba(0, 255, 0, 0.8);
+    color: black;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-test::before {
+    content: 'Desktop (≥1024px)';
+    background: rgba(0, 0, 255, 0.8);
+  }
+}
