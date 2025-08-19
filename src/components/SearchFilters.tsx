@@ -77,9 +77,9 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange, onWorkfl
   };
 
   return (
-    <div className="bg-white border-b border-gray-200">
+    <div className="optimized-search-filters">
       {/* Search Bar */}
-      <div className="px-10 py-4">
+      <div className="search-container" style={{ padding: '16px 0' }}>
         <div className="flex items-center space-x-4">
           <div className="flex-1 relative">
             <Search className="w-5 h-5 absolute left-3 top-3 text-gray-400" />
@@ -124,7 +124,8 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange, onWorkfl
 
       {/* Advanced Filters */}
       {isExpanded && (
-        <div className="container-padding section-spacing bg-gray-50 border-t border-gray-200">
+        <div className="bg-gray-50 border-t border-gray-200">
+          <div className="content-wrapper" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
           <div className="grid-responsive-4">
             {/* Date Range */}
             <div>
@@ -293,6 +294,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange, onWorkfl
             >
               Large Amounts
             </button>
+          </div>
           </div>
         </div>
       )}
