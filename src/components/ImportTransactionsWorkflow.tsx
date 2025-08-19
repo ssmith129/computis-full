@@ -338,61 +338,33 @@ export default function ImportTransactionsWorkflow({ onBack }: ImportTransaction
                 <p className="text-gray-600 font-sans">Choose the platform where your transaction data is located</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="flex flex-wrap gap-3 justify-center">
                 {dataSources.map((source) => (
-                  <AnimatedCard
+                  <div
                     key={source.id}
-                    className={`relative p-6 cursor-pointer transition-all duration-300 border-2 ${
+                    className={`relative px-4 py-3 cursor-pointer transition-all duration-300 border-2 rounded-lg flex items-center gap-3 min-w-[200px] ${
                       selectedSource === source.id
                         ? 'ring-2 ring-yellow-400 bg-yellow-50 border-yellow-300 scale-105'
                         : `${source.color} hover:shadow-lg hover:scale-102 border-gray-200`
                     }`}
                     onClick={() => setSelectedSource(source.id)}
                   >
+                    {/* Icon */}
+                    <div className="text-2xl flex-shrink-0">{source.icon}</div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <h4 className="text-sm font-bold text-gray-900 font-display truncate">{source.name}</h4>
+                      <p className="text-xs text-gray-600 font-sans truncate">{source.description}</p>
+                    </div>
+
                     {/* Popularity Badge */}
-                    <div className="absolute top-3 right-3">
+                    <div className="flex-shrink-0">
                       <Badge variant={source.badgeColor as any} tooltip={`${source.popularity} choice`}>
                         {source.popularity}
                       </Badge>
                     </div>
-
-                    <div className="flex flex-col items-center text-center space-y-3">
-                      {/* Icon and Name */}
-                      <div className="text-4xl mb-2">{source.icon}</div>
-                      <h4 className="text-lg font-bold text-gray-900 font-display">{source.name}</h4>
-                      <p className="text-sm text-gray-600 font-sans leading-relaxed">{source.description}</p>
-                      
-                      {/* Metadata */}
-                      <div className="w-full space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Category:</span>
-                          <span className="font-medium text-gray-700 font-sans">{source.category}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Difficulty:</span>
-                          <span className={`font-medium font-sans ${
-                            source.difficulty === 'Beginner' ? 'text-green-600' : 
-                            source.difficulty === 'Intermediate' ? 'text-yellow-600' : 'text-red-600'
-                          }`}>
-                            {source.difficulty}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="text-gray-500 font-sans">Est. Time:</span>
-                          <span className="font-medium text-gray-700 font-sans">{source.avgTime}</span>
-                        </div>
-                      </div>
-
-                      {/* Supported Formats */}
-                      <div className="flex flex-wrap gap-1 justify-center">
-                        {source.formats.map((format) => (
-                          <span key={format} className="px-2 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-sans">
-                            {format}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </AnimatedCard>
+                  </div>
                 ))}
               </div>
 
