@@ -97,32 +97,34 @@ export default function AnomalyFlags() {
   };
 
   return (
-    <div className="px-4 py-3 border-t border-gray-200">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900 font-sans">Anomaly Flags</h2>
-        <button className="text-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans">View All</button>
+    <div className="responsive-padding border-t border-gray-200">
+      <div className="flex items-center justify-between space-component">
+        <h2 className="text-responsive-lg font-bold text-gray-900 font-sans">Anomaly Flags</h2>
+        <button className="text-responsive-sm text-blue-600 hover:underline hover:scale-105 transition-all duration-200 font-sans min-h-[44px] px-2">View All</button>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid-responsive-3">
         {anomalies.map((anomaly) => (
-          <div key={anomaly.id} className="bg-white rounded-lg border border-gray-200 p-3 shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+          <div key={anomaly.id} className="bg-white rounded-lg border border-gray-200 card-responsive shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer focus-visible-enhanced" tabIndex={0}>
             <div className="flex items-center">
               <div className={`h-8 w-8 rounded-full flex items-center justify-center mr-2 ${anomaly.iconColor} hover:scale-110 transition-transform duration-200`}>
                 <anomaly.icon className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-900 font-sans">{anomaly.title}</h3>
-                <p className="text-sm text-gray-600 font-sans">{anomaly.description}</p>
+                <h3 className="text-responsive-sm font-medium text-gray-900 font-sans">{anomaly.title}</h3>
+                <p className="text-responsive-xs text-gray-600 font-sans">{anomaly.description}</p>
               </div>
             </div>
-            <div className="mt-2 text-xs text-gray-700 font-sans">
+            <div className="mt-2 text-responsive-xs text-gray-700 font-sans">
               {anomaly.details}
             </div>
-            <div className="mt-2 flex justify-between">
+            <div className="mt-2 flex flex-wrap gap-2 justify-between">
               {anomaly.actions.map((action, index) => (
-                <button 
-                  className={`text-xs hover:underline hover:scale-105 transition-all duration-200 font-sans ${
+                <button
+                  key={`${anomaly.id}-${action}-${index}`}
+                  className={`button-responsive-sm hover:underline hover:scale-105 transition-all duration-200 font-sans focus-visible-enhanced ${
                     index === 0 ? 'text-blue-600' : 'text-gray-600'
                   }`}
+                  onClick={() => handleAnomalyAction(anomaly.id, action.toLowerCase())}
                 >
                   {action}
                 </button>

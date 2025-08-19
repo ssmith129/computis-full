@@ -1,26 +1,30 @@
 import React from 'react';
-import { 
-  Search, 
-  LayoutDashboard, 
-  ArrowLeftRight, 
-  Wallet, 
-  Users, 
-  FileText, 
-  TrendingUp, 
+import {
+  Search,
+  LayoutDashboard,
+  ArrowLeftRight,
+  Wallet,
+  Users,
+  FileText,
+  TrendingUp,
   FileSpreadsheet,
   Settings,
   Sliders,
   GitBranch,
-  Crown
+  Crown,
+  X
 } from 'lucide-react';
 import InteractiveButton from './InteractiveButton';
 
 interface SidebarProps {
   activeModule: string;
   onModuleChange: (module: string) => void;
+  isOpen?: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
-export default function Sidebar({ activeModule, onModuleChange }: SidebarProps) {
+export default function Sidebar({ activeModule, onModuleChange, isOpen = false, onClose, isMobile = false }: SidebarProps) {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', key: 'dashboard' },
     { icon: ArrowLeftRight, label: 'Transactions', key: 'transactions' },
@@ -44,6 +48,11 @@ export default function Sidebar({ activeModule, onModuleChange }: SidebarProps) 
       event.preventDefault();
     }
     onModuleChange(moduleKey);
+
+    // Close mobile sidebar after navigation
+    if (isMobile && onClose) {
+      onClose();
+    }
   };
 
   const handleKeyboardNavigation = (moduleKey: string, event: React.KeyboardEvent) => {
@@ -52,17 +61,39 @@ export default function Sidebar({ activeModule, onModuleChange }: SidebarProps) 
       onModuleChange(moduleKey);
     }
   };
+  // Mobile sidebar classes
+  const sidebarClasses = isMobile
+    ? `fixed left-0 top-16 h-full w-64 bg-gray-900 text-white z-40 overflow-y-auto flex flex-col transform transition-transform duration-300 ease-in-out ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      } lg:translate-x-0 lg:static lg:z-auto`
+    : 'fixed left-0 top-16 h-full w-64 bg-gray-900 text-white z-40 overflow-y-auto flex flex-col';
+
   return (
-    <nav 
-      className="fixed left-0 top-16 h-full w-64 bg-gray-900 text-white z-40 overflow-y-auto flex flex-col"
+    <nav
+      className={sidebarClasses}
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="px-3 mb-3">
+      {/* Mobile Close Button */}
+      {isMobile && (
+        <div className="flex items-center justify-between p-3 border-b border-gray-800 lg:hidden">
+          <span className="font-semibold text-sm">Navigation</span>
+          <button
+            onClick={onClose}
+            className="p-1 rounded-md hover:bg-gray-800 transition-colors duration-200"
+            aria-label="Close navigation menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
+
+      {/* Search */}
+      <div className="px-3 mb-3 mt-3">
         <div className="relative">
-          <input 
-            type="text" 
-            placeholder="Search..." 
+          <input
+            type="text"
+            placeholder="Search..."
             className="w-full bg-gray-800 text-white rounded-md py-2 pl-8 pr-3 text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-gray-700 transition-all duration-200 font-sans"
             aria-label="Search navigation items"
           />
