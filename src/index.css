@@ -1,18 +1,13 @@
+/* Import all custom CSS files first */
+@import './styles/spacing-tokens.css';
+@import './styles/responsive.css';
+@import './styles/layout-validation.css';
+@import './styles/optimized-layout.css';
+
+/* Then import Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import spacing design tokens */
-@import './styles/spacing-tokens.css';
-
-/* Import responsive system */
-@import './styles/responsive.css';
-
-/* Import layout validation utilities */
-@import './styles/layout-validation.css';
-
-/* Import optimized layout system */
-@import './styles/optimized-layout.css';
 
 @keyframes slide-in-right {
   from {
