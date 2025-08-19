@@ -1,0 +1,373 @@
+/* ===== OPTIMIZED LAYOUT SYSTEM ===== */
+/* Professional container spacing optimization for crypto tax management app */
+
+/* Root-level layout improvements */
+:root {
+  /* Optimized container dimensions */
+  --header-height: 64px;           /* Fixed header height */
+  --sidebar-width: 256px;          /* Fixed sidebar width */
+  --content-max-width: 1400px;     /* Increased max content width */
+  
+  /* Optimized spacing scale - 8px base unit */
+  --space-1: 0.5rem;              /* 8px */
+  --space-2: 1rem;                /* 16px */
+  --space-3: 1.5rem;              /* 24px */
+  --space-4: 2rem;                /* 32px */
+  --space-5: 2.5rem;              /* 40px */
+  --space-6: 3rem;                /* 48px */
+  
+  /* Content area spacing */
+  --content-padding-mobile: 1rem;   /* 16px */
+  --content-padding-tablet: 1.5rem; /* 24px */
+  --content-padding-desktop: 2rem;  /* 32px */
+  
+  /* Component spacing consistency */
+  --component-gap: var(--space-3);  /* 24px between major components */
+  --element-gap: var(--space-2);    /* 16px between related elements */
+  --micro-gap: var(--space-1);      /* 8px for tight groupings */
+}
+
+/* ===== MAIN LAYOUT OPTIMIZATION ===== */
+
+/* Fixed header positioning */
+.optimized-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  z-index: 50;
+  background: #111827;
+  border-bottom: 1px solid #374151;
+}
+
+/* Fixed sidebar positioning */
+.optimized-sidebar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--header-height));
+  z-index: 40;
+  background: #1f2937;
+  border-right: 1px solid #374151;
+}
+
+/* Main content area optimization */
+.optimized-main {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  background: #f9fafb;
+  
+  /* Optimized content padding system */
+  padding: 0;
+  
+  /* Smooth transitions for responsive changes */
+  transition: margin-left 0.2s ease-in-out;
+}
+
+/* Content container with proper max-width */
+.optimized-content-container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+  
+  /* Responsive padding that maintains optimal line lengths */
+  padding-left: var(--content-padding-desktop);
+  padding-right: var(--content-padding-desktop);
+  
+  @media (max-width: 1024px) {
+    padding-left: var(--content-padding-tablet);
+    padding-right: var(--content-padding-tablet);
+  }
+  
+  @media (max-width: 768px) {
+    padding-left: var(--content-padding-mobile);
+    padding-right: var(--content-padding-mobile);
+  }
+}
+
+/* ===== COMPONENT-SPECIFIC OPTIMIZATIONS ===== */
+
+/* Search filters optimization */
+.optimized-search-filters {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  
+  /* Consistent internal spacing */
+  padding: var(--space-3) 0;
+}
+
+.optimized-search-filters .search-container {
+  padding: 0 var(--content-padding-desktop);
+  
+  @media (max-width: 1024px) {
+    padding: 0 var(--content-padding-tablet);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 var(--content-padding-mobile);
+  }
+}
+
+/* Page header optimization */
+.optimized-page-header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  
+  /* Optimized vertical spacing */
+  padding: var(--space-4) 0 var(--space-3) 0;
+}
+
+.optimized-page-header .header-container {
+  padding: 0 var(--content-padding-desktop);
+  
+  @media (max-width: 1024px) {
+    padding: 0 var(--content-padding-tablet);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 var(--content-padding-mobile);
+  }
+}
+
+/* Content sections spacing */
+.optimized-content-section {
+  /* Consistent vertical rhythm */
+  padding: var(--space-4) 0;
+  
+  /* Clean section separation */
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.optimized-content-section:last-child {
+  border-bottom: none;
+}
+
+/* ===== RESPONSIVE MOBILE LAYOUT ===== */
+
+@media (max-width: 768px) {
+  .optimized-main {
+    margin-left: 0;
+    margin-top: var(--header-height);
+  }
+  
+  .optimized-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .optimized-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  
+  /* Mobile content optimization */
+  .optimized-content-container {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+  
+  /* Adjust component spacing for mobile */
+  .optimized-search-filters {
+    padding: var(--space-2) 0;
+  }
+  
+  .optimized-page-header {
+    padding: var(--space-3) 0 var(--space-2) 0;
+  }
+  
+  .optimized-content-section {
+    padding: var(--space-3) 0;
+  }
+}
+
+/* ===== UTILITY CLASSES FOR CONSISTENT SPACING ===== */
+
+/* Container utilities */
+.content-wrapper {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding-desktop);
+  
+  @media (max-width: 1024px) {
+    padding: 0 var(--content-padding-tablet);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 var(--content-padding-mobile);
+  }
+}
+
+/* Section spacing utilities */
+.section-gap {
+  margin-bottom: var(--component-gap);
+}
+
+.element-gap {
+  margin-bottom: var(--element-gap);
+}
+
+.micro-gap {
+  margin-bottom: var(--micro-gap);
+}
+
+/* Flex and grid utilities with consistent gaps */
+.flex-gap {
+  display: flex;
+  gap: var(--element-gap);
+}
+
+.flex-gap-sm {
+  display: flex;
+  gap: var(--micro-gap);
+}
+
+.grid-gap {
+  display: grid;
+  gap: var(--element-gap);
+}
+
+.grid-gap-sm {
+  display: grid;
+  gap: var(--micro-gap);
+}
+
+/* ===== COMPONENT SPACING STANDARDS ===== */
+
+/* Button spacing optimization */
+.btn-optimized {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-optimized-sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.75rem;
+}
+
+.btn-optimized-lg {
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+}
+
+/* Card spacing optimization */
+.card-optimized {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: var(--space-4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-optimized-sm {
+  padding: var(--space-3);
+}
+
+.card-optimized-lg {
+  padding: var(--space-5);
+}
+
+/* Form element spacing */
+.form-group-optimized {
+  margin-bottom: var(--space-3);
+}
+
+.form-group-optimized label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-input-optimized {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-input-optimized:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* ===== TABLE SPACING OPTIMIZATION ===== */
+
+.table-optimized {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table-optimized th {
+  background: #f9fafb;
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-optimized td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid #f3f4f6;
+  color: #6b7280;
+}
+
+.table-optimized tr:last-child td {
+  border-bottom: none;
+}
+
+.table-optimized tr:hover {
+  background: #f9fafb;
+}
+
+/* ===== ACCESSIBILITY AND PERFORMANCE ===== */
+
+/* Focus states */
+.focus-optimized:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .optimized-main,
+  .optimized-sidebar {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-optimized,
+  .table-optimized {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ===== DEBUGGING UTILITIES ===== */
+
+/* Visual spacing guides for development */
+.debug-layout * {
+  outline: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.debug-layout .content-wrapper {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.debug-layout .optimized-content-section {
+  background: rgba(168, 85, 247, 0.1);
+}
