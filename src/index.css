@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import responsive system */
+@import './styles/responsive.css';
+
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
