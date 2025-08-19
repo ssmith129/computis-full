@@ -242,10 +242,11 @@ function App() {
         />
         
         {/* Main Content */}
-        <main 
+        <main
           className={getMainLayoutClasses()}
-          role="main" 
+          role="main"
           aria-label="Crypto tax management workspace"
+          style={{ marginLeft: '256px' }}
         >
           <div className={activeWorkflow ? 'w-full' : 'content-container'}>
             {renderContent()}
