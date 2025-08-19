@@ -1,0 +1,310 @@
+/* ===== SPACING DESIGN TOKENS SYSTEM ===== */
+
+/* Base Spacing Units - 4px grid system */
+:root {
+  /* Micro spacing (1-2 units) */
+  --space-micro: 0.125rem;      /* 2px - tiny gaps */
+  --space-xs: 0.25rem;          /* 4px - minimal spacing */
+  --space-sm: 0.5rem;           /* 8px - small elements */
+  
+  /* Standard spacing (3-6 units) */
+  --space-md: 0.75rem;          /* 12px - medium elements */
+  --space-base: 1rem;           /* 16px - base spacing */
+  --space-lg: 1.5rem;           /* 24px - large elements */
+  
+  /* Macro spacing (7-12 units) */
+  --space-xl: 2rem;             /* 32px - sections */
+  --space-2xl: 3rem;            /* 48px - major sections */
+  --space-3xl: 4rem;            /* 64px - page sections */
+  
+  /* Container spacing */
+  --space-container-sm: 1rem;   /* 16px - mobile container */
+  --space-container-md: 1.5rem; /* 24px - tablet container */
+  --space-container-lg: 2rem;   /* 32px - desktop container */
+  --space-container-xl: 2.5rem; /* 40px - large desktop */
+}
+
+/* ===== COMPONENT SPACING TOKENS ===== */
+
+/* Button Spacing Standards */
+.btn-spacing-sm {
+  padding: var(--space-sm) var(--space-md);    /* 8px 12px */
+}
+
+.btn-spacing-md {
+  padding: var(--space-md) var(--space-base);  /* 12px 16px */
+}
+
+.btn-spacing-lg {
+  padding: var(--space-base) var(--space-lg);  /* 16px 24px */
+}
+
+/* Card Spacing Standards */
+.card-spacing-sm {
+  padding: var(--space-base);                  /* 16px */
+}
+
+.card-spacing-md {
+  padding: var(--space-lg);                    /* 24px */
+}
+
+.card-spacing-lg {
+  padding: var(--space-xl);                    /* 32px */
+}
+
+/* Form Element Spacing */
+.form-spacing-sm {
+  padding: var(--space-sm) var(--space-md);    /* 8px 12px */
+}
+
+.form-spacing-md {
+  padding: var(--space-md) var(--space-base);  /* 12px 16px */
+}
+
+.form-spacing-lg {
+  padding: var(--space-base) var(--space-lg);  /* 16px 24px */
+}
+
+/* Input Field Spacing */
+.input-spacing {
+  padding: var(--space-md) var(--space-base);  /* 12px 16px */
+}
+
+/* Badge/Tag Spacing */
+.badge-spacing {
+  padding: var(--space-xs) var(--space-sm);    /* 4px 8px */
+}
+
+/* Icon Spacing */
+.icon-spacing-sm {
+  margin-right: var(--space-xs);               /* 4px */
+}
+
+.icon-spacing-md {
+  margin-right: var(--space-sm);               /* 8px */
+}
+
+.icon-spacing-lg {
+  margin-right: var(--space-md);               /* 12px */
+}
+
+/* ===== LAYOUT SPACING UTILITIES ===== */
+
+/* Consistent margin utilities */
+.margin-section {
+  margin-bottom: var(--space-xl);              /* 32px */
+}
+
+.margin-component {
+  margin-bottom: var(--space-lg);              /* 24px */
+}
+
+.margin-element {
+  margin-bottom: var(--space-base);            /* 16px */
+}
+
+.margin-micro {
+  margin-bottom: var(--space-sm);              /* 8px */
+}
+
+/* Consistent gap utilities */
+.gap-micro {
+  gap: var(--space-xs);                        /* 4px */
+}
+
+.gap-sm {
+  gap: var(--space-sm);                        /* 8px */
+}
+
+.gap-md {
+  gap: var(--space-md);                        /* 12px */
+}
+
+.gap-base {
+  gap: var(--space-base);                      /* 16px */
+}
+
+.gap-lg {
+  gap: var(--space-lg);                        /* 24px */
+}
+
+.gap-xl {
+  gap: var(--space-xl);                        /* 32px */
+}
+
+/* Stack spacing (for flex/grid children) */
+.stack-sm > * + * {
+  margin-top: var(--space-sm);                 /* 8px */
+}
+
+.stack-md > * + * {
+  margin-top: var(--space-base);               /* 16px */
+}
+
+.stack-lg > * + * {
+  margin-top: var(--space-lg);                 /* 24px */
+}
+
+/* Inline spacing (for horizontal layouts) */
+.inline-sm > * + * {
+  margin-left: var(--space-sm);                /* 8px */
+}
+
+.inline-md > * + * {
+  margin-left: var(--space-base);              /* 16px */
+}
+
+.inline-lg > * + * {
+  margin-left: var(--space-lg);                /* 24px */
+}
+
+/* ===== RESPONSIVE SPACING SYSTEM ===== */
+
+/* Container padding that scales responsively */
+.container-padding {
+  padding-left: var(--space-container-sm);
+  padding-right: var(--space-container-sm);
+  
+  @media (min-width: 640px) {
+    padding-left: var(--space-container-md);
+    padding-right: var(--space-container-md);
+  }
+  
+  @media (min-width: 1024px) {
+    padding-left: var(--space-container-lg);
+    padding-right: var(--space-container-lg);
+  }
+  
+  @media (min-width: 1280px) {
+    padding-left: var(--space-container-xl);
+    padding-right: var(--space-container-xl);
+  }
+}
+
+/* Section spacing that scales responsively */
+.section-spacing {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+  
+  @media (min-width: 768px) {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+  
+  @media (min-width: 1024px) {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
+  }
+}
+
+/* Component spacing that scales responsively */
+.component-spacing {
+  margin-bottom: var(--space-base);
+  
+  @media (min-width: 768px) {
+    margin-bottom: var(--space-lg);
+  }
+  
+  @media (min-width: 1024px) {
+    margin-bottom: var(--space-xl);
+  }
+}
+
+/* ===== SEMANTIC SPACING CLASSES ===== */
+
+/* Page-level spacing */
+.page-container {
+  padding: var(--space-base);
+  
+  @media (min-width: 640px) {
+    padding: var(--space-lg);
+  }
+  
+  @media (min-width: 1024px) {
+    padding: var(--space-xl);
+  }
+}
+
+/* Modal/Dialog spacing */
+.modal-spacing {
+  padding: var(--space-lg);
+  
+  @media (min-width: 640px) {
+    padding: var(--space-xl);
+  }
+}
+
+/* Table cell spacing */
+.table-cell-spacing {
+  padding: var(--space-md) var(--space-base);
+}
+
+/* List item spacing */
+.list-item-spacing {
+  padding: var(--space-sm) var(--space-base);
+}
+
+/* Navigation item spacing */
+.nav-item-spacing {
+  padding: var(--space-sm) var(--space-md);
+}
+
+/* ===== TOUCH TARGET OPTIMIZATION ===== */
+
+/* Ensure minimum touch targets on mobile */
+@media (max-width: 767px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--space-md);
+  }
+  
+  .touch-target-sm {
+    min-height: 36px;
+    min-width: 36px;
+    padding: var(--space-sm);
+  }
+}
+
+/* ===== DENSITY VARIATIONS ===== */
+
+/* Compact spacing for dense interfaces */
+.spacing-compact .card-spacing-md {
+  padding: var(--space-base);
+}
+
+.spacing-compact .btn-spacing-md {
+  padding: var(--space-sm) var(--space-md);
+}
+
+.spacing-compact .gap-base {
+  gap: var(--space-sm);
+}
+
+/* Loose spacing for accessibility */
+.spacing-loose .card-spacing-md {
+  padding: var(--space-xl);
+}
+
+.spacing-loose .btn-spacing-md {
+  padding: var(--space-base) var(--space-lg);
+}
+
+.spacing-loose .gap-base {
+  gap: var(--space-lg);
+}
+
+/* ===== DEBUGGING UTILITIES ===== */
+
+/* Visual spacing guides (development only) */
+.debug-spacing * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.debug-spacing .card-spacing-md {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.debug-spacing .btn-spacing-md {
+  background: rgba(0, 0, 255, 0.1);
+}

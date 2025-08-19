@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import spacing design tokens */
+@import './styles/spacing-tokens.css';
+
 /* Import responsive system */
 @import './styles/responsive.css';
 
