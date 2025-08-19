@@ -248,7 +248,7 @@ function App() {
           aria-label="Crypto tax management workspace"
           style={{ margin: '64px 0 0 256px' }}
         >
-          <div className={activeWorkflow ? 'w-full' : 'content-container'}>
+          <div className={activeWorkflow ? 'w-full' : 'max-w-[1200px] w-full mx-auto'}>
             {renderContent()}
           </div>
         </main>
