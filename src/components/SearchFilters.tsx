@@ -124,8 +124,8 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFiltersChange, onWorkfl
 
       {/* Advanced Filters */}
       {isExpanded && (
-        <div className="px-10 py-6 bg-gray-50 border-t border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="container-padding section-spacing bg-gray-50 border-t border-gray-200">
+          <div className="grid-responsive-4">
             {/* Date Range */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">Date Range</label>

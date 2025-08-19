@@ -8,6 +8,9 @@
 /* Import responsive system */
 @import './styles/responsive.css';
 
+/* Import layout validation utilities */
+@import './styles/layout-validation.css';
+
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
