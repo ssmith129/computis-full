@@ -9,11 +9,12 @@ interface StatusIndicatorProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export default function StatusIndicator({ 
-  status, 
-  label, 
-  animated = true, 
-  size = 'md' 
+export default function StatusIndicator({
+  status,
+  label,
+  description,
+  animated = true,
+  size = 'md'
 }: StatusIndicatorProps) {
   const getStatusConfig = () => {
     switch (status) {
