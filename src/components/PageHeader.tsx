@@ -11,19 +11,20 @@ export default function PageHeader({ onAuditTrailToggle }: PageHeaderProps) {
       <div className="header-container">
         <div className="flex justify-between items-center" style={{ marginBottom: '20px' }}>
           <div>
-            <h2 className="text-lg font-bold text-gray-900 font-display">AI-Enhanced Crypto Transaction Management</h2>
-            <p className="text-gray-600 margin-micro font-sans text-xs">Review and manage AI-classified transactions</p>
+            {/* Semantic H1 with proper typography */}
+            <h1 className="heading-2">AI-Enhanced Crypto Transaction Management</h1>
+            <p className="text-secondary">Review and manage AI-classified transactions</p>
           </div>
           <div className="flex gap-sm">
-            <button className="flex items-center btn-spacing-md bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-102 transition-all duration-150 font-sans text-xs">
+            <button className="btn-typography-sm flex items-center bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-102 transition-all duration-150">
               <Filter className="w-3 h-3 icon-spacing-sm" />
               <span>Filters</span>
             </button>
-            <button className="flex items-center btn-spacing-md bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-102 transition-all duration-150 font-sans text-xs">
+            <button className="btn-typography-sm flex items-center bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:scale-102 transition-all duration-150">
               <Plus className="w-3 h-3 icon-spacing-sm" />
               <span>Bulk Tag</span>
             </button>
-            <button className="flex items-center btn-spacing-md bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-102 transition-all duration-150 font-sans font-semibold text-xs">
+            <button className="btn-typography-md flex items-center bg-yellow-400 text-gray-900 rounded-md hover:bg-yellow-300 hover:scale-102 transition-all duration-150 font-semibold">
               <Upload className="w-3 h-3 icon-spacing-sm" />
               <span>AI Classify</span>
             </button>
@@ -32,22 +33,22 @@ export default function PageHeader({ onAuditTrailToggle }: PageHeaderProps) {
         
         <div className="flex gap-md margin-element">
           <div className="flex items-center gap-micro">
-            <span className="text-xs font-medium font-display">Confidence:</span>
-            <button className="btn-spacing-sm text-xs bg-yellow-400 text-gray-900 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">All</button>
-            <button className="btn-spacing-sm text-xs hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">High</button>
-            <button className="btn-spacing-sm text-xs hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">Medium</button>
-            <button className="btn-spacing-sm text-xs hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">Low</button>
+            <span className="label-typography">Confidence:</span>
+            <button className="btn-typography-sm bg-yellow-400 text-gray-900 rounded-md hover:scale-102 transition-all duration-150 font-semibold">All</button>
+            <button className="btn-typography-sm hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-semibold">High</button>
+            <button className="btn-typography-sm hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-semibold">Medium</button>
+            <button className="btn-typography-sm hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-semibold">Low</button>
           </div>
           <div className="flex items-center gap-micro">
-            <span className="text-xs font-medium font-display">Status:</span>
-            <button className="btn-spacing-sm text-xs hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">Confirmed</button>
-            <button className="btn-spacing-sm text-xs hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">Suggested</button>
-            <button className="btn-spacing-sm text-xs bg-yellow-400 text-gray-900 rounded-md hover:scale-102 transition-all duration-150 font-sans font-semibold">Flagged</button>
+            <span className="label-typography">Status:</span>
+            <button className="btn-typography-sm hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-semibold">Confirmed</button>
+            <button className="btn-typography-sm hover:bg-gray-100 rounded-md hover:scale-102 transition-all duration-150 font-semibold">Suggested</button>
+            <button className="btn-typography-sm bg-yellow-400 text-gray-900 rounded-md hover:scale-102 transition-all duration-150 font-semibold">Flagged</button>
           </div>
           <div className="flex items-center gap-sm ml-auto">
             <button 
               onClick={onAuditTrailToggle}
-              className="text-xs text-blue-600 hover:underline flex items-center hover:scale-102 transition-all duration-150 font-sans font-semibold"
+              className="btn-typography-sm text-blue-600 hover:underline flex items-center hover:scale-102 transition-all duration-150 font-semibold"
             >
               <History className="w-3 h-3 icon-spacing-sm" />
               <span>View Audit Trail</span>
